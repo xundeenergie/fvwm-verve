@@ -1,0 +1,5 @@
+TITEL|Mailprogramm $[infostore.default_mailclient]|Mailprogramm $[infostore.default_mailclient]
+icedove.desktop|default_mailclient
+evolution.desktop|default_mailclient
+claws-mail.desktop|default_mailclient
+mulberry.desktop|default_mailclient

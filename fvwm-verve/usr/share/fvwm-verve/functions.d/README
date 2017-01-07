@@ -1,0 +1,5 @@
+Die Funktion functions.fvwm, welche von ~[FVWM_USERDIR]/config aufgerufen wird, liest alle Dateien die mit einer Laufenden nummer "[0-9]" beginnen und mit dem Dateiende *-funcs.fvwm enden, ein.
+
+Sollen also neue Functions für Fvwm installiert werden, so kann dies am besten über ein neues File geschehen.
+
+z.B. 10_neueFunktion-funcs.fvwm

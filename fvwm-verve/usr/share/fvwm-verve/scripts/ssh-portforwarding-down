@@ -1,0 +1,15 @@
+#!/bin/bash
+
+USER=$USER
+DOTFILE="$1"
+
+echo "Lösen der Portforwardings:"|logger -t portforward
+
+if [ -e /home/$USER/$DOTFILE ]
+then
+	grep -v '^#\|^$' /home/$USER/$DOTFILE | while read i j k l n
+	do
+		pkill -f $n $j:localhost:$k &&  { echo $i erfolgreich gelöst| logger -t portforward; }  || { echo lösen von $i fehlgeschlagen|logger -t portforward; } 
+	done
+fi
+exit 0

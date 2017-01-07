@@ -1,0 +1,26 @@
+*FvwmShelf: (22x4, Frame 1, Swallow "FvwmPager" "FvwmPager *", \
+	Action (Mouse 4) 'GotoDesk $[infostore.Deskup]', \
+	Action (Mouse 5) 'GotoDesk $[infostore.Deskdown]', \
+	)
+*FvwmShelf: (22x2, Title(Side) " $[USERFULL]", Icon linux.xpm, \
+	Action(Mouse 1)  Function WORK_MENU, \
+	Action(Mouse 3)  Load menus.d/menu-admin-workmenu.fvwm \
+	)
+*FvwmShelf: (22x2, Frame 0, Swallow (UseOld, NoClose) `stalonetray` `Exec exec stalonetray --kludges fix_window_pos,force_icons_size,use_icons_hints --log-level info 2>$[FVWM_USERDIR]/.systray.log&`)
+*FvwmShelf: (6x2, Frame 0, Padding 2 0, Left, Id "Meteo",Icon /dev/shm/meteo-$[USER]/meteo_fetch_icon_button.png, \
+	Action(Mouse 1) FvwmScript Meteo/Meteo 10 Wien, \
+	Action(Mouse 3) Exec Meteo-fetch $USER, \
+	)
+#TEST (x i8kmon) *FvwmShelf: (3x2, Frame 0 Swallow (NoClose,UseOld,Respawn,NoKill) "i8kmon" 'Exec /usr/local/bin/i8kmon -nd --auto --font "$[xft_font]"' )
+*FvwmShelf: (11x2, Frame 0, Swallow FvwmApplet-kppp `FvwmScript FvwmApplet-kppp `)
+*FvwmShelf: (1x2, Frame 0, Swallow FvwmScript-Volume `FvwmScript FvwmScript-Volume $[infostore.AlsaCard]`)
+*FvwmShelf: (22x3, Frame 0, Swallow FvwmApplet-DayWeekTime `FvwmScript FvwmApplet-DayWeekTime  `)
+*FvwmShelf: (22x4, Frame 0, Swallow (Respawn,UseOld) "ipadress" 'Exec xterm -geometry 20x9+0-20 -fa "$[term_font]" -T "ipadress" -fg $[fg.cs10] -xrm "xterm*ScrollBar: off" -xrm "xterm*background: $[bg.cs10]" -e "$[FV_SYSTEMDIR]/scripts/ip-addressen"&', \
+	Action (Mouse 1) "Exec xterm -e 'watch netstat -r'&", \
+	Action (Mouse 3) "Exec $[infostore.default_netapplet]&", \
+	)
+
+############################
+# MPD-Steuer-Applet laden: # 
+############################
+Piperead `sed -e 's/FvwmButtonMPD/FvwmShelf/g' $FVWM_SCRIPTDIR/mpd-controll/button-mpd`

@@ -1,0 +1,183 @@
+#Colorset 0 fg black, bg grey, hi white, sh darkgrey 
+#Colorset 0 fg black, bg grey, RootTransparent buffer, Tint #c6cbd6 90
+#Colorset 1 fg black, bg #6b83b5, hi #dcdcdc, sh #dcdcdc
+#Colorset 2 fg white, bg black, RootTransparent buffer, Tint #b5b2ff 80
+#Colorset 3 fg white, bg black, RootTransparent buffer, Tint #eeefcf 70
+#Colorset 4 fg #63656e, bg black, RootTransparent buffer, Tint #b5b2ff 60
+#Colorset 5 fg black, bg #e7e7e7, Plain
+#Colorset 6 fg white, bg black, RootTransparent buffer, Tint #e4e5c7 90
+#Colorset 7 fg black, bg white, sh white, RootTransparent Buffer, Tint #f6f6f6 20
+#Colorset 10 fg black, bg #c6c3c6, Tint #efebef 65
+#Colorset 12 fg white, bg black, fgsh black, RootTransparent
+#Colorset 13 fg #f6f6f6, bg black, IconAlpha 40
+#Colorset 14 fg white, bg black, fgsh black, IconAlpha 100
+#Colorset 15 fg black, bg #c6c3c6, sh #dedbde, hi #dedbde, RootTransparent buffer, Tint #efebef 65
+#Colorset 16 fg black, bg #c6c3c6, RootTransparent buffer, Tint #e4e5c7 90
+#Colorset 17 fg black, bg #c6cbd6
+#Colorset 18 fg black, bg #c6c3c6, Tint #c3c6c3 65
+#Colorset 19 fg black, bg darkgrey
+#Colorset 20 fg white, bg black
+#Colorset 21 fg white, bg #3d3d3d
+#Colorset 22 fg white, bg #3d3d3d, hi #3d3d3d, sh #b5cd75
+##Colorset 21 fg white, bg #293C42
+##Colorset 22 fg white, bg #293C42, hi #293C42, sh #b5cd75
+
+SetEnv BWwidth 3 #Border- and handlewidht
+
+
+OpaqueMoveSize 100
+
+MenuStyle * Hilight3DThin, PopupOffset 0 100, PopupDelay 100
+MenuStyle * MenuColorset 5, HilightBack, ActiveColorset 6
+MenuStyle * BorderWidth 1, TitleUnderlines2, SeparatorsShort, TrianglesSolid, !Animation
+MenuStyle * ItemFormat %.2|%.5i%.5l%.5i%2.3>%2|
+MenuStyle * AutomaticHotKeys
+
+ColormapFocus FollowsFocus
+BugOpts FlickeringMoveWorkaround True
+
+
+
+DeskTopSize 3x2
+DesktopName 0 Main
+DesktopName 1 Work
+DesktopName 2 Games
+
+*FvwmScript: DefaultFont Shadow=0 1 SE:xft:Bitstream Vera Sans Mono:style=Roman:size=7
+*FvwmScript: DefaultColorset 18
+
+
+##################
+# Hit Alt+Esc to toggle FvwmProxy, which allows you to see all windows on your
+# desktop, even if they've been obscured..really cool.
+##################
+DestroyModuleConfig FvwmProxy: *
+*FvwmProxy: Font "xft:snap;-artwiz-snap-*-r-*-*-*-*-*-*-*-*-iso8859-1"
+*FvwmProxy: ProxyMove false
+
+#########################
+## Menü-Icon-Size für SVG-Icons
+#########################
+
+SetEnv MIconSize 16x16
+SetEnv AIconSize 18x18	#When Mouse Hovering over Button
+
+###############################
+# Allgemeine Style-Anweisungen#
+###############################
+Style * IconTitle, IconTitleColorset 12, HilightIconTitleColorset 12, IconTitleRelief 0
+Style * IconFont xft:Aquafont:size=11minspacing=True, IconTitleFormat %n, IconBackgroundPadding 2,
+Style * IconBackgroundRelief 0, IconBackGroundColorset 12
+#Style * PositionPlacement Center, !UsePPosition, UseUSPosition
+#Style * PositionPlacement Center
+Style * SloppyFocus
+Style * EWMHPlacementUseDynamicWorkingArea, !UsePPosition 
+Style * GrabFocusOff
+Style * !FPGrabFocus
+Style Chromium* !FPFocusByProgram
+
+EdgeResistance -1
+Style * EdgeMoveDelay 500
+Style * EdgeMoveResistance 17
+EdgeThickness 0
+#EdgeCommand Top Maximize
+
+
+Style * SnapAttraction 3 SameType
+Style * WindowShadeShrinks, WindowShadeSteps 1000, WindowShadeBusy
+Style * MiniIcon noicon-red.png
+Style * BorderWidth $[BWwidth] 
+Style * Color black/darkgrey
+Style * DecorateTransient
+Style * HandleWidth $[BWwidth]
+Style * IconBox 0 0 50 -1
+Style * MWMBorder, MWMFunctions, MWMDecor, HintOverride
+
+
+#####################################
+# Spezielle Style-Anweisungen: FVWM #
+#####################################
+FuncPrintDbgMsg LoadModuleConfig START
+PipeRead 'ls $FV_SYSTEMDIR/modules/*.fvwm|while read i; do echo " Load $i"; done'
+FuncPrintDbgMsg LoadModulConfig END
+
+
+#####################################
+# Spezielle Style-Anweisungen:  APPS#
+#####################################
+Style *OpenOffice* MiniIcon ooo.png.png, PositionPlacement Center, NoPPosition, NoUSPosition
+Style AcroRead MiniIcon book_open.png
+Style Calculator MiniIcon calculator.png
+Style Chromium MiniIcon chromium.png, PositionPlacement Center
+Style Ddd MiniIcon audio_waveform_view.png
+Style DeskControl NoTitle, NeverFocus, CirculateSkip, WindowListSkip, Sticky, StaysOnBottom, FixedSize, NoHandles
+Style Dia MiniIcon chart_line-graph.png
+Style Eboard MiniIcon games_chess.png
+Style Eterm MiniIcon konsole.png
+Style Firefox-bin EWMHMiniIconOVerride, MiniIcon firefox.png
+Style GIMP-Start NoTitle, HandleWidth 0, BorderWidth 0, !Borders
+Style Gcr-promter Lenience
+Style Gmrun StaysOnTop, Sticky, FPGrabFocus, PositionPlacement Center, NoPPosition, NoUSPosition
+Style HiddenConsole Sticky, WindowListSkip, Notitle, StaysOnTop, NoHandles, CirculateSkip
+Style HiddenConsole WindowShadeSteps 100, ResizeHintOverride
+Style Lplayer MiniIcon graph_mixer.png
+Style MPlayer MiniIcon film.png
+Style Message MiniIcon person_face_talking.png
+Style Mulberry MiniIcon mail.png
+Style NEdit MiniIcon nedit16.png
+Style Nautilus MiniIcon nautilus.png
+Style ROX-Filer EWMHMiniIconOverride, MiniIcon floppy_disk.png, !FPFocusByProgram, !FPGrabFocusTransient
+Style SDL_App EWMHMiniIconOverride, MiniIcon games_jesters-cap.png
+Style VMware MiniIcon hardware_computers.png
+Style Waiting MinOverlapPlacement, ClickToFocus
+Style XDosEmu EWMHMiniIconOverride, MiniIcon games_jesters-cap.png
+Style XOsview WindowListSkip, CirculateSkip, NoTitle
+Style XTerm MiniIcon konsole.png
+Style URxvt MiniIcon konsole.png
+Style XVroot GrabFocus
+Style Xlock NoTitle
+Style abiword-2.0 EWMHMiniIconOverride, MiniIcon document_letter_word-processor.png
+Style aterm !Borders,NoTitle,Sticky,StaysOnBottom,NoHandles
+Style aterm WindowShadeShrinks
+Style beep-media-player MiniIcon audio_horn.png, UsePPosition, !FPFocusByProgram, !Iconifiable, IgnoreRestack
+Style chromium PositionPlacement Center
+Style findtextdialog NoFuncHint, NoDecorHint
+Style fvwm_menu MiniIcon gears.png, NoButton 4
+Style gaim EWMHMiniIconOverride, MiniIcon instant-messenger.png
+Style gcalctool EWMHMiniIconOverride, MiniIcon gnome-calculator.png
+Style gedit EWMHMiniIconOverride, MiniIcon paper_pencil.png
+Style gimp EWMHMiniIconOverride, MiniIcon gnome-gimp.svg:$[MIconSize], !FPFocusByProgram, PositionPlacement Center, NoPPosition, NoUSPosition
+Style gimp-2.0 EWMHMiniIconOverride, MiniIcon gnome-gimp.svg:$[MIconSize], !FPFocusByProgram, PositionPlacement Center, NoPPosition, NoUSPosition
+Style gmrun MiniIcon gears.png, GrabFocus, StaysOnTop, WindowListSkip, CirculateSkip, PositionPlacement Center, !UsePPosition, UseUSPosition
+Style grip EWMHMiniIconOverride, MiniIcon hardware_audio_cd.png
+Style gvim EWMHMiniIconOverride, MiniIcon gvim.png
+Style Mail MiniIcon gnome-mailcheck.svg:$[MIconSize], PositionPlacement Center
+Style libreoffice* EWMHMiniIconOverride, MiniIcon /usr/share/icons/hicolor/16x16/apps/libreoffice-startcenter.png, PositionPlacement Center, NoPPosition, NoUSPosition
+Style LibreOffice* EWMHMiniIconOverride, MiniIcon /usr/share/icons/hicolor/16x16/apps/libreoffice-startcenter.png, PositionPlacement Center, NoPPosition, NoUSPosition
+Style nautilus EWMHMiniIconOverride, MiniIcon file-manager.svg:$[MIconSize]
+Style openttd MiniIcon openttd.png
+Style opera EWMHMiniIconOverride, MiniIcon opera.png
+Style ossxmix MiniIcon graph_mixer.png
+Style pan !FPFocusByProgram
+Style peksystray NoTitle
+Style rxvt WindowShadeShrinks
+Style stalonetray EWMHUseStackingOrderHints, WindowListSkip
+Style treeline.py MiniIcon paper_paper-set.png
+Style vmware MiniIcon hardware_computers.png
+Style wicd* EWMHMiniIconOverride, MiniIcon wicd-gtk.png, PositionPlacement Center, NoPPosition, NoUSPosition
+Style wmtimer NoUSPosition
+Style xcalendar MiniIcon calendar_schedule.png
+Style xchat-2 !FPFocusByProgram, NoFuncHint, NoDecorHint
+Style xfig MiniIcon paper_pencil2.png
+Style xlock NoTitle
+Style xmag ClickToFocus, MiniIcon document_database_view.png
+Style xman MiniIcon book_help_paper.png
+Style xmessage MiniIcon person_face_talking.png, MinOverlapPlacement, EWMHPlacementIgnoreWorkingArea
+Style xmessage NoTitle
+Style xmms MiniIcon audio.png
+Style xv MiniIcon graphics_woman_panel.png
+Style xwrits NoDecorHint, NoFuncHint
+
+#Gnome-Applications with client-side window-decoration get back server-side decoration
+Style * EWMHIgnoreWindowType, GNOMEIgnoreHints
+Style * !MWMDecor

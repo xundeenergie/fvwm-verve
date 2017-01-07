@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.3.1 r9886"
+   width="32"
+   height="32"
+   sodipodi:docname="skype.svg">
+  <metadata
+     id="metadata8">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs6" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1306"
+     inkscape:window-height="877"
+     id="namedview4"
+     showgrid="false"
+     inkscape:zoom="56.656931"
+     inkscape:cx="30.113661"
+     inkscape:cy="6.0812226"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer2" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer1"
+     inkscape:label="Original"
+     style="display:none"
+     sodipodi:insensitive="true">
+    <image
+       width="32"
+       height="32"
+       xlink:href="/usr/share/icons/gnome-colors-common/32x32/apps/./gnome-colors-common/32x32/apps/skype.png"
+       id="image10"
+       x="0"
+       y="0"
+       sodipodi:absref="/usr/share/icons/gnome-colors-common/32x32/apps/./gnome-colors-common/32x32/apps/skype.png" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="skype"
+     style="display:inline">
+    <path
+       style="opacity:0.77999998;fill:#808080;fill-opacity:1;fill-rule:nonzero;stroke:#4d4d4d;stroke-opacity:1"
+       d="M 8.59375,1.5625 C 5.4497048,1.7191146 2.6379839,3.8846691 1.8125,7.09375 c -0.5516006,2.1443553 -0.095179,4.304714 1.0625,6 -0.2099666,0.943316 -0.34375,1.930934 -0.34375,2.9375 0,7.416641 6.0208587,13.4375 13.4375,13.4375 0.99602,0 1.972044,-0.138042 2.90625,-0.34375 0.65146,0.421534 1.394647,0.733552 2.1875,0.9375 3.949638,1.01598 7.95277,-1.362862 8.96875,-5.3125 l -0.02374,-0.113592 c 0.490608,-2.051958 -0.03158,-0.0083 -0.0061,-0.04383 l 0.09234,-0.03008 c 0.455888,-2.013505 0.04089,-4.044444 -1,-5.65625 0.204189,-0.930932 0.3125,-1.882766 0.3125,-2.875 0,-7.4166413 -6.020859,-13.4375 -13.4375,-13.4375 -0.950456,0 -1.855366,0.1247172 -2.75,0.3125 C 12.507443,2.4047975 11.703913,2.0105516 10.8125,1.78125 10.071943,1.5907537 9.3192989,1.5263582 8.59375,1.5625 z m 7.9375,5.15625 c 2.24755,1.79e-5 3.980466,0.4101816 5.15625,1.25 1.183753,0.8318532 1.869778,2.145121 2.09375,3.96875 l -5.125,0.3125 C 18.520266,11.458168 18.252403,10.891193 17.8125,10.53125 17.380575,10.171334 16.76784,9.9687646 16,9.96875 c -0.631885,1.46e-5 -1.11757,0.134318 -1.4375,0.40625 -0.319944,0.263963 -0.468757,0.584838 -0.46875,0.96875 -7e-6,0.279958 0.142295,0.557306 0.40625,0.78125 0.255943,0.231967 0.85268,0.425051 1.8125,0.625 2.375524,0.511911 4.069937,1.034614 5.09375,1.5625 1.031784,0.519908 1.786075,1.192911 2.25,1.96875 0.471891,0.775856 0.718734,1.633944 0.71875,2.59375 -1.6e-5,1.127784 -0.313638,2.173189 -0.9375,3.125 -0.623893,0.951816 -1.505233,1.660348 -2.625,2.15625 -1.119793,0.487905 -2.515094,0.75 -4.21875,0.75 -2.991421,0 -5.066979,-0.598225 -6.21875,-1.75 -1.1517766,-1.151772 -1.8167807,-2.599343 -1.96875,-4.375 l 5.1875,-0.34375 c 0.111972,0.839841 0.312311,1.497591 0.65625,1.9375 0.559883,0.711865 1.366445,1.062503 2.40625,1.0625 0.775838,3e-6 1.365321,-0.171317 1.78125,-0.53125 0.423906,-0.367924 0.656239,-0.801339 0.65625,-1.28125 C 19.093739,19.169094 18.899911,18.766186 18.5,18.40625 18.100068,18.046327 17.174456,17.694945 15.71875,17.375 13.33521,16.839113 11.609547,16.137835 10.59375,15.25 9.5699481,14.362184 9.0624984,13.219493 9.0625,11.84375 c -1.6e-6,-0.903809 0.2613499,-1.762642 0.78125,-2.5625 0.527894,-0.807826 1.327201,-1.4190724 2.375,-1.875 1.055788,-0.4638917 2.480851,-0.6874821 4.3125,-0.6875 z"
+       id="path2987"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="sscsscscccccsscsscccccccccccccccsscccscccccsccc" />
+    <g
+       style="font-size:24.57119751px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial Black;-inkscape-font-specification:'Arial Black,'"
+       id="text3019" />
+  </g>
+</svg>

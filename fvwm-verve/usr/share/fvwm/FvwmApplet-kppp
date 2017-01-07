@@ -1,0 +1,257 @@
+WindowTitle {FvwmApplet-kppp}
+WindowSize 60 16
+Font "Shadow=0 1 SE:xft:Bitstream Dejavu Sans Mono:style=Roman:size=6"
+##Font		-*-lucida-bold-r-normal-*-10-*-*-*-*-*-*
+## Use the FvwmScript default colors.
+#BackColor {#c6c3c6}
+##ForeColor {black}
+##ShadowColor	{black}
+##HilightColor	{rgb:a0/90/80}
+
+Init
+ Begin
+  Set $MainColorset=(GetScriptArgument 1)
+  If $MainColorset <> {} Then
+  Begin
+   ChangeColorset 0 $MainColorset
+   ChangeColorset 1 $MainColorset
+   ChangeColorset 2 $MainColorset
+   ChangeColorset 3 $MainColorset
+  End
+#  ChangeIcon 1 status_off.png
+#  ChangeIcon 3 choice-no.png
+  Set $mars = 0
+  Set $ppp = 0
+  Set $umts = 0
+  Set $rsnap = 0
+  Set $pidoffnews = 0
+  Set $pidoffmail = 0
+  Set $fmail = 0
+  Set $fetchstat = 0
+  Set $volume_set = 0
+  Set $mute_set = ""
+  Set $dpms = (GetOutput {xset q|grep -q 'DPMS is Enabled' && echo 1 || echo 0} 1 1)
+  Set $dpms_set = 0
+  Set $dpms_ch = 1
+  If $dpms == 1 Then
+    Do {CHANGE_ICON dpms ok.png}
+  Else
+    Do {CHANGE_ICON dpms not_ok.png}
+ End
+
+
+PeriodicTasks
+ Begin 
+  If (RemainderOfDiv (GetTime) 2)==0 Then
+  Begin
+   #Set $pidoffnews = 0
+   Set $pidoffmail = 0
+   Set $fmail = 0
+   Set $fstat = 0
+   Set $fetchstat = 0
+   Set $umts =  (GetOutput {test -e /dev/umts0 && echo 1 || echo 0} 1 1) 
+   Set $ppp = (GetOutput {test -e /var/run/ppp0.pid && echo 1 || echo 0} 1 1)
+   Set $mars = (GetOutput {test -e /dev/mapper/mars && echo 1 || echo 0} 1 1)
+   If $mars == 1 Then
+     Set $mars = (GetOutput {/bin/mount|grep -q mars && echo 2 || echo 1} 1 1)
+   Else
+     Set $mars = 0
+
+     #Set $mars = (GetOutput {/usr/bin/ssh tinakisti /bin/mount|grep -q mars && echo 2 || echo 1} 1 1)
+#   Set $rsnap = (GetOutput {test -e /var/run/rsnapshot.pid && echo 1 || echo 0} 1 1)
+   Set $rsnap = (GetOutput {pgrep mkbtrbackup >/dev/null && echo 1 || echo 0} 1 1)
+   Set $pidoffnews = (GetOutput {/bin/pidof fetchnews } 1 1)
+   Set $pidoffmail = (GetOutput {head -n1 $HOME/.fetchmail.pid 2>/dev/null} 1 1)
+   Set $dpms = (GetOutput {xset q|grep -q 'DPMS is Enabled' && echo 1 || echo 0} 1 1)
+   If $pidoffmail <> {} Then
+	#Set $fmail = (GetOutput {grep SigIgn /proc/$(pidof fetchmail &)/status 2>/dev/null|cut -c 22} 1 1)
+        Set $cmdpofm = {grep SigIgn /proc/} $pidoffmail {/status 2>/dev/null|cut -c 22}
+	Set $fmail = (GetOutput $cmdpofm 1 1)
+
+   If $pidoffnews <> {} Then
+      Set $fnews = 1 
+   Else
+      Set $fnews = 0
+
+   If (Add $fnews $fmail) > 0 Then
+      ChangeIcon 3 fetch-off.png
+  Else
+      ChangeIcon 3 fetch-on.png
+
+   If $umts == 1 Then
+   Begin
+     If $ppp == 1 Then
+        ChangeIcon 1 kppp-establ.png
+     Else
+       ChangeIcon 1 kppp-ready.png
+   End
+   Else
+     ChangeIcon 1 kppp-notready.png
+
+   If $rsnap > 0 Then
+      ChangeIcon 2 disk-achtung.png
+   Else
+   Begin
+      If $mars == 0 Then
+         ChangeIcon 2 disk-off.png
+      Else
+      Begin
+         If $mars == 1 Then
+            ChangeIcon 2 disk-umount.png
+         Else
+            ChangeIcon 2 disk-on.png
+      End
+   End
+
+#   If $mars == 0 Then
+#     ChangeIcon 2 disk-off.png
+#   If $mars == 1 Then
+#     ChangeIcon 2 disk-umount.png
+# #  If $mars > 1 Then
+# #    Begin
+#       If $rsnap > 0 Then
+#          ChangeIcon 2 disk-achtung.png
+#       Else
+#          ChangeIcon 2 disk-on.png
+# #    End
+
+
+#   If $mars >= 1 Then
+#     Begin
+#       Set $mars = (GetOutput {/bin/mount|grep -q mars && echo 2 || echo 1} 1 1)
+#       If $mars == 1 Then
+#           ChangeIcon 2 disk-umount.png
+#       If $mars == 2 Then 
+#         ChangeIcon 2 disk-on.png
+#       Else
+#         Begin
+#           If $rsnap >= 0 Then
+#              ChangeIcon 2 disk-achtung.png
+#           Else
+#              ChangeIcon 2 disk-on.png
+#         End
+#     End
+
+
+#   If $mars == 1 Then
+#   Begin
+#     Set $mars = (GetOutput {/bin/mount|grep -q mars && echo 2 || echo 1} 1 1)
+#     If $mars == 1 Then
+#        ChangeIcon 2 disk-umount.png
+#     If $mars == 2 Then
+#        Begin
+#          ChangeIcon 2 disk-on.png
+#          If $rsnap == 1 Then
+#            ChangeIcon 2 disk-achtung.png
+#          If $rsnap == 0 Then
+#            ChangeIcon 2 disk-umount.png
+#	End
+#     Else
+#       ChangeIcon 2 disk-on.png
+#   End
+#   Else
+#     ChangeIcon 2 disk-off.png
+
+   If $dpms == $dpms_set Then
+   Begin
+     Set $dpms_ch = 0
+     Set $dpms_set = $dpms
+   End
+   Else
+   Begin
+     Set $dpms_ch = 1
+     Set $dpms_set = $dpms
+   End
+
+
+   If $dpms_ch == 1 Then
+   Begin
+     If $dpms_set == 1 Then
+  	Do {CHANGE_ICON dpms ok.png}
+     Else
+  	Do {CHANGE_ICON dpms not_ok.png}
+     Set $dpms_ch = 0
+   End
+
+# Externe HD-Status/backup-Status
+#   If $mars == 1 Then
+#   Begin
+#     If $rsnap == 1 Then
+#       ChangeIcon 2 disk-achtung.xpm
+#     Else
+#       ChangeIcon 2 disk-on.xpm
+#   End
+#   Else
+#     ChangeIcon 2 disk-off.xpm
+
+ End
+End
+
+
+
+
+
+
+Widget 1
+# status von ppp/umts
+Property
+  Position 2 0
+  Size 16 16
+  Type ItemDraw
+  Flags NoReliefString
+# Title {orange|orange}
+  Icon kppp-notready.png
+  Main
+    Case message of
+    SingleClic :
+    Begin
+      Do {Function PPPconnect}
+    End
+    1 :
+    Begin
+       Set $pidoffmail = (LastString)
+    End
+    2 :
+    Begin
+       Set $pidoffnews = (LastString)
+    End
+  End
+
+Widget 2
+#status von rsnapshot
+Property 
+  Position 22 0
+  Size 16 16
+  Type ItemDraw
+  Flags NoReliefString
+##  Title {""|mount-mars|umount-mars}
+  Icon disk.xpm
+  Main
+    Case message of
+    SingleClic :
+    Begin
+      If $rsnap == 1 Then
+        Do {Function KillMkBackUp}
+      Else
+        Do {Function StartMkBackUp}
+    End
+  End
+
+Widget 3
+#status von fetchnews
+Property 
+  Position 42 0
+  Size 16 16
+  Type ItemDraw 
+#  Type PushButton
+  Flags NoReliefString
+#  Title {"1"|"mount-mars"|"umount-mars"}
+  Icon status_on.png 
+  Main
+    Case message of
+    SingleClic :
+    Begin
+      Do {Function FetchMailNews}
+#      Do {echo Funktion deaktiviert}
+    End
+  End

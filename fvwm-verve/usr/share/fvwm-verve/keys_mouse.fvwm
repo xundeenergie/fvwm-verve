@@ -1,0 +1,212 @@
+########################
+#
+# Section: Key bindings
+#
+##############################################################################
+# bindings Functions  ==>  Key / Mouse                                       #
+##############################################################################
+# Mouse [Button] [Context] [Modifiers] [Function / Action]                   #
+##############################################################################
+############ Context: ##  "R" root window (Hintergrund)              #########
+########################  "W" application window                     #########
+########################  "T" window title bar                       #########
+########################  "S" window side/bottom                     #########
+########################  "F" window Frame                           #########
+########################  "I" Icon                                   #########
+########################  "1, 3, 5, 7, 9" title-bar buttons (links)  #########
+########################  "0, 8, 6, 4, 2" title-bar buttons (rechts) #########
+##############################################################################
+########## Modifiers: ##  "N" modifiers     ##################################
+########################  "C" Ctrl (Strg)   ##################################
+########################  "S" Shift         ##################################
+########################  "M" Meta (Alt)    ##################################
+########################  "A" any modifier  ##################################
+##############################################################################
+
+##############################################################################
+# Wenn                                                                       #
+#              Style "*"        FocusFollowsMouse                            #
+# eingestellt ist (siehe oben), dann genuegt ein "R" statt "RWTSF".          #
+# Denn dann kann man einfach mit der Maus auf den Hintergrung gehen          #
+# und schon funktionieren diese Tastendefinitionen. Darueberhinaus           #
+# sind diese Tastendefinitionen dann fuer die Anwendung frei wenn die        #
+# Anwendingen aktiv sind.                                                    #
+##############################################################################
+# This section binds some actions to keys.  The bindings have been inspired
+# by MWM, Windows, and nightmares.  Everything that these key bindings do,
+# can be done without them.  Therefore they should not be too much of a
+# burden on new users, but it definitely _can_ be confusing to press a
+# key by accident and have it do something completely unexpected.
+#
+
+Key b A M	FvwmBrowser
+Key C A CM	Exec exec xcalc -stipple
+Key d A M	Function vpncDEFunc
+Key Down A CM	Exec exec /usr/bin/mpc -h $MPD_HOST -p $MPD_PORT volume -5 > /dev/null
+Key Down WTSF SM	PackWrapperDown
+Key Down WTSF SCM	PackWrapperPageDown m
+Key Down A SC	PackWrapperPageDown g
+Key Escape  A   M   SendToModule FvwmProxy ShowToggle
+Key F10 A M	Maximize
+#Key F12 A N	exec /usr/bin/beagle-search 
+#Key F1 A C	exec /usr/bin/X11/xterm_color -sb -sl 500 -j -ls -fn 7x14 -geometry 80x30
+Key F1 A M	Restart 
+Key F2 A M	Function gmrun
+#Key F3 A M	Lower
+#Key F3 A N	NoWindow Expose
+Key F3 A N	Exec xrandr --output LVDS-0 --auto --scale 1x1 || xrandr --output LVDS-0 --auto --scale 1x1
+Key F3 A M	Module FvwmConsole -terminal xterm
+Key F4 A CM	Quit
+Key F4 A M	Pick Close
+Key F5 A M	CirculateUp
+Key F6 A M	CirculateDown
+Key F7 A M	Exec exec /usr/local/bin/touchpad.py
+Key F8 A M	Resize
+Key F9 A M	Thumbnail
+Key F12 A M	Move m-1 m-1
+Key f A SC	Function FetchMail
+Key f A SCM	Function FetchMailNews
+Key f A SM	Function FetchNews
+Key g A M	Exec exec /usr/bin/googlizer
+#Key H A 4	Next (CirculateHit, HiddenConsole) HiddenConsoleKeyBinding
+#Key h A M	Function StartHiddenConsole
+#Key I A 4	All (AcceptsFocus CurrentPage !Iconic !Shaded) Thumbnail
+Key I W C	Module FvwmIdent
+#Key L A 4	Exec exec xscreensaver-command --lock
+Key l A C	Function LOCK_SCREEN
+#######
+# Diese Keybindings werden für Inkscape benötigt!!!
+#######
+#Key Left A CM	Exec exec echo -e "previous\\nclose"|nc localhost 6600 #> /dev/null
+#Key Left A M	Exec exec /usr/bin/mpc -h $MPD_HOST -p $MPD_PORT seek -5 > /dev/null
+Key Left WTSF SM	PackWrapperLeft
+Key Left WTSF SCM	PackWrapperPageLeft m
+Key Left A SC	PackWrapperPageLeft g
+#Key M A CM	Exec exec mulberry
+#Key m A CM	Exec exec /usr/bin/googlizer -u mailto:
+Key m A M	Function FvwmMailClient
+Key M WTSF2 SM	Maximize grow grow
+Key M WTSF2 CSM	Maximize 100 100
+#Key N A CM	Exec exec pan
+#Key O A CM	Exec exec opera -newpage -bigicon
+Key o A CM	exec /usr/bin/x-mpd-client
+Key p A CM	Exec exec echo -e "pause\\nclose"|nc localhost 6600 #> /dev/null
+Key p A M	Function PPPconnect
+Key p A SC	Exec exec /usr/bin/x-mpd-client
+Key p A SCM	Exec exec echo -e "play\\nclose"|nc localhost 6600 #> /dev/null
+Key Print A A	Exec xwd -screen|convert - capture.png #Nur zu Testzwecken
+Key Print A N	Exec xwd -root|convert - capture.png
+Key R A CM	Restart
+Key r A M	Function RootShell
+
+#######
+# Diese Keybindings werden für Inkscape benötigt!!!
+#######
+#Key Right A CM	Exec exec echo -e "next\\nclose"|nc localhost 6600 #> /dev/null
+#Key Right A M	Exec exec /usr/bin/mpc -h $MPD_HOST -p $MPD_PORT seek +5 > /dev/null
+Key L WTSF SM	PackWrapperRight
+Key L WTSF SCM	PackWrapperPageRight m
+Key L A SC	PackWrapperPageRight g
+Key S A CM	Exec exec aterm -g 102x42 -title 's d f' -e ssh tty.freeshell.org
+Key Super_L A A	Function bringup
+Key Super_L A M	Function "WORK_MENU"
+Key Tab A CM	Next [CurrentDesk] deiconify-and-focus
+Key Tab A CMS	Prev [CurrentDesk] deiconify-and-focus
+#Key Tab A M	Next [CurrentDesk !iconic] Focus
+Key Tab A MS	Prev [CurrentDesk !iconic] Focus
+Key Tab A M	Windowlist
+Key Up A CM	Exec exec /usr/bin/mpc -h $MPD_HOST -p $MPD_PORT volume +5 > /dev/null
+Key Up WTSF SM	PackWrapperUp
+Key Up WTSF SCM	PackWrapperPageUp m
+Key Up A SC	PackWrapperPageUp g
+Key S A CM	Exec exec aterm -g 102x42 -title 's d f' -e ssh tty.freeshell.org
+Key V A CM	Exec exec gvim -geom 139x56
+Key v A M	Function vpncFunc
+Key w A M	Exec exec googlizer -u http://de.wikipedia.org/w/index.php?search=
+Key X A 4	Pick Destroy
+Key X A 4	Pick Destroy
+Key X A CM	Exec exec xmag
+Key x A M	Function FvwmXTerm
+Key Space WTSF SM	Pick CentreWindow (126/2) (28/2) Animated
+Key XF86LaunchA A N	WindowList
+#Key XF86AudioNext A N	MMNext-Seek
+Key XF86AudioNext A N	Exec exec /usr/bin/mpc -h $MPD_HOST -p $MPD_PORT next
+Key XF86AudioNext A C	Exec exec /usr/bin/mpc -h $MPD_HOST -p $MPD_PORT seek +5
+Key XF86AudioPlay A N	Exec exec /usr/bin/mpc -h $MPD_HOST -p $MPD_PORT toggle
+Key XF86AudioPlay A C	Exec exec /usr/bin/mpc -h $MPD_HOST -p $MPD_PORT stop
+Key XF86AudioPlay A CM	Exec exec /usr/bin/mpc -h $MPD_HOST -p $MPD_PORT play
+Key XF86AudioPrev A N	Exec exec /usr/bin/mpc -h $MPD_HOST -p $MPD_PORT prev
+Key XF86AudioPrev A C	Exec exec /usr/bin/mpc -h $MPD_HOST -p $MPD_PORT seek -5
+Key XF86AudioMute 	 A C	Exec exec /usr/bin/mpc -h $MPD_HOST -p $MPD_PORT volume 0 > /dev/null
+Key XF86AudioLowerVolume A C	Exec exec /usr/bin/mpc -h $MPD_HOST -p $MPD_PORT volume -3 > /dev/null
+Key XF86AudioRaiseVolume A C	Exec exec /usr/bin/mpc -h $MPD_HOST -p $MPD_PORT volume +3 > /dev/null
+Key XF86AudioMute 	 A N	FvwmMuteVolume
+Key XF86AudioLowerVolume A N	FvwmSetVolume -
+Key XF86AudioRaiseVolume A N	FvwmSetVolume +
+#Key F10 A M	Exec exec /usr/bin/mpc -h $MPD_HOST -p $MPD_PORT volume 0 > /dev/null
+#Key F11 A M	Exec exec /usr/bin/mpc -h $MPD_HOST -p $MPD_PORT volume -5 > /dev/null
+#Key F12 A M	Exec exec /usr/bin/mpc -h $MPD_HOST -p $MPD_PORT volume +5 > /dev/null
+#Key XF86Launch0	A N	Expose
+#Key XF86Launch0 A N NoWindow Expose
+###################
+# Mouse bindings. #
+###################
+
+#################################################################
+##  1,3,5,7,9                 Titel                 0,8,6,4,2 ###
+#################################################################
+Mouse 1 1 N	FuncMenuOps
+#Mouse 3 1 N	Menu MenuFvwmWindowOps
+Mouse 1 3 A	Stick
+
+#Mouse 1 5 A	Nop		#Muss definiert sein, damit im Titel die linke Rundung angezeigt wird
+
+
+#Mouse 1 T A	Function "TransparencyMove"
+#Mouse 1 T A	Function "MoveOrRaise"
+Mouse 1 T58 A	Function demaximize-and-move-$[infostore.tpos]
+Mouse 2 T A	move-and-raise-or-raiselower
+Mouse 2 T A	TransparencyMove
+#Mouse 3 T A	move-or-lower
+Mouse 3 TSF A	RaiseLower
+#Mouse 1 T A	Move-or-Raise
+Mouse 5 T N	WheelToggleShade False
+Mouse 4 T N	WheelToggleShade True
+
+
+#Mouse 1 8 A	Nop		#Muss definiert sein, damit im Titel die rechte Rundung angezeigt wird
+
+Mouse 1 6 A	Thumbnail
+
+Mouse 1 4 A	Maximize grow grow
+Mouse 2 4 A	Maximize 0 grow
+Mouse 3 4 A	Maximize grow 0
+
+Mouse 1 2 A	Delete
+Mouse 1 2 A	DestroyOnHold
+#################################################################
+
+#Mouse (FvwmPager) 4 W A GotoDesk prev
+#Mouse (FvwmPager) 5 W A GotoDesk next
+Mouse 0 F A	resize-or-raiselower
+Mouse 1 FS A	Resize-or-Raise
+Mouse 1 I A	DeThumbnail
+Mouse 1 R A	Function "WORK_MENU"
+Mouse 1 S A	move-or-raise
+Mouse 1 SF A	Function "ResizeOrRaise"
+Mouse 1 W M	Function demaximize-and-move-$[infostore.tpos]
+Mouse 2 R A	Menu Window-Ops
+Mouse 2 STF A	move-and-raise-or-raiselower
+#Mouse 2 W C	Resize-or-Raise
+#Mouse 3 R A	StrokeFunc DrawMotion FeedBack StrokeWidth 1
+#Mouse 3 R A	WindowList
+Mouse 3 R A	Menu BACKGROUND_popup
+#Mouse 3 S A	move-or-lower
+Mouse 4 A M	Next (AcceptsFocus) FlipFocus
+Mouse 4 A S	WheelScroll down
+Mouse 4 R A	Menu MenuFvwmRoot
+Mouse 4 R C	WheelScroll down
+Mouse 5 A M	Prev (AcceptsFocus) Focus
+Mouse 5 A S	WheelScroll up
+Mouse 5 R A	Menu MenuFvwmRoot
+Mouse 5 R C	WheelScroll up

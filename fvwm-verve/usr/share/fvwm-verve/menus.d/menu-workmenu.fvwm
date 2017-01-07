@@ -1,0 +1,30 @@
+PipeRead "echo SetEnv DPMS_T `xset q|grep Standby|cut -d \":\" -f 2`"
+PipeRead 'echo SetEnv DT_ICONS_SHOW "`gsettings get org.gnome.desktop.background show-desktop-icons`"'
+PipeRead 'echo SetEnv CS_RUN "`/usr/bin/pgrep w_scan 1>/dev/null 2>&1; echo $?`"'
+#PipeRead 'echo SetEnv FW_RUN "`lsof -i4 |grep -q ssh; echo $?`"'
+Test (f $[FVWM_USERDIR]/DebianMenu) Read DebianMenu Quiet
+
+DestroyMenu recreate WORK_MENU_popup
+AddToMenu WORK_MENU_popup "Arbeitsmenue" Title top
+TEST (x /usr/bin/urxvtc)	+ "Terminal"%terminal.png%					Function FvwmXTerm
+TEST (f $[FVWM_USERDIR]/menus.d/".EIGENE_popup.menu.fvwm") PipeRead 'fv-menu-from-file -o WORK_MENU_popup $[FVWM_USERDIR]/menus.d/".EIGENE_popup.menu.fvwm"'
+TESTRC (NoMatch) TEST (f $[FV_SYSTEMDIR]/menus.d/".EIGENE_popup.menu.fvwm) PipeRead 'fv-menu-from-file -o WORK_MENU_popup $[FV_SYSTEMDIR]/menus.d/".EIGENE_popup.menu.fvwm"'
+TEST (f $[FV_SYSTEMDIR]/menus.d/) PipeRead 'ls $[FV_SYSTEMDIR]/menus.d/menu-wm-*.fvwm|while read i;do echo Load "$i";done'
+TEST (f $[FVWM_USERDIR]/menus.d/) PipeRead 'ls $[FVWM_USERDIR]/menus.d/menu-wm-*.fvwm|while read i;do echo Load "$i";done'
+#Load menus.d/menu-wm-apps.fvwm
+#Load menus.d/menu-wm-menus.fvwm
+#Load menus.d/menu-wm-sys.fvwm
+#Load menus.d/menu-wm-sess.fvwm
+#Load menus.d/menu-wm-submenus.fvwm
+
+AddToMenu WORK_MENU_popup
+ + ""			Nop
+# + "Fvwm2 neu starten"%gnome-reboot.svg:$[MIconSize]%	Restart
+# + "Sitzung beenden"%gnome-shutdown.svg:$[MIconSize]%	Quit
+ + "Fvwm2 neu starten"%gnome-reboot.svg:$[MIconSize]%	FvwmRestart
+ + "Sitzung beenden"%gnome-shutdown.svg:$[MIconSize]%	FvwmQuit
+ + "Computer runterfahren und ausschalten"%gnome-shutdown.svg:$[MIconSize]% PowerOff
+ + "Computer neu starten"%gnome-reboot.svg:$[MIconSize]% PowerReboot
+ + "Computer schlafen schicken"%gnome-suspend.svg:$[MIconSize]% FuncSuspendButton
+
+Load /dev/shm/fvwm-$[USER]/userswitch.menu

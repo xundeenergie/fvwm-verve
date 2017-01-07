@@ -1,0 +1,35 @@
+#!/bin/sh
+#-----------------------------------------------------------------------
+# File:		fvwm-verve
+# Version:	1.0.3
+# Licence: 	GPL 2
+#
+# Description:	startup script for Fvwm-Verve based on FVWM-Crystal's
+#               startup script.
+#
+# Author:	Jakobus Schürz <jakob@xundeenerige.at>
+# Created:	08/21/2012
+# Changed:	01/09/2013
+#-----------------------------------------------------------------------
+
+initfile=`dirname ${0}`/../share/fvwm-verve/fv-init
+. /etc/profile.d/gdk-scroll-fix.sh 
+export FVWM_USERDIR=$HOME/.fvwm-verve
+export FVWM_SCRIPTDIR=/usr/share/fvwm
+export FV_SYSTEMDIR=`dirname ${0}`/../share/fvwm-verve
+export FV_INITFILE=$initfile
+# set this env variable to 1 for debugging. Default is 0
+export FV_DEBUG=1
+
+[ ! -d "/dev/shm/fvwm-$USER" ] && mkdir "/dev/shm/fvwm-$USER"
+[ ! -d "/dev/shm/meteo-$USER" ] && mkdir "/dev/shm/meteo-$USER"
+/usr/bin/gnome-keyring-daemon --start --components=pkcs11
+
+if [ ! -d "$HOME/.fvwm-verve" ]
+then
+	mkdir $HOME/.fvwm-verve
+fi
+
+exec fvwm -f $initfile $@
+
+

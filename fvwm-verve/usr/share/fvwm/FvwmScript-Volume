@@ -1,0 +1,115 @@
+WindowTitle {Volume}
+WindowSize 1 1		# Taille
+Init
+Begin
+  Set $volume_set = 0
+  Set $mute_set = ""
+  #Set $MainColorset=(GetScriptArgument 1)
+  Set $AlsaCard=(GetScriptArgument 1)
+  #Set $AlsaCard=1
+  If $MainColorset <> {} Then
+  Begin
+   ChangeColorset 0 $MainColorset
+  End
+###Experimental-Code Start####
+#Set $CalID = (LaunchScript {FvwmApplet-MpdSongInfo})
+
+
+
+
+####Experimental-Code Stop#####
+
+End
+
+  PeriodicTasks
+  Begin
+    If (RemainderOfDiv (GetTime) 1800) == 0  Then
+    Begin
+      Do {/usr/bin/Meteo-fetch}
+    End
+  
+    If (RemainderOfDiv (GetTime) 5) == 0 Then
+    Begin
+      Do {/usr/share/fvwm-verve/scripts/switch-user-fvwm}
+#     Set $volume = (GetOutput {amixer -c 1 get Master 2>/dev/null |grep "%"|sed -e 's/^.*\[\([0-9]*\)%.*$/\1/g'} 1 1) 
+#     Set $mute = (GetOutput {amixer -c 1 get Master 2>/dev/null |grep "%"|sed -e 's/^.*\(on\|off\).*$/\1/g'} 1 1) 
+
+      Set $amixer_volume = { amixer -c }$AlsaCard
+      Set $cmd1= $amixer_volume{ get Master 2>/dev/null |grep "%"|sed -e 's/^.*\[\([0-9]*\)%.*$/\1/g'}
+      Set $cmd2= $amixer_volume{ get Master 2>/dev/null |grep "%"|sed -e 's/^.*\(on\|off\).*$/\1/g'}
+     Set $volume = (GetOutput $cmd1 1 1) 
+     Set $mute = (GetOutput $cmd2 1 1) 
+      #Do FuncPrintDbgMsg { } "Master" { "} $mute { } $volume  {%"}
+      #Do FuncPrintMsg { } "Master" { "} $mute { } $volume  {%"}
+    End
+
+    If (RemainderOfDiv (GetTime) 1) == 0 Then
+    Begin 
+    ####ChangeTitle 3 $fnews
+    If $volume_set == $volume Then
+     Set $chvol = 0
+    Else
+    Begin
+      Set $chvol = 1
+      Set $volume_set = $volume
+    End
+   
+    If $mute_set == $mute Then
+     Set $chmute = 0
+    Else
+    Begin
+     Set $chvol =1
+     Set $chmute = 1
+     Set $mute_set = $mute
+   #  Set $tit = "Mute"
+    End
+  
+  
+    If $mute == on Then
+    Begin
+      If $chvol == 1 Then
+      Begin
+        If $volume == 0 Then
+          Do {CHANGE_ICON Vol audio-volume-muted.png}
+        If $volume > 0 Then
+          Do {CHANGE_ICON Vol audio-volume-low.png}
+        If $volume >= 33 Then
+          Do {CHANGE_ICON Vol audio-volume-medium.png}
+        If $volume >= 66 Then
+          Do {CHANGE_ICON Vol audio-volume-high.png}
+        Do {CHANGE_TITLE Vol "\ Volume (} $volume {%)\""}
+      End
+    End
+    Else
+    Begin
+      If $chmute == 1 Then
+        Do {CHANGE_ICON Vol audio-volume-muted.png} 
+  #      Do {CHANGE_TITLE Vol (} $volume $mute {%)}
+    End
+  End
+End
+
+  Widget 1
+  Property
+   Position 1 1 
+   Size 1 1
+  # Type HDipstick
+   Type ItemDraw
+   Flags NoReliefString
+   Title {Pause}
+  Main
+  #Hier empfängt das Script über SendToModule die Informationen über die geänderten Umgebungsvariablen. Dieser Abschnitt hat mit dem Widget an sich nichts zu tun!!!
+  Case message of
+     1 :
+     Begin
+        Set $volume = (LastString)
+        Do {CHANGE_TITLE Vol "\ Volume (} $volume {%)\""}
+        Do {CHANGE_ICON Vol audio-volume-medium.png}
+     End
+     2 :
+     Begin
+        Set $mute = (LastString)
+        Do {CHANGE_ICON Vol audio-volume-muted.png} 
+     End
+  End
+

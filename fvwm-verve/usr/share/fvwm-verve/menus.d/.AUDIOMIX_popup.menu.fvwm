@@ -1,0 +1,14 @@
+TITEL|Lautstärkeregler
+qasmixer.desktop|default_mixer
+gnome-alsamixer.desktop|default_mixer
+|Nop
+pavucontrol.desktop
+paprefs.desktop
+paman.desktop
+#Qasmixer (graphisch)|/usr/bin/qasmixer|/usr/bin/qasmixer|default_mixer|apps/qasmixer.svg:$[MIconSize]
+#Alsamixer (Gnome)|/usr/bin/gnome-alsamixer|/usr/bin/gnome-alsamixer|default_mixer|gnome-mixer.svg:$[MIconSize]
+#Alsamixer (Terminal)|alsamixer|$[infostore.default_terminal] -e alsamixer|default_mixer|gnome-mixer.svg:$[MIconSize]
+#|Nop
+#Pulseaudio Volume|/usr/bin/pavucontrol|/usr/bin/pavucontrol|
+#Pulseaudio Streaming|/usr/bin/paprefs|/usr/bin/paprefs|
+#Pulseaudio Server|/usr/bin/paman|/usr/bin/paman|

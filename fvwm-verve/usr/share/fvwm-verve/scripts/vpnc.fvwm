@@ -1,0 +1,5 @@
+#! /bin/bash
+# Script für fvwm-vpnc-menüeintrag
+# jakob.schuerz@gmx.at
+
+/usr/sbin/vpnc "$1"

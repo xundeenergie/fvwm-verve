@@ -1,0 +1,8 @@
+##############################################
+# MPD-SteuerApplet Funktionen und Menü laden #
+##############################################
+
+Read $[FVWM_SCRIPTDIR]/mpd-controll/function-mpd
+Read $[FVWM_SCRIPTDIR]/mpd-controll/menu-mpd
+
+##############################################

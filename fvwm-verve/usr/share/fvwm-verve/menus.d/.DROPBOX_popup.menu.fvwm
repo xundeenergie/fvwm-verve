@@ -1,0 +1,2 @@
+TITEL|Dropboxen|Dropboxen
+dropbox|/usr/bin/dropbox|$(HOME=~;dropbox start)|default_dropbox|dropbox.svg:$[MIconSize]

@@ -1,0 +1,22 @@
+###########################################################################
+## Div. Submenüs zum WORKMENU
+###########################################################################
+
+DestroyMenu recreate VirtM
+AddToMenu VirtM "Virtuelle Maschinen" Title
+ + "Virtualbox"%virtualbox.png%		Exec exec /usr/bin/virtualbox
+ + ""				Nop
+ + "Debian-Lenny (charon) headless"%debian.png%	Exec exec VBoxManage startvm "debian 5.04" --type headless
+ + "Debian-Lenny (charon)"%debian.png%	Exec exec VBoxManage startvm "debian 5.04"
+ + "stop charon"%debian.png%	Exec exec VBoxManage controlvm "debian 5.04" acpipowerbutton
+TEST (f /virt/XP-virtualbox.vdi ) + "WinXP (nix)"%winxp.png%	Exec exec VBoxManage startvm "WinXP"
+TEST (f /virt/XP-virtualbox.vdi ) + "stop nix"%winxp.png%	Exec exec VBoxManage controlvm "WinXP" acpipowerbutton
+TEST (f "/home/jakob/VirtualBox VMs/Hannibal/Hannibal.vbox" ) + "WinXP (Hannibal) headless"%winxp.png%	Exec exec VBoxManage startvm "Hannibal" --type headless
+TEST (f "/home/jakob/VirtualBox VMs/Hannibal/Hannibal.vbox" ) + "WinXP (Hannibal)"%winxp.png%	Exec exec VBoxManage startvm "Hannibal"
+TEST (f "/home/jakob/VirtualBox VMs/Hannibal/Hannibal.vbox" ) + "Stop Hannibal"%winxp.png%	Exec exec VBoxManage controlvm "Hannibal" acpipowerbutton
+AddToMenu VirtM "externe Medien" Title
+TEST (R "/dev/disk/by-id/usb-SanDisk_Cruzer_Facet_4C532000050910113530-0:0" ) + "DEBIAN LIVE (STICK)"%debian.png%	Exec exec kvm -hda /dev/disk/by-id/usb-SanDisk_Cruzer_Facet_4C532000050910113530-0:0 -m 500M  -net nic,vlan=0 -net tap,vlan=0,ifname=tap0 -usb
+TEST (R "$[HOME]/src/debian-live-builds/herschel/binary.hybrid.iso" ) + "DEBIAN LIVE aktueller Build"%debian.png%	Exec exec kvm -hda $[HOME]/src/debian-live-builds/herschel/binary.hybrid.iso -m 500M  -net nic,vlan=1 -net tap,vlan=1,ifname=tap0 -usb
+TEST (R "/dev/disk/grml-rescue" ) + "GRML - Rettungs-Linux"%debian.png%	Exec exec kvm -hda /dev/disk/grml-rescue -m 500M  -net nic,vlan=0 -net tap,vlan=0,ifname=tap0 -usb
+TEST (R "/dev/disk/debian-mobile" ) + "Debian - Mobiles Linux"%debian.png%	Exec exec kvm -hda /dev/disk/debian-mobile -m 500M  -net nic,vlan=1 -net tap,vlan=1,ifname=tap0 -usb
+

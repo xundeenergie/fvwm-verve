@@ -1,0 +1,109 @@
+#---------------------------------------------------------------------
+#-  File          : ~/.fvwm/windowdecors/cooljakob/config
+#-  Contents      : fvwm window decoration description
+#-  Author        : Uwe Pross - taken from fvwm-theme                                         
+#---------------------------------------------------------------------
+FuncPrintDbgMsg LoadDecorSTART "$[FV_THEMEDIR]/menus.fvwm"
+
+SetEnv COLOR      rgb:66/66/66
+SetEnv FG_COLOR   rgb:ab/ab/ab
+
+SetEnv HICOLOR    rgb:99/99/99
+SetEnv FG_HICOLOR white
+
+SetEnv MaxDeskNumber 1
+UnSetEnv XPMPath
+SetEnv XPMPath $[FV_THEMEDIR]/images-$[infostore.tpos]
+
+#---------------------------------------------------------------------
+DestroyDecor Default 
+AddToDecor Default
++ TitleStyle ActiveUp          TiledPixmap $[XPMPath]/title-activeup.png -- Flat 
++ TitleStyle ActiveDown        TiledPixmap $[XPMPath]/title-activedown.png -- Flat
++ TitleStyle Inactive          TiledPixmap $[XPMPath]/title-inactive.png -- Flat
++ TitleStyle ToggledActiveUp   TiledPixmap $[XPMPath]/title-activeup.png -- Flat
++ TitleStyle ToggledActiveDown TiledPixmap $[XPMPath]/title-activedown.png -- Flat
++ TitleStyle ToggledInactive   TiledPixmap $[XPMPath]/title-inactive.png -- Flat
+
++ ButtonStyle 1 ActiveUp   Pixmap $[XPMPath]/options-activeup.png -- Flat
++ ButtonStyle 1 ActiveDown Pixmap $[XPMPath]/options-activedown.png -- Flat
++ ButtonStyle 1 Inactive   Pixmap $[XPMPath]/options-inactive.png -- Flat
+
++ ButtonStyle 3 ActiveUp   Pixmap $[XPMPath]/options-activeup.png -- Flat
++ ButtonStyle 3 ActiveDown Pixmap $[XPMPath]/options-activedown.png -- Flat
++ ButtonStyle 3 Inactive   Pixmap $[XPMPath]/options-inactive.png -- Flat
+
++ ButtonStyle 5 ActiveUp   Pixmap $[XPMPath]/titleleft-activeup.png -- Flat
++ ButtonStyle 5 ActiveDown Pixmap $[XPMPath]/titleleft-activedown.png -- Flat
++ ButtonStyle 5 Inactive   Pixmap $[XPMPath]/titleleft-inactive.png -- Flat
+
++ ButtonStyle 2 ActiveUp   Pixmap $[XPMPath]/close-activeup.png -- Flat
++ ButtonStyle 2 ActiveDown Pixmap $[XPMPath]/close-activedown.png -- Flat
++ ButtonStyle 2 Inactive   Pixmap $[XPMPath]/close-inactive.png -- Flat
+
++ ButtonStyle 4 ActiveUp   Pixmap $[XPMPath]/maximize-activeup.png -- Flat
++ ButtonStyle 4 ActiveDown Pixmap $[XPMPath]/maximize-activedown.png -- Flat
++ ButtonStyle 4 ToggledActiveUp Pixmap $[XPMPath]/maximize-activedown.png -- Flat
++ ButtonStyle 4 ToggledActiveDown Pixmap $[XPMPath]/maximize-activedown.png -- Flat
++ ButtonStyle 4 Inactive   Pixmap $[XPMPath]/maximize-inactive.png -- Flat
+
++ ButtonStyle 6 ActiveUp   Pixmap $[XPMPath]/iconify-activeup.png -- Flat
++ ButtonStyle 6 ToggledActiveUp Pixmap $[XPMPath]/iconify-activedown.png -- Flat
++ ButtonStyle 6 ActiveDown Pixmap $[XPMPath]/iconify-activedown.png -- Flat
++ ButtonStyle 6 Inactive   Pixmap $[XPMPath]/iconify-inactive.png -- Flat
+
++ ButtonStyle 8 ActiveUp   Pixmap $[XPMPath]/titleright-activeup.png -- Flat
++ ButtonStyle 8 ActiveDown Pixmap $[XPMPath]/titleright-activedown.png -- Flat
++ ButtonStyle 8 Inactive   Pixmap $[XPMPath]/titleright-inactive.png -- Flat
+
++ ButtonStyle All - Clear
++ ButtonStyle 1 - MWMDecorMenu
++ ButtonStyle 3 - MWMDecorMenu
++ ButtonStyle 5 - MWMDecorMin
++ ButtonStyle 2 - MWMDecorMin
++ ButtonStyle 4 - MWMDecorMin
++ ButtonStyle 6 - MWMDecorMax
++ ButtonStyle 8 - MWMDecorMenu
+
++ TitleStyle Centered Height 22
+
++ BorderStyle Active Colorset 
++ BorderStyle Inactive Solid $[HICOLOR] -- HiddenHandles NoInset Flat
++ BorderStyle Active   Solid $[COLOR]   -- HiddenHandles NoInset Flat
+
+Style CoolJakobStyle \
+    UseDecor Default, \
+    Colorset, BorderColorset, \
+    HilightColorset, HilightBorderColorset, \
+    BorderWidth 3, HandleWidth 3, \
+    ForeColor $[FG_COLOR], BackColor $[COLOR], \
+    HilightFore $[FG_HICOLOR], HilightBack $[HICOLOR], \
+    Button 1, Button 2, Button 3, Button 4, Button 5, Button 6, Button 7, Button 8, \
+    TitleAt$[infostore.tpos]
+
+Style * UseDecor Default
+Style * Colorset, BorderColorset, \
+    HilightColorset, HilightBorderColorset, \
+    BorderWidth 3, HandleWidth 3, \
+    ForeColor $[FG_COLOR], BackColor $[COLOR], \
+    HilightFore $[FG_HICOLOR], HilightBack $[HICOLOR], \
+    Button 1, Button 2, Button 3, Button 4, Button 5, Button 6, Button 7, Button 8, \
+    TitleAt$[infostore.tpos]
+
+
+#-------------------------------------------------------------------------------
+#- menus
+#-------------------------------------------------------------------------------
+Load $[FV_THEMEDIR]/menus.fvwm
+#-------------------------------------------------------------------------------
+#- functions
+#-------------------------------------------------------------------------------
+Load $[FV_THEMEDIR]/functions.fvwm
+
+#-------------------------------------------------------------------------------
+#- mouse defs
+#-------------------------------------------------------------------------------
+Load $[FV_THEMEDIR]/bindings.fvwm
+
+FuncPrintDbgMsg LoadDecorEND "$[FV_THEMEDIR]/menus.fvwm"
+

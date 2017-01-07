@@ -1,0 +1,238 @@
+#Exec	if [ ! -f ${FVWM_USERDIR}/.settings ]; then \
+#		cp ${FV_SYSTEMDIR}/.settings ${FVWM_USERDIR}/.settings; \
+#	fi 
+#
+#-----------------------------------------------------------------------
+# Stop Fvwm modules
+#-----------------------------------------------------------------------
+DestroyFunc FuncStopModule
+AddToFunc   FuncStopModule
++ I KillModule $0
+
+#-----------------------------------------------------------------------
+# Stop Fvwm modules by alias
+#-----------------------------------------------------------------------
+DestroyFunc FuncStopModuleByAlias
+AddToFunc   FuncStopModuleByAlias
++ I KillModule $0 $1
+
+#-----------------------------------------------------------------------
+# Restart modules
+#-----------------------------------------------------------------------
+DestroyFunc FuncRestartModule
+AddToFunc   FuncRestartModule
++ I FuncStopModule $0
++ I Module $0
+
+#-----------------------------------------------------------------------
+# Restart modules ny alias
+#-----------------------------------------------------------------------
+DestroyFunc FuncRestartModuleByAlias
+AddToFunc   FuncRestartModuleByAlias
++ I FuncStopModuleByAlias $0 $1
++ I Module $0 $1 $2
+
+DestroyFunc FuncRemoveAllButtonBindings
+AddToFunc   FuncRemoveAllButtonBindings
+#   Button	Context Modifi 	Function
++ I Mouse 0 	1234567890	A	-
++ I Mouse 1 	1234567890	A	-
++ I Mouse 2 	1234567890	A	-
++ I Mouse 3 	1234567890	A	-
++ I Mouse 4 	1234567890	A	-
++ I Mouse 5 	1234567890	A	-
+#+ I Mouse 6 	1234567890	A	-
+#+ I Mouse 7 	1234567890	A	-
++ I Mouse 0	1234567890	SCM	-
++ I Mouse 1	1234567890	SCM	-
++ I Mouse 2	1234567890	SCM	-
++ I Mouse 3	1234567890	SCM	-
++ I Mouse 4	1234567890	SCM	-
++ I Mouse 5	1234567890	SCM	-
+#+ I Mouse 6	1234567890	SCM	-
+#+ I Mouse 7	1234567890	SCM	-
+
+
+
+DestroyFunc ReloadLayoutParts
+AddToFunc   ReloadLayoutParts
++ I FuncPrintDbgMsg ReloadLayoutParts
++ I PipeRead 'fv-built-trayapplist $FVWM_USERDIR/.systray.log $FVWM_USERDIR/.trayapplist'
+#+ I Load modules/HorizontalPanel
+#+ I Load modules/GlobalIconMan_ShowHide
++ I FuncRestartModuleByAlias FvwmButtons FvwmShelf
+#+ I FuncRestartModule FvwmButtons 
++ I Wait stalonetray
++ I Exec exec fv-start-programs reload_applets $[FVWM_USERDIR]/.trayapplist
+
+#-----------------------------------------------------------------------
+# Resets a definition of all colorsets
+#-----------------------------------------------------------------------
+DestroyFunc FuncResetColorset
+AddToFunc   FuncResetColorset
++ I CleanupColorsets
+
+#-----------------------------------------------------------------------
+# Remove all buttons for a theme and its bindings
+#-----------------------------------------------------------------------
+DestroyFunc FuncRemoveAllButtons
+AddToFunc   FuncRemoveAllButtons
++ I Style * !Button 1, !Button 3, !Button 5, !Button 7, !Button 9
++ I Style * !Button 2, !Button 4, !Button 6, !Button 8, !Button 0
++ I FuncRemoveAllButtonBindings
++ I ButtonStyle Reset
++ I TitleStyle Height 5
+
+#-----------------------------------------------------------------------
+# Change a decor on the fly
+#-----------------------------------------------------------------------
+DestroyFunc FuncChangeDecor
+AddToFunc   FuncChangeDecor
++ I PipeRead 'echo InfoStoreAdd used_theme $0'
++ I PipeRead 'echo InfoStoreAdd tpos $1'
++ I PipeRead 'echo InfoStoreAdd colorset $2'
+#+ I FuncUpdateBaseSetupFile Theme $0
++ I FuncSetThemeDir $[infostore.used_theme]
++ I FuncRemoveAllButtons
++ I Load $[FV_THEMEDIR]/colorsets/$2
++ I Load $[FV_THEMEDIR]/config
++ I FuncWriteInfoStoreToFileAndSet used_theme $0 $[FVWM_USERDIR]/.settings
++ I FuncWriteInfoStoreToFileAndSet tpos $1 $[FVWM_USERDIR]/.settings
++ I FuncWriteInfoStoreToFileAndSet colorset $2 $[FVWM_USERDIR]/.settings
+#+ I ReloadLayoutParts $[infostore.used_layout]
++ I ReloadLayoutParts
+
+#-----------------------------------------------------------------------
+# Change a Layout on the fly
+#-----------------------------------------------------------------------
+DestroyFunc FuncChangeLayout
+AddToFunc   FuncChangeLayout
+#+ I PipeRead "rm -f ${FVWM_USERDIR}/.layout; \
+#			  ln -s $0/layouts/$1 ${FVWM_USERDIR}/.layout"
++ I FuncWriteInfoStoreToFileAndSet ShelfPos $0 $[FVWM_USERDIR]/.settings
++ I FuncPrintMsg "ButtonPos" $0
+#+ I FuncUpdateBaseSetupFile Layout $1
++ I FuncRestart
+
+
+##-----------------------------------------------------------------------
+## Update/Create an InfoStore variable in a file
+## FuncWriteInfoStoreToFile <var_name> <var_value> <file>
+##-----------------------------------------------------------------------
+#DestroyFunc FuncWriteInfoStoreToFileAndSet
+#AddToFunc   FuncWriteInfoStoreToFileAndSet
+#+ I PipeRead 'Val=`echo "$1" | sed "s/[[:blank:]]*$//"`; \
+#            if [ `grep -c $0 $2` -gt 0 ] ; then \
+#                sed -i --follow-symlinks "s#^InfoStoreAdd $0.*#InfoStoreAdd $0 \\"$Val\\"#" $2; \
+#            else \
+#                sed -i --follow-symlinks "$ a\InfoStoreAdd $0 \\"$Val\\"" $2; \
+#            fi; \
+#            echo InfoStoreAdd $0 "$Val"'
+#
+#
+##-----------------------------------------------------------------------
+## Update/Create an SetEnv variable in a file
+## FuncWriteSetEnvToFile <var_name> <var_value> <file>
+##-----------------------------------------------------------------------
+#DestroyFunc FuncWriteSetEnvToFileAndSet
+#AddToFunc   FuncWriteSetEnvToFileAndSet
+#+ I PipeRead 'Val=`echo "$1" | sed "s/[[:blank:]]*$//"`; \
+#            if [ `grep -c $0 $2` -gt 0 ] ; then \
+#                sed -i --follow-symlinks "s#^SetEnv $0.*#SetEnv $0 \\"$Val\\"#" $2; \
+#            else \
+#                sed -i --follow-symlinks "$ a\SetEnv $0 \\"$Val\\"" $2; \
+#            fi; \
+#            echo SetEnv $0 "$Val"'
+#
+
+#-----------------------------------------------------------------------
+# Update/Create an InfoStore variable in a file
+# FuncWriteInfoStoreToFile <var_name> <var_value> <file>
+#-----------------------------------------------------------------------
+DestroyFunc FuncWriteInfoStoreToFileAndSet
+AddToFunc   FuncWriteInfoStoreToFileAndSet
++ I PipeRead 'Val=`printf %s "$1" | sed "s/[[:blank:]]*$//"`; \
+            if [ `grep -c $0 $2` -gt 0 ] ; then \
+                sed -i --follow-symlinks "s#^InfoStoreAdd $0.*#InfoStoreAdd $0 \\"$Val\\"#" $2; \
+            else \
+                sed -i --follow-symlinks "$ a\InfoStoreAdd $0 \\"$Val\\"" $2; \
+            fi; \
+            Val=`printf %s "$Val" | sed "s/[\!]/\\\\\\\\\\\!/g;s/[\']/\\\\\\\\\\\'/g;s/ /\\\\\\\\\\ /g"`; \
+            printf %s "InfoStoreAdd $0 $Val"'
+
+
+#-----------------------------------------------------------------------
+# Update/Create an SetEnv variable in a file
+# FuncWriteSetEnvToFile <var_name> <var_value> <file>
+#-----------------------------------------------------------------------
+DestroyFunc FuncWriteSetEnvToFileAndSet
+AddToFunc   FuncWriteSetEnvToFileAndSet
++ I PipeRead 'Val=`printf %s "$1" | sed "s/[[:blank:]]*$//"`; \
+            if [ `grep -c $0 $2` -gt 0 ] ; then \
+                sed -i --follow-symlinks "s#^SetEnv $0.*#SetEnv $0 \\"$Val\\"#" $2; \
+            else \
+                sed -i --follow-symlinks "$ a\SetEnv $0 \\"$Val\\"" $2; \
+            fi; \
+            Val=`printf %s "$Val" | sed "s/ /\\\\\\\\\\ /g"`; \
+            printf %s "SetEnv $0 $Val"'
+
+
+
+
+#-----------------------------------------------------------------------
+# Update layout and theme settings in base setup file .FV-BaseSetup
+# FuncUpdateBaseSetupFile <Layout/Theme> <layout/theme name>
+#-----------------------------------------------------------------------
+DestroyFunc FuncUpdateBaseSetupFile
+AddToFunc   FuncUpdateBaseSetupFile
++ I PipeRead 'if [ "$0" = "Layout" ]; then \
+				case $1 in \
+					Horizontal|Vertical|G2like) \
+						sed -i --follow-symlinks "/^*SavedBaseSetup: Layout.*/s/on //" ${FVWM_USERDIR}/.FV-BaseSetup; \
+						sed -i --follow-symlinks "s/^*SavedBaseSetup: Layout$1.*/*SavedBaseSetup: Layout$1 on /" ${FVWM_USERDIR}/.FV-BaseSetup;; \
+				esac; \
+			  else \
+				sed -i --follow-symlinks "s/^*SavedBaseSetup: Theme .*/*SavedBaseSetup: Theme $1/" ${FVWM_USERDIR}/.FV-BaseSetup; \
+			  fi'
+			  
+
+#-----------------------------------------------------------------------
+# Starts programs while startup
+#-----------------------------------------------------------------------
+DestroyFunc FuncAutoStartPrograms
+AddToFunc   FuncAutoStartPrograms
++ I Test (f $[FVWM_USERDIR]/.autostart) \
+    Exec exec fv-start-programs Autostart $[FVWM_USERDIR]/.autostart
+
+#-----------------------------------------------------------------------
+# Suspend the machine
+#-----------------------------------------------------------------------
+DestroyFunc FuncSuspend
+AddToFunc   FuncSuspend
++ I Test (x pm-is-supported) PipeRead 'dbus-send --system --print-reply --dest=org.freedesktop.Hal \
+					/org/freedesktop/Hal/devices/computer \
+					org.freedesktop.Hal.Device.SystemPowerManagement.Suspend \
+					int32:0'
++ I TestRc (!Match) FuncShowMessage "Suspend Info" "Install pm-utils for full functionality"         
+
+#-----------------------------------------------------------------------
+# Hibernate the machine
+#-----------------------------------------------------------------------
+DestroyFunc FuncHibernate
+AddToFunc   FuncHibernate
++ I Test (x pm-is-supported) PipeRead 'dbus-send --system --print-reply --dest=org.freedesktop.Hal \
+					/org/freedesktop/Hal/devices/computer \
+					org.freedesktop.Hal.Device.SystemPowerManagement.Hibernate'
++ I TestRc (!Match) FuncShowMessage "Suspend Info" "Install pm-utils for full functionality"          
+
+#-----------------------------------------------------------------------
+# delete a window (single click) or destroy it (double click)
+#-----------------------------------------------------------------------
+DestroyFunc FuncDeleteOrDestroy
+AddToFunc   FuncDeleteOrDestroy
++ H Nop
++ M Nop
++ C Delete
++ D Destroy
+
+

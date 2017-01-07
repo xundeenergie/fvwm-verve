@@ -1,0 +1,5 @@
+#!/bin/sh
+#/usr/sbin/vpnc-disconnect 
+sudo /usr/bin/poff `cat $HOME/.ppp_provider`
+
+exec `echo rm "/dev/shm/ppp-connect"`

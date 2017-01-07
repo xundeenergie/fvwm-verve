@@ -1,0 +1,15 @@
+[Desktop Entry]
+Version=1.0
+Name=NEdit "Nirvana Text Editor"
+Name[en]=NEdit "Nirvana Text Editor"
+Name[nl]=NEdit "Nirvana tekstverwerker"
+Exec=nedit-nc %U
+Icon=nedit
+Terminal=false
+Type=Application
+MimeType=text/plain;
+Categories=Motif;Utility;TextTools;
+Keywords=Customizable;Scripts;Powerful;
+GenericName=Text Editor
+GenericName[en]=Text Editor
+GenericName[nl]=Tekstverwerker

@@ -1,0 +1,11 @@
+#!/bin/sh
+
+loginctl --no-legend list-users|awk '\
+{print "+ \"Zu "$2" wechseln\" FuncMenuUserSwitch "$2} \
+END{print "+ \"Zum Anmeldebildschirm wechseln\" FuncMenuGreeterSwitch"}' \
+> /dev/shm/fvwm-$USER/userswitch.menu
+
+
+exit 0
+
+echo "TEST (x /usr/bin/ario) + \"%mpd.png%mpd-Client (ario)\" Exec exec /usr/bin/ario "

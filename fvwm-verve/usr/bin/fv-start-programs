@@ -1,0 +1,94 @@
+#!/bin/sh
+#-----------------------------------------------------------------------
+# File:		fv-start-programs
+# Version:	3.0.4
+# Licence: 	GPL 2
+#
+# Description:	shell script to execute command strings which will be 
+#		found in <infile>
+#
+# Parameters:	fv-start-programs <type> <infile>
+#
+# Remarks:	<type> is a name printed in [] to stderr
+#
+# Author:	Jakobus Schürz <jakob@xundeenerige.at	
+# Created:	08/13/2012
+# Changed:	10/22/2012
+#-----------------------------------------------------------------------
+
+#!/bin/bash
+
+version=3.0.3
+
+if [ "$1" = "-h" ] || [ "$1" = "--help" ]
+then
+	echo "------------------------------------------------------------------------"
+	echo "Usage: `basename $0` <type> <infile>"
+	echo "       <type>          name printed in [] to stderr"
+	echo "       <infile>        execute command(s) found in infile"
+	echo "       -h|--help       short help"
+	echo "       -v|--version    version"
+	echo
+	echo "Example:"
+	echo "`basename $0` autostart $FVWM_USERDIR/.autostart"
+	echo
+	echo "Output in stderr:"
+	echo "[Fvwm-Verve][autostart]: 'bla' not running. Starting now."
+	echo 
+	echo "Fvwm-Functions are called in the File with"
+	echo "Function FvwmFunctionName"
+	echo 
+	echo "Programms are called only by their program-name"
+	echo "------------------------------------------------------------------------"
+	exit 0
+elif [ "$1" = "-v" ] || [ "$1" = "--version" ]
+then
+	echo `basename $0` V $version
+	exit 0
+fi
+
+if [ $# -lt 2 ]
+then
+	echo Not enough parameter! Exiting.
+	exit 1
+elif  [ $# -gt 2 ]
+then
+	echo Too much parameter! Exiting.
+	exit 1
+fi
+
+type=$1
+infile=$2
+
+# check whether infile exist
+if [ -f $infile ]
+then
+    # read startup file
+    #commands="$(cat $infile|grep -v "^#")"
+    #cat $infile|grep -v "^#"|while IFS= read REPLY
+    cat $infile|sed -e 's/#..*$//;/^$/d'|while IFS= read REPLY
+    do
+	if test `echo "$REPLY"|cut -d " " -f1` = "Function" 
+	then 
+		echo [Fvwm-Verve][$type-FvwmFunction] $REPLY 2>&1
+		FvwmCommand $REPLY
+	else
+		# check if prog already running
+		prog_started=`ps -ef|grep -c "$REPLY" |grep -v grep`
+		if [ $prog_started -gt 1 ]
+		then
+	            echo [Fvwm-Verve][$type]: \'$REPLY\' is already running. Skipping. 2>&1
+	        else
+	            echo [Fvwm-Verve][$type]: \'$REPLY\' not running. Starting now. 2>&1
+	            $REPLY &
+	            #sleep 2
+	        fi
+	fi
+    #done <<< "$commands"
+    done 
+    unset IFS
+else
+    echo [Fvwm-Verve][$type]: No file \'$infile\' found 2>&1
+    exit 1
+fi
+exit 0

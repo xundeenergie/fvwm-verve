@@ -1,0 +1,38 @@
+AddToMenu MenuRoot DynamicPopupAction FuncMenuRoot
+
+DestroyFunc FuncMenuRoot
+AddToFunc   FuncMenuRoot
++ I SetMenuIconSize
++ I DestroyMenu MenuRoot
++ I AddToMenu MenuRoot DynamicPopupAction FuncMenuRoot
++ I AddToMenu MenuRoot "$[gt.root Menu]" Title
++ I AddToMenu MenuRoot "$[gt.&Personal Applications]%home.svg:$[infostore.MenuIconSize]%"       Popup MenuFvwmPersonal
++ I Popup FvwmMenu
+
+#-----------------------------------------------------------------------
+# Dynamic FvwmMenu sub menu for XDG menus
+# realized with DynamicPopupAction
+#-----------------------------------------------------------------------
+AddToMenu FvwmMenu DynamicPopupAction FuncXdgMenusInRoot
+
+DestroyFunc FuncXdgMenusInRoot
+AddToFunc   FuncXdgMenusInRoot
++ I AddToMenu FvwmMenu DynamicPopupAction FuncXdgMenusInRoot
++ I Test (f $[FVWM_USERDIR]/.menu) Read $[FVWM_USERDIR]/.menu
++ I TestRC (!Match) Test (Version >= 2.6.6) PipeRead 'fvwm-menu-desktop --insert-in-menu MenuRoot > $[FVWM_USERDIR]/.menu &&  echo "Read $[FVWM_USERDIR]/.menu"'
++ I TestRC (!Match) PipeRead 'fvwm-menu-desktop2 --insert-in-menu MenuRoot > $[FVWM_USERDIR]/.menu &&  echo "Read $[FVWM_USERDIR]/.menu"'
+
+
+#-----------------------------------------------------------------------
+# Dynamic personal applications sub menu for favorite apps
+# realized with DynamicPopupAction
+#-----------------------------------------------------------------------
+AddToMenu MenuFvwmPersonal DynamicPopupAction FuncMenuFvwmPersonal
+
+DestroyFunc FuncMenuFvwmPersonal
+AddToFunc   FuncMenuFvwmPersonal
++ I DestroyMenu MenuFvwmPersonal
++ I AddToMenu MenuFvwmPersonal DynamicPopupAction FuncMenuFvwmPersonal
++ I AddToMenu MenuFvwmPersonal "$[gt.Personal Applications]" Title
++ I AddToMenu MenuFvwmPersonal "$[gt.&Configure Personal Applications]%PersonalMenuCreator.svg:$[infostore.MenuIconSize]%"    FvwmScript FvwmScript-PersonalMenu
++ I Test (f  $[FVWM_USERDIR]/.personal) PipeRead `sed -e '/^# personal menu/ d;/^ *$/,$ d' $[FVWM_USERDIR]/.personal`

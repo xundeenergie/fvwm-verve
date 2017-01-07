@@ -1,0 +1,23 @@
+########################
+## Animations-Effekte FvwmAnimate
+########################
+
+# Destroy the module definition.
+DestroyModuleConfig FvwmAnimate: *
+
+# I don't care which effect I use.  I like variety.
+*FvwmAnimate: Effect Zoom3D
+
+# How many steps the iterations will be.  25 is about right, but if
+# this is too long, shorten the number.
+*FvwmAnimate: Iterations 9
+
+# How many milliseconds to wait before the next frame starts.
+*FvwmAnimate: Delay 3
+
+# How thick (in pixels) the lines for the animation are to be drawn.
+*FvwmAnimate: Width 2
+
+# How many revolutions to twist the iconification frame.
+#*FvwmAnimate: Zoom3D
+

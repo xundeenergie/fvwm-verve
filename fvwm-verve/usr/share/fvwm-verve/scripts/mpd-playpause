@@ -1,0 +1,15 @@
+#!/bin/sh
+
+#status=`mpc status|grep '\[playing\]\|\[paused\]'|awk '{print $1}'|sed -e 's/\[//g' -e 's/\]//g'`
+#echo $status|logger
+#case $status in
+#	playing)
+#		/usr/bin/mpc -h $MPD_HOST -p $MPD_PORT pause
+#		;;
+#	*)
+#		/usr/bin/mpc -h $MPD_HOST -p $MPD_PORT play
+#		;;
+#esac
+
+/usr/bin/mpc status|grep -q '\[playing\]\|\[paused\]' && /usr/bin/mpc -h $MPD_HOST -p $MPD_PORT toggle || /usr/bin/mpc -h $MPD_HOST -p $MPD_PORT play
+#fi

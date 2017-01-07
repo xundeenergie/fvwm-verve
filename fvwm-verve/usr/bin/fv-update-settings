@@ -1,0 +1,9 @@
+#!/bin/bash
+grep -v '^#\|^$' $FV_SYSTEMDIR/.settings |while read i j k
+do
+  grep -q "$i $j" $FVWM_USERDIR/.settings
+  if [ $? -gt 0 ] 
+  then
+    echo $i $j $k >> $FVWM_USERDIR/.settings
+  fi
+done

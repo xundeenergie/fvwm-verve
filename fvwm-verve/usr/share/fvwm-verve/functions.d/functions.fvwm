@@ -1,0 +1,8 @@
+# Alle files *.fvwm aus dem functions.d-Verzeichnis laden
+
+#Test (f $[FV_SYSTEMDIR]/functions.d/) PipeRead `ls $[FV_SYSTEMDIR]/functions.d/[0-9]*-funcs.fvwm|while read i;do cat "$i";done`
+#Test (f $[FVWM_USERDIR]/functions.d/) PipeRead `ls $[FVWM_USERDIR]/functions.d/[0-9]*-funcs.fvwm|while read i;do cat "$i";done`
+
+Test (f $[FV_SYSTEMDIR]/functions.d/) PipeRead `ls $[FV_SYSTEMDIR]/functions.d/[0-9]*-funcs.fvwm|while read i;do echo Load "$i";done`
+Test (f $[FVWM_USERDIR]/functions.d/) PipeRead `ls $[FVWM_USERDIR]/functions.d/[0-9]*-funcs.fvwm|while read i;do echo Load "$i";done`
+

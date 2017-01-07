@@ -1,0 +1,27 @@
+#!/bin/sh
+
+LOC="$HOME/.local/share/applications /usr/share/fvwm-verve/applications /usr/share/applications /usr/share/applications/kde4 /usr/share/kde4/services /etc/xdg/autostart"
+
+for j in $@; do
+  for i in $LOC;do
+    DTFILE="$i/$j"
+    [ -e "$DTFILE" ] || continue
+    gawk -F "=" 'BEGIN {a=0}
+  	{gsub(/"/,"",$0)} \
+  	$1 ~ /\[Desktop Action */     {a++ ; action[a] = $0 ; gsub(/\[Desktop Action / , "" , action[a]) ; gsub(/\]/,"",action[a])} \
+  	$1 ~ /^Exec/     { exec[a] = $2 ; e[a] = 1 ; gsub(/%.+ */ , "" , exec[a]) } \
+  	$1 ~ /^TryExec/  { tryexec[a]=$2;if (tryexec[a] != //) texec[a]="TEST (x "tryexec[a]")"} \
+  	$1 ~ /^Icon/     { icon[a] = $2 } \
+  	$1 ~ /^Name/     { name[a] = $2 } \
+  	$1 ~ /^GenericName/     { gname[a] = $2 } \
+  	$1 ~ /^Terminal/ { terminal[a] = $2 } \
+  	$1 ~ /^Id/	 { id[a] = "Id \""$2"\","} \
+	$1 ~ /^OnlyShowIn/ { if($2 ~ /FvwmButton/) { show[a]=1 ; shi[a] = $2 }}
+  	END { if ( show[0] == 1 ) { \
+	  print "*FvwmShelf: (22x2 Frame 0, Title(Side) \" "gname[0]"\", Left, "id[0]" Icon "icon[0]".svg:$[MIconSize], ActiveIcon "icon[0]".svg:$[AIconSize], \\"; \
+       	  for (x=1;x<=a;x++){print "\tAction("action[x]") "exec[x]", \\"}; \
+       	  print ")"}}' $DTFILE
+    [ -e "$DTFILE" ] && break
+  done
+done
+exit 0

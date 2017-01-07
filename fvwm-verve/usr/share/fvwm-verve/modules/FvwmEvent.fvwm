@@ -1,0 +1,7 @@
+#=====================================================#
+#FvwmEvent
+#=====================================================#
+
+*FvwmEvent-NewWindow: StartDelay 4
+*FvwmEvent-NewWindow: add_window FuncFocusWindow
+

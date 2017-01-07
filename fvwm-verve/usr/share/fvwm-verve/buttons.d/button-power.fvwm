@@ -1,0 +1,11 @@
+##### Button/Menue vom Powerbutton zum Ausschalten
+#
+*FvwmPowerButton: (22x2 Frame 0, Title(Side) " Lock Screen", Left, Icon gnome-lockscreen.svg:16x16, Action(Mouse 1) Function LOCK_SCREEN, \
+		Action(Mouse 3) Function LOCK_SCREEN_LOUD )
+*FvwmPowerButton: (22x2 Frame 0, Title(Side) " Ausloggen", Left, Icon gnome-shutdown.svg:$[MIconSize], Action(Mouse 1) Function FvwmQuit)
+*FvwmPowerButton: (22x2 Frame 0, Title(Side) " Fvwm neu laden", Left, Icon gnome-reboot.svg:$[MIconSize], Action(Mouse 1) Function FvwmRestart)
+*FvwmPowerButton: (22x2 Frame 0, Title(Side) " Ausschalten", Left, Icon gnome-shutdown.svg:$[MIconSize], Action(Mouse 1) Function PowerOff)
+*FvwmPowerButton: (22x2 Frame 0, Title(Side) " Neu starten", Left, Icon gnome-reboot.svg:$[MIconSize], Action(Mouse 1) Function PowerReboot)
+*FvwmPowerButton: (22x2 Frame 0, Title(Side) " Suspend", Left, Icon gnome-suspend.svg:$[MIconSize], Action(Mouse 1) Function FuncSuspendButton)
+#
+########

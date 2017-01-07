@@ -1,0 +1,128 @@
+#############################################################################################################################
+## Diese Funktion erstellt die Submenüs in Abhängigkeit des Vorhandenseins von .$MENU.menu.fvwm bzw. .$MENU.sub.menu.fvwm  ##
+## .$MENU.menu.fvwm		Dieses Menü ergänzt das Systemmenü (aus $FV_SYSTEMDIR/menus.d/.MENU.menu.fvwm)             ##
+## .$MENU.sub.menu.fvwm		Dieses Menü ersetzt vollkommen das Systemmenü inkl. der Ergänzung von der Zeile darüber.   ##
+#############################################################################################################################
+
+
+DestroyFunc FuncMenuSUB
+AddToFunc   FuncMenuSUB
++ I PipeRead 'echo "DestroyMenu recreate " `echo $1|sed -e 's/-s/select_/' -e 's/-d/default_/'`$0'
++ I Test (f $[FV_SYSTEMDIR]/menus.d/"."$0".menu.fvwm") PipeRead 'fv-menu-from-file \"$1\" \" $[FV_SYSTEMDIR]/menus.d/.\"$0\".menu.fvwm\"'
++ I Test (f $[FVWM_USERDIR]/menus.d/"."$0".menu.fvwm") PipeRead 'echo "AddToMenu " `echo $1|sed -e 's/-s/select_/' -e 's/-d/default_/'`$0' "" Nop
++ I Test (f $[FVWM_USERDIR]/menus.d/"."$0".menu.fvwm") PipeRead 'fv-menu-from-file $1 $[FVWM_USERDIR]/menus.d/"."$0".menu.fvwm"'
++ I Test (f $[FVWM_USERDIR]/menus.d/"."$0".sub.menu.fvwm") PipeRead 'echo "DestroyMenu recreate " `echo $1|sed -e 's/-s/select_/' -e 's/-d/default_/'`$0'
++ I Test (f $[FVWM_USERDIR]/menus.d/"."$0".sub.menu.fvwm") PipeRead 'fv-menu-from-file $1 $[FVWM_USERDIR]/menus.d/"."$0".sub.menu.fvwm"'
+
+
+# Diese Menüs werden von verschiedenen Buttons in FvwmButton(FvwmShelf) aufgerufen
+
+##############################################
+## Menü-Filebrowser/Manager
+##############################################
+DestroyMenu default_FILES_popup
+AddToMenu   default_FILES_popup DynamicPopupAction FuncMenuSUB "FILES_popup" "-d" "Dateimanager $[infostore.default_filesbrowser]"
+
+DestroyMenu select_FILES_popup
+AddToMenu   select_FILES_popup DynamicPopupAction FuncMenuSUB "FILES_popup" "-s" "Dateimanager $[infostore.default_filesbrowser]"
+
+##############################################
+## Menü-Videoprogramme
+##############################################
+DestroyMenu default_VIDEO_popup
+AddToMenu   default_VIDEO_popup DynamicPopupAction FuncMenuSUB "VIDEO_popup" "-d" "Dateimanager $[infostore.default_video]"
+
+DestroyMenu select_VIDEO_popup
+AddToMenu   select_VIDEO_popup DynamicPopupAction FuncMenuSUB "VIDEO_popup" "-s" "Dateimanager $[infostore.default_video]"
+
+##############################################
+## Menü-Lautstärke, Alsa, Pulseaudio
+##############################################
+DestroyMenu default_AUDIOMIX_popup
+AddToMenu   default_AUDIOMIX_popup DynamicPopupAction FuncMenuSUB "AUDIOMIX_popup" "-d" "Audiomixer"
+
+DestroyMenu select_AUDIOMIX_popup
+AddToMenu   select_AUDIOMIX_popup DynamicPopupAction FuncMenuSUB "AUDIOMIX_popup" "-s" "Audiomixer"
+
+
+##############################################
+## Menü - Internetbrowser
+##############################################
+DestroyMenu default_INTERNET_popup
+AddToMenu   default_INTERNET_popup DynamicPopupAction FuncMenuSUB "INTERNET_popup" "-d" "Dateimanager $[infostore.default_browser]"
+
+DestroyMenu select_INTERNET_popup
+AddToMenu   select_INTERNET_popup DynamicPopupAction FuncMenuSUB "INTERNET_popup" "-s" "Dateimanager $[infostore.default_browser]"
+
+##############################################
+## Menü - Office
+##############################################
+DestroyMenu default_OFFICE_popup
+AddToMenu   default_OFFICE_popup DynamicPopupAction FuncMenuSUB "OFFICE_popup" "-d" "Dateimanager $[infostore.default_office]"
+
+DestroyMenu select_OFFICE_popup
+AddToMenu   select_OFFICE_popup DynamicPopupAction FuncMenuSUB "OFFICE_popup" "-s" "Dateimanager $[infostore.default_office]"
+
+##############################################
+## Menü-Editoren
+##############################################
+DestroyMenu default_EDITOR_popup
+AddToMenu   default_EDITOR_popup DynamicPopupAction FuncMenuSUB "EDITOR_popup" "-d" "Dateimanager $[infostore.default_editor]"
+
+DestroyMenu select_EDITOR_popup
+AddToMenu   select_EDITOR_popup DynamicPopupAction FuncMenuSUB "EDITOR_popup" "-s" "Dateimanager $[infostore.default_editor]"
+
+##############################################
+## Menü-Terminal
+##############################################
+DestroyMenu default_TERMINAL_popup
+AddToMenu   default_TERMINAL_popup DynamicPopupAction FuncMenuSUB "TERMINAL_popup" "-d" "Dateimanager $[infostore.default_terminal]"
+
+DestroyMenu select_TERMINAL_popup
+AddToMenu   select_TERMINAL_popup DynamicPopupAction FuncMenuSUB "TERMINAL_popup" "-s" "Dateimanager $[infostore.default_terminal]"
+
+##############################################
+## Menü-DPMS-Bildschirm abschalten nach welcher Zeit
+##############################################
+DestroyMenu default_DPMS_popup
+AddToMenu   default_DPMS_popup DynamicPopupAction FuncMenuSUB "DPMS_popup" "-d" "Monitor abschalten in"
+
+DestroyMenu select_DPMS_popup
+AddToMenu   select_DPMS_popup DynamicPopupAction FuncMenuSUB "DPMS_popup" "-s" "Monitor abschalten in"
+
+##############################################
+## Menü-Emailprogramm
+##############################################
+DestroyMenu default_MAIL_popup
+AddToMenu   default_MAIL_popup DynamicPopupAction FuncMenuSUB "MAIL_popup" "-d" "Dateimanager $[infostore.default_mail]"
+
+DestroyMenu select_MAIL_popup
+AddToMenu   select_MAIL_popup DynamicPopupAction FuncMenuSUB "MAIL_popup" "-s" "Dateimanager $[infostore.default_mail]"
+
+##############################################
+## Menü-Dropbox
+##############################################
+DestroyMenu default_DROPBOX_popup
+AddToMenu   default_DROPBOX_popup DynamicPopupAction FuncMenuSUB "DROPBOX_popup" "-d" "Dateimanager $[infostore.default_dropbox]"
+
+DestroyMenu select_DROPBOX_popup
+AddToMenu   select_DROPBOX_popup DynamicPopupAction FuncMenuSUB "DROPBOX_popup" "-s" "Dateimanager $[infostore.default_dropbox]"
+
+##############################################
+## Menü-Messenger
+##############################################
+DestroyMenu default_MESSENGER_popup
+AddToMenu   default_MESSENGER_popup DynamicPopupAction FuncMenuSUB "MESSENGER_popup" "-d" "Dateimanager $[infostore.default_messenger]"
+
+DestroyMenu select_MESSENGER_popup
+AddToMenu   select_MESSENGER_popup DynamicPopupAction FuncMenuSUB "MESSENGER_popup" "-s" "Dateimanager $[infostore.default_messenger]"
+
+##############################################
+## Menü-Photomanager 
+##############################################
+DestroyMenu default_PHOTO_popup
+AddToMenu   default_PHOTO_popup DynamicPopupAction FuncMenuSUB "PHOTO_popup" "-d" "Dateimanager $[infostore.default_picturemanager]"
+
+DestroyMenu select_PHOTO_popup
+AddToMenu   select_PHOTO_popup DynamicPopupAction FuncMenuSUB "PHOTO_popup" "-s" "Dateimanager $[infostore.default_picutremanager]"
+

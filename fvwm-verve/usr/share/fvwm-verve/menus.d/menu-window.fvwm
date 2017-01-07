@@ -1,0 +1,120 @@
+#Alle zusätzlichen Menüs die extra aufgerufen werden (z.B. bei Buttons von Fenstern)
+
+# The Window-Ops menu is for manipulating windows.  It is invoked either
+# from the main menu, or directly from the root window.
+#
+#Read /etc/X11/fvwm/menudefs.hook Quiet
+#Read wm-icons/menudefs.hook Quiet
+Test (f menudefs.hook) Read menudefs.hook Quiet
+Test (f DebianMenu) Read DebianMenu Quiet
+
+DestroyMenu Window-Ops
+AddToMenu Window-Ops
++ "Window Ops"				Title		
++ "Fenster Verschieben"			Move
++ "Fenster ganz nach oben"		Raise
++ "Fenster ganz nach unten"		Lower 
++ "(De)Iconify"				Iconify
++ "(Un)Stick"				Stick		
++ "vertikal (de)maximieren"		Maximize 0 100
++ "horizontal (de)maximieren"		Maximize 100 0
++ "auf ganzen Bildschirm maximieren" 	Maximize 100 100
++ ""					Nop  
++ "Titelleiste - Position" 		Popup DECOSET_popup
++ ""					Nop  
++ "Screenshot (Alles)"			Exec exec xwd -root|convert - "$HOME/Screencapture-`date  +%F-%R:%S`.png"
++ "Screenshot (Fenster auswählen)"	Exec exec xwd -screen|convert - "$HOME/Screencapture-`date  +%F-%R:%S`.png"
++ ""					Nop  
++ "Fenster freigeben (VNC)"		FuncVNC
++ "Desktop freigeben (VNC)"		Exec urxvtc -e /usr/bin/x11vnc -localhost 
++ ""					Nop  
++ "Identify" 				Pick Module FvwmIdent
++ "Programm killen"			Destroy
++ "Schliessen"				Close	 
+
+# XXX: I can probably automate making this menu.
+DestroyMenu MenuPageList
+AddToMenu MenuPageList
++ "1" Pick MoveToPage 0 0
++ "2" Pick MoveToPage 1 0
++ "3" Pick MoveToPage 2 0
++ "4" Pick MoveToPage 0 1
++ "5" Pick MoveToPage 1 1
++ "6" Pick MoveToPage 2 1
+#+ "7" Pick MoveToPage 0 2
+#+ "8" Pick MoveToPage 1 2
+#+ "9" Pick MoveToPage 2 2
+
+##############################################
+## Menü-Titelposition
+##############################################
+DestroyMenu recreate DECOSET_popup
+AddToMenu DECOSET_popup "Position der Titelleiste" Title
++ DynamicPopupAction Function FuncDeco
+
+DestroyFunc FuncDeco
+AddToFunc FuncDeco
++ I DestroyMenu recreate DECOSET_popup
++ I AddToMenu DECOSET_popup "$[infostore.used_theme] - Titelposition" Title
++ I Piperead '\
+ echo AddToMenu DECOSET_popup \\"Oben\\" FuncChangeDecor \\"$[infostore.used_theme]\\" \\"Top\\" \\$[infostore.colorset]\\"; \
+ echo AddToMenu DECOSET_popup \\"Links\\" FuncChangeDecor \\"$[infostore.used_theme]\\" \\"Left\\" \\$[infostore.colorset]\\"; \
+ echo AddToMenu DECOSET_popup \\"Rechts\\" FuncChangeDecor \\"$[infostore.used_theme]\\" \\"Right\\" \\$[infostore.colorset]\\"; \
+ echo AddToMenu DECOSET_popup \\"Unten\\" FuncChangeDecor \\"$[infostore.used_theme]\\" \\"Bottom\\" \\$[infostore.colorset]\\"; '
+
+##############################################
+## Menü-Buttonposition
+##############################################
+DestroyMenu recreate BUTTONPOS_popup
+AddToMenu 	     BUTTONPOS_popup "Position der Button-Leiste" Title
++ DynamicPopupAction Function FuncButtonPos
+
+DestroyFunc FuncButtonPos
+AddToFunc FuncButtonPos
++ I DestroyMenu recreate BUTTONPOS_popup
++ I AddToMenu BUTTONPOS_popup "Titelposition - aktuell: $[infostore.ShelfPos]" Title
++ I Piperead '\
+ echo AddToMenu BUTTONPOS_popup \\"Rechts\\" FuncChangeLayout \\"-0+0\\"; \
+ echo AddToMenu BUTTONPOS_popup \\"Links\\" FuncChangeLayout \\"+0+0\\"; '
+
+
+###########################################################################
+##  Hintergrundbild-Menü wird über WORK_MENU und Klick auf den
+##  Bildschirmhintergrund mit der rechten Maustaste aufgerufen
+###########################################################################
+
+DestroyMenu recreate BACKGROUND_popup
+AddToMenu BACKGROUND_popup "Monitor"   Title
++ DynamicPopupAction Function BACKGROUND_set BACKGROUND_popup
+
+DestroyFunc BACKGROUND_set
+AddToFunc   BACKGROUND_set
+ + I DestroyMenu recreate $0
+ + I AddToMenu $0 "Hintergrundbild"   Title
+ + I PipeRead '\
+ echo "AddToMenu $0 MissingSubmenuFunction WallpaperBrowser \\"$[HOME]/Wallpaper\\""; \
+ echo "AddToMenu $0 \\"Hintergrundbild einstellen\\" Popup \\"$[HOME]/Wallpaper\\""; \
+ echo "AddToMenu $0 \\"Hintergrund Optionen - Ausrichtung\\" Popup THISBKGR_OPTIONS_popup"; \
+ echo "AddToMenu $0 \\"Control-Center Hintergrund\\" Exec gnome-control-center background"; \
+echo "TEST (EnvMatch DT_ICONS_SHOW true)  AddToMenu $0 \\"Keine Icons am Hintergrund\\" Exec gsettings set org.gnome.desktop.background show-desktop-icons false"; \
+echo "TEST (EnvMatch DT_ICONS_SHOW false) AddToMenu $0 \\"Icons am Hintergrund zeigen\\" Exec gsettings set org.gnome.desktop.background show-desktop-icons true"; \
+'
+
+###########################################################################
+##  Colorsets auswählen
+###########################################################################
+DestroyMenu recreate COLORSET_popup
+AddToMenu COLORSET_popup "Farben"   Title
++ DynamicPopupAction Function FuncChooseColorset
+
+DestroyFunc FuncChooseColorset
+AddToFunc FuncChooseColorset
++ I DestroyMenu recreate COLORSET_popup
++ I AddToMenu COLORSET_popup "$[infostore.used_theme] - Colorset" Title
++ I Piperead 'for i in `ls $[FV_THEMEDIR]/colorsets/*`;do basename $i;done |while read i; do\
+	echo AddToMenu COLORSET_popup \\"$i\\" FuncChangeDecor \\"$[infostore.used_theme]\\" \\"$[infostore.tpos]\\" \\"$i\\"; \
+	done;'
+
+
+
+

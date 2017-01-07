@@ -1,0 +1,13 @@
+#-------------------------------------------------------------------------------
+#- functions
+#-------------------------------------------------------------------------------
+DestroyFunc demaximize-and-move-Top
+AddToFunc   demaximize-and-move-Top
++ "M" Current (Maximized) Maximize False
++ "M" TestRc (Match) WarpToWindow 50 20p
++ "M" AnimatedMove Warp
++ "D" Current (Maximized) Maximize False
++ "D" TestRc (Match) break
++ "D" Current (!Maximized) Piperead "echo AnimatedMove $$((($[vp.width] - $[w.width])/2))p 0"
++ "D" Current (!Maximized) Maximize grow grow
++ "C" Raise

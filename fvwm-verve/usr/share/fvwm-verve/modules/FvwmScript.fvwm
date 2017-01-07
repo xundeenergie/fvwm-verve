@@ -1,0 +1,5 @@
+#*FvwmScript: DefaultFont Shadow=0 1 SE:xft:Bitstream Vera Sans Mono:size=8
+*FvwmScript: DefaultFont $[small_font]
+*FvwmScript: DefaultColorset 10
+*FvwmScript: ActiveColorset 10
+

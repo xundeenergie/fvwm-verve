@@ -1,0 +1,49 @@
+#!/bin/sh
+export MPC="/usr/bin/mpc"
+export CON=" -h $MPD_IP -p $MPD_PORT"
+HOSTNAME=`cat /etc/hostname`
+
+if [ -e /dev/shm/fvwm-$USER/mpd-hosts.list.cache ] 
+then
+	cp /dev/shm/fvwm-$USER/mpd-hosts.list /dev/shm/fvwm-$USER/mpd-hosts.list.cache 
+else
+	touch /dev/shm/fvwm-$USER/mpd-hosts.list.cache
+fi
+
+avahi-browse _mpd._tcp -t --resolve -p 2>/dev/null|sed -n '/^=.*.IPv4.*Music Player Daemon/p' 2>/dev/null|sort|uniq -w 30|\
+awk -F";" '$7 ~ hn {print "+ \""$4":"$(NF-1)" ("$2")\" Function FuncSetNewMpd \""$7"\" \""$9"\" \""$4"\" \""$8"\""}\
+$(NF-3) !~ hn {print "+ \""$4" - "$(NF-2)":"$(NF-1)" ("$2")\" Function FuncSetNewMpd \""$7"\" \""$9"\" \""$4"\" \""$8"\""}' hn=`cat /etc/hostname`|grep -v "::"|sort > /dev/shm/fvwm-$USER/mpd-hosts.list
+echo + "\"mpd-$HOSTNAME (socket)\"" Function FuncSetNewMpd /run/mpd/socket 6600 $HOSTNAME /run/mpd/socket >> /dev/shm/fvwm-$USER/mpd-hosts.list
+cp /dev/shm/fvwm-$USER/mpd-hosts.list /dev/shm/fvwm-$USER/mpd-hosts.list.cache
+
+touch /dev/shm/fvwm-$USER/mpd-hosts.list.tmp
+touch $FVWM_USERDIR/.mpd-host.list.recent
+cat $FVWM_USERDIR/.mpd-host.list.recent /dev/shm/fvwm-$USER/mpd-hosts.list.cache |sort|uniq > /dev/shm/fvwm-$USER/mpd-hosts.list.tmp
+[ -e /dev/shm/fvwm-$USER/mpd-hosts.list.tmp ] && mv /dev/shm/fvwm-$USER/mpd-hosts.list.tmp $FVWM_USERDIR/.mpd-host.list.recent
+
+#if [ `grep -q $MPD_IP /dev/shm/fvwm-$USER/mpd-hosts.list.cache && echo 1 || echo 0` -eq 0 ]
+#then
+#	FvwmCommand "FuncSetNewMpd `avahi-browse _mpd._tcp -t --resolve -p | \
+#	sed -n '/^=.*.IPv4.*Music Player Daemon/p' 2>/dev/null |sort|uniq -w 30|head -n1|awk -F ";" '{print $7,$9,$4,$8}'`"	
+#	exit 0
+#fi
+
+#if test `grep -q "$MPD_IP\|$MPD_NAME" /dev/shm/fvwm-$USER/mpd-hosts.list.cache; echo $?`
+mpd_run=`$MPC -h $MPD_HOST -p $MPD_PORT status 2>&1`
+
+if [ "$mpd_run" = "error: No route to host" ] 
+then
+#	echo TEST1:$MPD_IP $MPD_PORT $MPD_HOST $MPD_NAME
+	FvwmCommand "FuncSetNewMpd /run/mpd/socket 6600 $HOSTNAME /run/mpd/socket "
+	:
+else
+#	echo TEST
+#	grep $MPD_IP /dev/shm/fvwm-$USER/mpd-hosts.list.cache
+#	grep $MPD_NAME /dev/shm/fvwm-$USER/mpd-hosts.list.cache
+#	echo $MPD_IP" : "$MPD_NAME
+#	FvwmCommand "FuncSetNewMpd /run/mpd/socket 6600 $HOSTNAME /run/mpd/socket "
+	:
+fi
+exit 0
+
+=;eth0;IPv4;mpd-tinakisti-system;Music Player Daemon;local;tinakisti.local;192.168.0.22;6600;

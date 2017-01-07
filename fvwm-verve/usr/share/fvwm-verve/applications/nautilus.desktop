@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Nautilus File-Explorer
+Comment=Classic session desktop file for desktop icons
+Exec=nautilus --no-desktop
+Icon=nautilus
+OnlyShowIn=GNOME;
+NoDisplay=false

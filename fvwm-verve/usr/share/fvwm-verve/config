@@ -1,0 +1,398 @@
+InfoStoreAdd fv_version 0.2.13.56
+
+
+
+#       mmmmmm m    mm     m m    m        m    m                            
+#       #      "m  m"#  #  # ##  ##        "m  m"  mmm    m mm  m   m   mmm  
+#       #mmmmm  #  # " #"# # # ## #         #  #  #"  #   #"  " "m m"  #"  # 
+#       #       "mm"  ## ##" # "" #  """    "mm"  #""""   #      #m#   #"""" 
+#       #        ##   #   #  #    #          ##   "#mm"   #       #    "#mm" 
+#
+#                                                          
+#                                                            .X    
+#                                                             :    
+#        :;t:.:;                    8                        .;    
+#            t     @t;             @S                       : :    
+#          ;.       tX                                      t..    
+#             ;     S                                       % S    
+#           t.t              88888 S@;%X   S8               S S    
+#           8 .    t           . .:X 8t; . %     S          ;.8    
+#            ; :   %   X%.t;   X. 8       :     .%  %%:%%   : 8    
+#            t .  ;8  ::   . @   t        X ;  ;. 8 :    .  %.8    
+#             . @ S  t ;;%;@8@   %         . @@.  ; ;t;%88   X     
+#             ..%X:  t          .S          :;;   .         8:S    
+#                S   @ .      8@            8;    :.S       .      
+#              ; ;     t:@..                        :.S ;          
+#                8                                                 
+#               @                                                  
+                                                            
+
+
+# Fvwm-Verve ist eine Weiterentwicklung meiner persönlichen FVWM-Konfiguration
+# Die ursprüngliche Konfiguration basiert auf mehreren Ideen und Konfigurationen von anderen.
+# Großen Danke gebührt dabei Bernhard Ömer, durch den ich überhaupt 
+# auf Linux und im speziellen auf FVWM gestoßen bin.
+# Weiters habe ich einige Ideen, Designs und Funktionen von Tavis Omahdis genialer Konfig auch übernommen.
+# Und ich habe einiges aus der Konfiguration von Fvwm-Nightshade übernommen.
+# Auch an dieser Stelle besten Dank an Thomas Funk & Co.
+#
+#
+# Das Applet zur Steuerung eines oder mehrerer mpd (Musik Player Daemon) habe ich selbst entwickelt, 
+# wie auch das Skript zur Anpassung des Volume-Icons in der Buttonleiste.
+# Das Skript Meteo habe ich aus dem Fvwm-Forum.
+# Die Skripte, welche ein Wettericon in FvwmButton zaubern, stammen aus eigener Feder (in Anlehnung an das originale Meteo-Skrip)
+#
+# Ich verzichte nicht gänzlich auf die Werkzeuge von Gnome, da diese z.T. wirklich gut gelungen sind.
+# Damit aber halte ich die Systemressourcen nicht ganz so gering im Verbrauch, wie bei Fvwm eigentlich zu erwarten wäre.
+# Auf modernen Computern sollten dies aber noch lange im Bereich des erträglichen sein.
+# Ausserdem ist wahlweise der Compositions-Manager "compton" im Einsatz, 
+# welcher moderne Eyecandy-Effekte (Transparente Fenster und Menüs) wesentlich besser darstellt, als die FVWM-internen Funktionen.
+
+
+
+###########################################################
+##### Einlesen der Systemverzeichnisse
+###########################################################
+
+#==========================================================
+# Ksh has my favourite shell syntax, so use it if it exists.
+#==========================================================
+Test (f /bin/dash) ExecUseShell /bin/dash
+
+#==========================================================
+#Grundlegende Variablen setzen
+#==========================================================
+ModulePath /usr/lib/fvwm/$[version.num]
+
+###########################################################
+# 1.2.3 ImagePath
+###########################################################
+ImagePath $[FVWM_USERDIR]/icons
+ImagePath +:$[FV_SYSTEMDIR]/icons
+#ImagePath +:$[FV_SYSTEMDIR]/icons/Flat-SVG/scalable/apps
+#ImagePath +:$[FV_SYSTEMDIR]/icons/Flat-SVG/scalable/devices
+#ImagePath +:$[FV_SYSTEMDIR]/icons/Flat-SVG/scalable/apps/filesystems
+#ImagePath +:$[FV_SYSTEMDIR]/icons/Flat-SVG/scalable/apps/mimetypes
+ImagePath +:/usr/share/empathy/icons/hicolor/scalable/
+ImagePath +:/usr/share/openclipart/svg/computer/icons/flat-theme/
+ImagePath +:$[HOME]/icons
+#ImagePath +:/usr/share/icons/$[fvwm_ICON_THEME]/16x16/actions
+ImagePath +:/usr/share/app-install/icons/
+ImagePath +:~/.fvwm/wm-icons/
+PipeRead '/usr/bin/fv-parse-icon-theme Flat-SVG'
+PipeRead '/usr/bin/fv-parse-icon-theme gnome-colors-common'
+PipeRead '/usr/bin/fv-parse-icon-theme fvwm'
+PipeRead '/usr/bin/fv-parse-icon-theme HighContrast'
+PipeRead '/usr/bin/fv-parse-icon-theme hicolor'
+
+#***********************************************************************
+# 1.2.2 Environment settings
+#***********************************************************************
+# These settings are rolled out to $[FVWM_USERDIR]/.settings
+# They can configured with the FV-BaseSetup (Later!!!)
+PipeRead '[ -e $[FVWM_USERDIR]/.settings ] && fv-update-settings || cp $[FV_SYSTEMDIR]/.settings $[FVWM_USERDIR]/'
+Load .settings
+FuncSetThemeDir $[infostore.used_theme]
+
+#DestroyFunc FuncLoadFunctions
+#AddToFunc   FuncLoadFunctions
+#Test (f $[FV_SYSTEMDIR]/functions.d/) + I PipeRead `ls $[FV_SYSTEMDIR]/functions.d/[0-9]*-funcs.fvwm|while read i;do echo Load "$i";done`
+##Test (f $[FVWM_USERDIR]/functions.d/) + I PipeRead `ls $[FVWM_USERDIR]/functions.d/[0-9]*-funcs.fvwm|while read i;do echo Load "$i";done`
+#+ I Exec echo DEBUG
+
+Load /functions.d/functions.fvwm
+
+###########################################################
+# You can set simple options like this, using variables.
+# If you need something more complex, you can get your configuration 
+# pre-processed with FvwmCPP or FvwmM4.
+###########################################################
+
+#==========================================================
+# Für Admins und normale User verschiedene Konfigurationen
+# IS_ADMIN = 0 bedeutet User ist Mitglied der Gruppe sudo und damit Admin
+# IS_ADMIN = 1 Errorcode ist ein, Mitglied kein Superuser
+#==========================================================
+PipeRead 'echo SetEnv IS_ADMIN `groups|grep -q "  *sudo  *\\|  *admin  *\\|  *adm  *"; echo $?`'
+
+SetEnv fvwm_video_path $[HOME]/Videos
+#SetEnv fvwm_video_exec "mplayer -vo x11 > /dev/null"
+SetEnv	fvwm_video_exec "$[infostore.videoplayer]"
+
+SetEnv fvwm_audio_path $[HOME]/Musik
+SetEnv fvwm_audio_exec "$[infostore.audioplayer]"
+
+SetEnv fvwm_image_path $[HOME]/Bilder
+SetEnv fvwm_image_exec "$[infostore.imageviewer] 
+
+SetEnv fvwm_wallpaper_dir $[HOME]/Wallpaper
+#SetEnv fvwm_wallpapersetter "fbsetbg -f"
+#SetEnv fvwm_wallpapersetter "gsettings set org.gnome.desktop.background picture-uri file://"
+SetEnv fvwm_wallpaperOptionsetter "gsettings set org.gnome.desktop.background picture-options"
+SetEnv fvwm_wallpapersetter "/usr/bin/display -resize $[vp.width]x$[vp.height]\! -window root "
+
+SetEnv fvwm_ICON_THEME gnome
+
+PipeRead 'echo SetEnv FVWM_HOST `cat /etc/hostname`'
+
+SetEnv fvwm_icons $[HOME]/icons
+
+PipeRead 'echo SetEnv USERFULL `getent passwd $USER | cut -d ':' -f 5 | cut -d ',' -f 1`'
+
+
+##################################################################
+## Grundsätzliches Look & Feel                                  ##
+##################################################################
+
+##################################################################
+## Look                                                         ##
+##################################################################
+
+#=======================================================================
+# Colorsets
+#=======================================================================
+#http://fvwm-themes.sourceforge.net/doc/colorsets
+#Colorset N |          Meaning           |           Usage Examples
+#-----------+----------------------------+-------------------------------------
+#         0 | default                    | feedback windows, FvwmScroll
+#         1 | inactive window            | window/icon titles, windows in Pager
+#         2 | active window              | window/icon titles, windows in Pager
+#         3 | inactive borders           | window borders (may copy 1)
+#         4 | active borders             | window borders (may copy 2)
+#         5 | inactive menu item         | menus (may have pixmap or gradient)
+#         6 | active menu item           | menus (only bg/fg used)
+#         7 | greyed menu item           | menus (only fg used)
+#         8 | reserved                   | for the fvwm-themes future use
+#         9 | reserved                   | for the fvwm-themes future use
+#        10 | modules, default           | Button Bar, Pager, other modules
+#        11 | modules, default hilight   | Button Bar
+#        12 | modules, special           | gradient for IconMan/IconBox
+#        13 | modules, swallowed apps    | bg, fg, sh, hi for xclock/xload etc.
+#        14 | modules, default #2        | alternative for Pager, Button Bar
+#        15 | modules, default hilight #2| alternative for Pager
+#        16 | modules, balloons          | TaskBar, Pager
+#        17 | modules, winlist, standard | item of IconMan, WinList, TaskBar
+#        18 | modules, winlist, active   | --.--
+#        19 | modules, winlist, iconified| --.--
+#        20 | modules, winlist, pointed  | --.--
+#        21 | modules, ident             | FvwmIdent
+#        22 | modules, console           | FvwmConsole
+#        23 | modules, transparent       | Button Bar
+#        24 | modules, reserved          | for the fvwm-themes future use
+#        25 | modules, reserved          | for the fvwm-themes future use
+#        26 | reserved                   | for the fvwm-themes future use
+#        27 | reserved                   | for the fvwm-themes future use
+#        28 | reserved                   | for the fvwm-themes future use
+#        29 | dynamical/temporary        | tools for choosing/previewing colors
+#        30 | regular terminal           | xterm/rxvt or any other terminal
+#        31 | admin terminal             | terminal for root (su)
+#        32 | remote terminal            | terminal with ssh/rsh/telnet
+#        33 | viewer terminal            | man, less, tail -f
+#        34 | console application        | top, editor
+#        35 | dialog main area           | FvwmScript, FvwmForm, xmessage
+#        36 | dialog text area           | FvwmScript, FvwmForm, xmessage
+#        37 | reserved                   | for the fvwm-themes future use
+#        38 | reserved                   | for the fvwm-themes future use
+#        39 | reserved                   | for the fvwm-themes future use
+
+Colorset 1 fg white, bg #3d3d3d
+Colorset 2 fg white, bg #3d3d3d
+Colorset 3 fg white, bg #3d3d3d
+Colorset 4 fg white, bg #3d3d3d
+#Colorset 5 fg white, bg #3d3d3d
+#Colorset 6 fg white, bg #3d3d3d
+Colorset 5 fg white, bg #3d3d3d, hi #3d3d3d, sh #b5cd75
+Colorset 6 fg black, bg #6b83b5, hi #dcdcdc, sh #dcdcdc
+Colorset 7 fg white, bg #3d3d3d
+Colorset 8 fg white, bg #3d3d3d
+Colorset 9 fg white, bg #3d3d3d
+#Colorset 10 fg white, bg #3d3d3d
+Colorset 10 fg white, bg #3d3d3d, hi #3d3d3d, sh #b5cd75
+Colorset 11 fg white, bg #3d3d3d
+Colorset 12 fg white, bg #3d3d3d
+Colorset 13 fg white, bg #3d3d3d
+Colorset 14 fg white, bg #3d3d3d
+Colorset 15 fg white, bg #3d3d3d
+Colorset 16 fg black, bg #e7e7e7, Plain
+Colorset 17 fg white, bg #3d3d3d
+Colorset 18 fg white, bg #3d3d3d
+Colorset 19 fg white, bg #3d3d3d
+Colorset 20 fg white, bg #3d3d3d
+Colorset 21 fg white, bg #3d3d3d
+Colorset 22 fg white, bg #3d3d3d
+Colorset 23 fg white, bg #3d3d3d
+Colorset 24 fg white, bg #3d3d3d
+Colorset 25 fg white, bg #3d3d3d
+Colorset 26 fg white, bg #3d3d3d
+Colorset 27 fg white, bg #3d3d3d
+Colorset 28 fg white, bg #3d3d3d
+Colorset 29 fg white, bg #3d3d3d
+Colorset 30 fg white, bg #3d3d3d
+Colorset 31 fg white, bg #3d3d3d
+Colorset 32 fg white, bg #3d3d3d
+Colorset 33 fg white, bg #3d3d3d
+Colorset 34 fg white, bg #3d3d3d
+Colorset 35 fg white, bg #3d3d3d
+Colorset 36 fg white, bg #3d3d3d
+Colorset 37 fg white, bg #3d3d3d
+Colorset 38 fg white, bg #3d3d3d
+Colorset 39 fg white, bg #3d3d3d
+
+# Wird kein Colorset gefunden, werden obige Standardeinstellungen verwendet.
+
+Load $[FV_THEMEDIR]/colorsets/$[infostore.colorset]
+
+
+#=======================================================================
+# Fonts
+#=======================================================================
+# For window titles, another for icons, and another for the menus
+DefaultFont "Shadow=0 1 SE:xft:$[infostore.default_font]:style=$[infostore.default_fontstyle]:pixelsize=$[infostore.default_fontsize]"
+WindowFont "Shadow=0 1 SE:xft:$[infostore.window_font]:style=$[infostore.window_fontstyle]:pixelsize=$[infostore.window_fontsize]"
+IconFont "Shadow=0 1 SE:xft:$[infostore.icon_font]:style=$[infostore.icon_fontstyle]:pixelsize=$[infostore.icon_fontsize]"
+
+SetEnv small_font "xft:$[infostore.small_font]:style=$[infostore.small_fontstyle]:pixelsize=$[infostore.small_fontsize]"
+
+Style * Font "xft:$[infostore.used_font]:pixelsize=$[infostore.fontsize]"
+
+Style * IconFont "xft:monospace:pixelsize=$[infostore.fontsize]:Medium"
+
+
+#=======================================================================
+# Cursors
+#=======================================================================
+#CursorStyle ROOT            left_ptr                black    white
+#CursorStyle TITLE           top_left_arrow          black    white
+#CursorStyle DEFAULT         top_left_arrow          black    white
+#CursorStyle SYS             hand2                   black    white
+#CursorStyle MENU            top_left_arrow          black    white
+#CursorStyle POSITION        top_left_corner         black    white
+#CursorStyle MOVE            fleur                   black    white
+#CursorStyle RESIZE          sizing                  black    white
+#CursorStyle WAIT            watch                   black    white
+#CursorStyle SELECT          crosshair               black    white
+#CursorStyle DESTROY         pirate                  black    white
+#CursorStyle TOP             top_side                black    white
+#CursorStyle RIGHT           right_side              black    white
+#CursorStyle BOTTOM          bottom_side             black    white
+#CursorStyle LEFT            left_side               black    white
+#CursorStyle TOP_LEFT        top_left_corner         black    white
+#CursorStyle TOP_RIGHT       top_right_corner        black    white
+#CursorStyle BOTTOM_LEFT     bottom_left_corner      black    white
+#CursorStyle BOTTOM_RIGHT    bottom_right_corner     black    white
+#CursorStyle TOP_EDGE        top_side                black    white
+#CursorStyle RIGHT_EDGE      right_side              black    white
+#CursorStyle BOTTOM_EDGE     bottom_side             black    white
+#CursorStyle LEFT_EDGE       left_side               black    white
+#CursorStyle STROKE          plus                    black    white
+
+######
+# Use an arrow rather than the `X` cursor on the root window.
+#################
+CursorStyle root top_left_arrow
+CursorStyle stroke hand2
+
+BusyCursor DynamicMenu False, ModuleSynchronous true, Read false, Wait true
+
+#=======================================================================
+# Decoration
+#=======================================================================
+Load style.fvwm
+
+##################################################################
+## Feel                                                         ##
+##################################################################
+
+#=======================================================================
+# Keybindings
+#=======================================================================
+
+#=======================================================================
+# Mousbindings
+#=======================================================================
+
+#=======================================================================
+# Menüs
+#=======================================================================
+
+Load menus.d/menu-window.fvwm
+Load menus.d/menu-buttons.fvwm
+TEST (EnvMatch IS_ADMIN 0) Load menus.d/menu-admin-workmenu.fvwm
+TEST (EnvMatch IS_ADMIN 1) Load menus.d/menu-workmenu.fvwm
+
+
+##################################################################
+## Thema laden. Dekoration, Mousbindings, Funktionen, Colorsets ##
+##################################################################
+
+#=======================================================================
+# 2.5 Grundsätzliche Key/Mousebindings (auch ohne Thema verwendbar!!)
+#=======================================================================
+Load keys_mouse.fvwm
+
+#=======================================================================
+# 2.5 Theme related decorations
+#=======================================================================
+# In the decor file there a all decoration stuff needed for the specific
+# theme like
+# window bar: buttons, titlebar, ...
+# Menus: for the Root and WinOps menu style
+# mouse bindings for the buttons
+#-----------------------------------------------------------------------
+#Load $[FV_THEMEDIR]/config
+
+
+########################################################################
+
+
+##########################################################
+##### MPD Music Player Daemon Host-Einstellungen Default##
+##########################################################
+###  #Wird nur benötigt, wenn das Applet in eine andere 
+###  #Konfiguration eingefügt wird. Hier über Infostore gelöst!!
+###
+####SetEnv MPD_HOST localhost
+####SetEnv MPD_PORT 6600
+### 
+### Setzen von MPD_HOST und MPD_PORT für den Localhost entsprechend dynamisch mit avahi-browse
+
+#PipeRead 'echo SetEnv HOSTNAME `head -n1 /etc/hostname`'
+#PipeRead "echo SetEnv lochost `avahi-browse --all -t -p -f --resolve|grep \"Music Player Daemon\"|grep '=.*IPv4'|grep $[HOSTNAME]|awk -F \";\" 'BEGIN{OFS=\";\"}{print $(NF-3),$(NF-1)}'`" 
+#PipeRead "echo SetEnv MPD_HOST `echo \"$[lochost]\"|awk -F\";\" '{print $(NF-1)}'`"
+#PipeRead "echo SetEnv MPD_PORT `echo \"$[lochost]\"|awk -F\";\" '{print $(NF)}'`"
+#FuncWriteSetEnvToFileAndSet "MPD_HOST" $[MPD_HOST] $[FVWM_USERDIR]/.settings
+#FuncWriteSetEnvToFileAndSet "MPD_PORT" $[MPD_PORT] $[FVWM_USERDIR]/.settings
+#FuncPrintMsg MPD_PORT $[MPD_PORT]
+
+########################################################
+## Module-Config                                      ##
+########################################################
+
+
+#=====================================================#
+#FvwmPager
+#=====================================================#
+Load modules/FvwmPager.fvwm
+
+#=====================================================#
+#FvwmEvent
+#=====================================================#
+Load modules/FvwmEvent.fvwm
+
+#=====================================================#
+#FvwmAnimate
+#=====================================================#
+Load modules/FvwmAnimate.fvwm
+
+#=====================================================#
+#FvwmButtons-Shelf
+#=====================================================#
+Load modules/FvwmButtons-FvwmShelf.fvwm
+Load modules/FvwmButtons-FvwmPowerButton.fvwm
+
+
+IgnoreModifiers L25
+
+Load buttons.d/button.fvwm
+Load fvwm2rc-taviso
+Load $[FV_THEMEDIR]/config

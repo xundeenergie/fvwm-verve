@@ -1,0 +1,4 @@
+#!/bin/sh
+MPC=/usr/bin/mpc
+echo $1 " : " $MPC
+$MPC -h "localhost" add $1; $MPC -h "localhost" play `$MPC -h "localhost" playlist|wc -l`

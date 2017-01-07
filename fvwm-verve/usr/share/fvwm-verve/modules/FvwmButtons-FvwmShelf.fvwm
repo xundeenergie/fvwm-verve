@@ -1,0 +1,10 @@
+DestroyModuleConfig FvwmShelf: *
+*FvwmShelf: Font "xft:$[infostore.default_font]:style=$[infostore.default_fontstyle]:pixelsize=$[infostore.default_fontsize]"
+*FvwmShelf: Colorset 10
+*FvwmShelf: Frame 0
+*FvwmShelf: Padding 3 0
+*FvwmShelf: Columns 22
+*FvwmShelf: Rows 80
+PipeRead "echo *FvwmShelf: Geometry 126x$$(($[vp.height]-$[BWwidth]*2))$[infostore.ShelfPos]"
+Style FvwmBanner NoTitle, StaysOnTop, WindowListSkip, CirculateSkip
+Style FvwmShelf NoTitle, Sticky, WindowListSkip, CirculateSkip, NeverFocus, FixedSize

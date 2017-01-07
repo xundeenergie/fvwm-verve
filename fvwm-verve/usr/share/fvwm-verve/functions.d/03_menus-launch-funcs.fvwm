@@ -1,0 +1,77 @@
+###############################################################################
+## >>> WALLPAPER BROWSER
+###############################################################################
+# (taviso's config)
+# If you have eog (Eye of Gnome) installed, clicking the title will start a slide show.
+###############
+DestroyFunc WallpaperBrowser
+AddToFunc WallpaperBrowser
+ + I PipeRead 'test ! -d "$0/.thumbs" && mkdir "$0/.thumbs"; \
+    for i in "$0/"*; do \
+        test -f "$0/.thumbs/${i##*/}" \
+            -a "${i}" -ot "$0/.thumbs/${i##*/}" || { \
+                convert -quality 0 -scale 67 "${i}" "png:$0/.thumbs/${i##*/}" 2>/dev/null \
+                    || continue; \
+            }; \
+    done; \
+    fvwm-menu-directory --icon-title folder_view.png --icon-file __PIXMAP__ \
+    --icon-dir folder_paper_closed.png --dir "$0" --exec-file "^$[FV_SYSTEMDIR]/scripts/setbackground " \
+    --exec-t="^eog *" | sed -e "s#FuncFvwmMenuDirectory#WallpaperBrowser#g" \
+    -e "s#__PIXMAP__\\(.*\\)\\\"\\(.*/\\)\\(.*\\)\\\"#\\2.thumbs/\\3\\1\\2\\3#g" -e "s@file:// @file://@g"'
+#+ I + "Keine Icons am Hintergrund" Exec gsettings set org.gnome.desktop.background show-desktop-icons false
+#+ I + "Icons am Hintergrund zeigen" Exec gsettings set org.gnome.desktop.background show-desktop-icons true
+TEST (EnvMatch DT_ICONS_SHOW true) + I + "Keine Icons am Hintergrund" Exec gsettings set org.gnome.desktop.background show-desktop-icons false
+TEST (EnvMatch DT_ICONS_SHOW false) + I + "Icons am Hintergrund zeigen" Exec gsettings set org.gnome.desktop.background show-desktop-icons true
+
+
+##############################################################################
+## >>> MODULE
+##############################################################################
+# (jakobs config)
+DestroyFunc ModuleBrowser
+AddToFunc ModuleBrowser I PipeRead 'fvwm-menu-directory --icon-title folder_view.png --icon-dir folder_paper_closed.png \
+		--dir $[FVWM_MODULEDIR] --title "" --exec-file "^Module" |\
+		sed -e "s#Exec xterm -e##g" -e "s#$[FVWM_MODULEDIR]/##g" -e "s#Fvwm##1" -e "s#\\"##3" -e "s#\\"##3"' 
+
+##############################################################################
+## >>> MANPAGES
+##############################################################################
+# (jakobs config)
+DestroyFunc ManpageBrowser
+AddToFunc ManpageBrowser I PipeRead 'fvwm-menu-directory --icon-title folder_view.png --icon-dir folder_paper_closed.png \
+		--dir "/usr/share/man/man1" --title "" --exec-file "^xterm -e man" |\
+		grep "^Destroy\\|^AddTo\\|^+ Dynamic\\|^+ Missing\\|^+ \\"Fvwm*"|sed -e "s#\\.1\\.gz##g" -e "s#/usr/share/man/man1/##g" -e "s#\\"##3" -e "s#\\"##3" '
+		
+
+DestroyFunc FilesBrowser
+AddToFunc FilesBrowser
++ I DestroyMenu ConfigFVWMMenu
++ I AddToMenu ConfigFVWMMenu
++ I AddToMenu ConfigFVWMMenu "Fvwm-Config-Files" Title
++ I + DynamicPopDownAction DestroyMenu ConfigFVWMMenu
++ I PipeRead 'echo "+ \"config%noicon-yellow.png%\" Exec exec $[infostore.default_editor] ~/.fvwm/config" ; find $[FVWM_USERDIR]/ -maxdepth 1 -iname \"*\\.fvwm\"|sort|while read i; \
+do echo "+ \"`basename $i`%noicon-green.png%\" Exec exec $[infostore.default_editor] $i"; done'
++ I PipeRead 'find $[FVWM_USERDIR]/ -mindepth 2 -iname \"*\\.fvwm\"|sort|while read i; \
+do echo "+ \"`basename $i`%noicon-green.png%\" Exec exec $[infostore.default_editor] $i"; done'
+
+
+DestroyFunc FuncMenuGreeterSwitch
+AddToFunc   FuncMenuGreeterSwitch
++ I PipeRead `/bin/sh -c '[ "$(cat /etc/X11/default-display-manager 2>/dev/null)" = "/usr/sbin/kdm" ] && printf %s "SetEnv DM kdm"'`
++ I PipeRead `/bin/sh -c '[ "$(cat /etc/X11/default-display-manager 2>/dev/null)" = "/usr/sbin/lightdm" ] && printf %s "SetEnv DM lightdm"'`
++ I PipeRead `/bin/sh -c '[ "$(cat /etc/X11/default-display-manager 2>/dev/null)" = "/usr/sbin/gdm3" ] && printf %s "SetEnv DM gdm3"'`
++ I FuncPrintMsg "DISPLAYM" $DM
++ I Exec exec xscreensaver-command -lock
+Test (EnvMatch DM lightdm) + I Exec exec /usr/bin/dm-tool switch-to-greeter &
+Test (EnvMatch DM kdm) + I Exec exec /usr/bin/kdmctl reserve &
+Test (EnvMatch DM gdm3) + I Exec exec /usr/bin/gdmflexiserver & 
+
+DestroyFunc FuncMenuUserSwitch
+AddToFunc   FuncMenuUserSwitch
++ I PipeRead `/bin/sh -c '[ "$(cat /etc/X11/default-display-manager 2>/dev/null)" = "/usr/sbin/kdm" ] && printf %s "SetEnv DM kdm"'`
++ I PipeRead `/bin/sh -c '[ "$(cat /etc/X11/default-display-manager 2>/dev/null)" = "/usr/sbin/lightdm" ] && printf %s "SetEnv DM lightdm"'`
++ I PipeRead `/bin/sh -c '[ "$(cat /etc/X11/default-display-manager 2>/dev/null)" = "/usr/sbin/gdm3" ] && printf %s "SetEnv DM gdm3"'`
++ I Exec exec xscreensaver-command -lock
+Test (EnvMatch DM lightdm) + I Exec exec /usr/bin/dm-tool switch-to-user $0 &
+Test (EnvMatch DM kdm) + I Exec exec /usr/bin/kdmctl reserve &
+Test (EnvMatch DM gdm3) + I Exec exec /usr/bin/gdmflexiserver & 

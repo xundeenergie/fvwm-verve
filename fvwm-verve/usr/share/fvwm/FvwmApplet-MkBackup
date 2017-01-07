@@ -1,0 +1,130 @@
+WindowTitle {MkBackup}
+WindowSize 360 330		# Taille
+WindowPosition 191 50		# Position
+
+Init 
+  Begin
+  End
+
+Widget 3
+Property
+ Title { Welche Art von Backup soll angestoßen werden? }
+ Position 50  8
+ Flags NoReliefString NoFocus
+ Type ItemDraw
+ Value 0
+ Font -adobe-helvetica-bold-r-*-*-12-*
+Main
+ Case message of
+  SingleClic :
+  Begin
+  End
+End
+
+
+Widget 4
+Property
+ Title {Backup anstossen}
+ Size 60 28
+ Position 200 225
+ Flags NoReliefString
+ Type PushButton
+ Value 1
+Main
+ Case message of
+  SingleClic :
+  Begin
+    Do {Exec gksudo /usr/local/bin/mkbackup-} $ToDo
+  End
+End
+
+Widget 5
+Property
+ Title {Cancel}
+ Size 60 28
+ Position 40 225
+ Flags NoReliefString
+ Type PushButton
+ Value 1
+Main
+ Case message of
+  SingleClic :
+  Begin
+   Quit
+  End
+End
+
+ 
+Widget 6
+Property
+ Title {Stündlich}
+ Position 90 45
+ Flags NoReliefString
+ Type RadioButton
+ Value 0
+Main
+ Case message of
+  SingleClic :
+  Begin
+   ChangeValue 7 0
+   ChangeValue 8 0
+   ChangeValue 9 0
+   Set $ToDo = hourly
+  End
+End
+
+Widget 7
+Property
+ Title {Täglich}
+ Position 90 75
+ Flags NoReliefString
+ Type RadioButton
+ Value 0
+Main
+ Case message of
+  SingleClic :
+  Begin
+   ChangeValue 6 0
+   ChangeValue 8 0
+   ChangeValue 9 0
+   Set $ToDo = daily
+  End
+End
+
+Widget 8
+Property
+ Title {Wöchentlich}
+ Position 90 105
+ Flags NoReliefString
+ Type RadioButton
+ Value 0
+Main
+ Case message of
+  SingleClic :
+  Begin
+   ChangeValue 6 0
+   ChangeValue 7 0
+   ChangeValue 9 0
+   Set $ToDo = weekly
+  End
+End
+
+Widget 9
+Property
+ Title {Monatlich}
+ Position 90 135
+ Flags NoReliefString
+ Type RadioButton
+ Value 0
+Main
+ Case message of
+  SingleClic :
+  Begin
+   ChangeValue 6 0
+   ChangeValue 7 0
+   ChangeValue 8 0
+   Set $ToDo = monthly
+  End
+End
+
+ 

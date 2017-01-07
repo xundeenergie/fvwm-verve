@@ -1,0 +1,20 @@
+[Desktop Entry]
+Name=Editor
+GenericName=Text Editor
+Icon=gedit-icon
+Exec=editor
+Id=Editor
+OnlyShowIn=FvwmButton
+
+[Desktop Action Mouse 1]
+Exec=FvwmEditor
+OnlyShowIn=FvwmButton
+
+[Desktop Action Mouse 2]
+Exec=Menu select_EDITOR_popup
+OnlyShowIn=FvwmButton
+
+[Desktop Action Mouse 3]
+Exec=Menu default_EDITOR_popup
+OnlyShowIn=FvwmButton
+

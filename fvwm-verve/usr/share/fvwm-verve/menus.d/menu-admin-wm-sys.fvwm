@@ -1,0 +1,46 @@
+#################################################################################
+## Abschnitt System-Tools
+#################################################################################
+
+AddToMenu WORK_MENU_popup "System-Tools" Title
+ + "Netzwerk"%preferences-system-network.png%			Popup Netzwerk
+TEST (x netstat)			+ "route"				Exec xterm -e 'watch netstat -r'&
+ + ""			Nop
+ + "Virtuelle Maschinen"	Popup VirtM
+TEST (x gnome-control-center) + "Gnome-Control-Center"%control-center2.svg:$[MIconSize]%	Exec /usr/bin/gnome-control-center
+TEST (x system-config-printer) + "Drucker-Verwaltung"%gnome-dev-printer.svg:$[MIconSize]%	Exec /usr/bin/system-config-printer
+TEST (x /usr/bin/gtklp) + "Drucken"%gnome-dev-printer.svg:$[MIconSize]%	Exec /usr/bin/gtklp
+#TEST (x /usr/bin/xsane)		+ "Scanner"%xsane.svg:$[MIconSize]%		Exec /usr/bin/xsane
+TEST (x /usr/bin/simple-scan)		+ "Schnell-Scannen"%xsane.svg:$[MIconSize]%		Exec /usr/bin/simple-scan
+TEST (x /usr/sbin/synaptic) + "Synaptic-Paketverwaltung"%synaptic.svg:$[MIconSize]%	Function FvwmSynaptic
+TEST (x /usr/bin/update-manager) + "Update Manager"%update-manager.png%	Exec /usr/bin/update-manager
+TEST (x /usr/bin/sysinfo) + "Systeminformationen"%gnome-info.svg:$[MIconSize]% Exec /usr/bin/sysinfo
++ "" Nop
+ + "mounts zeigen"%gnome-dev-harddisk.svg:$[MIconSize]%		Exec xterm -e 'watch mount'&
+TEST (f /dev/mapper/mars) + %noicon-green.png%"mars einhängen"	Exec exec /bin/systemctl stop var-cache-backup.mount
+TEST (!f /dev/mapper/mars) + %noicon-red.png%"mars aushängen"	Exec exec  /bin/systemctl start var-cache-backup.mount
+TEST (f /dev/disk/debian-mobile) TEST (!f /tmp/virt-mounted) + %noicon-green.png%"virt einhängen"	Exec sudo /usr/local/bin/mount-vol /virt
+TEST (f /dev/disk/debian-mobile) TEST (f /tmp/virt-mounted) + %noicon-red.png%"virt aushängen"	Exec sudo /usr/local/bin/umount-vol /virt
+TEST (f /dev/disk/grml-rescue) TEST (!f /tmp/grml-mounted) + %noicon-green.png%"grml einhängen"	Exec sudo /usr/local/bin/mount-vol /grml
+TEST (f /dev/disk/grml-rescue) TEST (f /tmp/grml-mounted) + %noicon-red.png%"grml aushängen"	Exec sudo /usr/local/bin/umount-vol /grml
+TEST (!f /tmp/gmx-mounted) + %noicon-green.png%"gmx einhängen"	Exec /usr/local/bin/mount-vol /home/jakob/gmx
+TEST (f /tmp/gmx-mounted) + %noicon-red.png%"gmx aushängen"	Exec /usr/local/bin/umount-vol /home/jakob/gmx
+
+###############################################################################
+## SUBMENÜS zum Abschnitt "System-Tools"
+###############################################################################
+
+DestroyMenu recreate Netzwerk
+AddToMenu Netzwerk "Netzwerk" Title
+TEST (!f /var/run/ppp0.pid) TEST (x $[FV_SYSTEMDIR]/scripts/pon) + "Orange on"		Exec $[FV_SYSTEMDIR]/scripts/pon
+TEST (f /var/run/ppp0.pid) TEST (x $[FV_SYSTEMDIR]/scripts/poff) PipeRead 'echo "+ \\"`cat $[HOME]/.ppp_provider` off\\"	Exec $[FV_SYSTEMDIR]/scripts/poff"'	
+AddToMenu Netzwerk "Fernwartung" Title
+TEST (EnvMatch FW_RUN 1) + %noicon-green.png%"Fernwartung aktivieren" Exec /usr/bin/x-terminal-emulator -e /usr/local/bin/ssh-fernwartung-up
+TEST (EnvMatch FW_RUN 0) + %noicon-red.png%"Fernwartung deaktivieren" Exec /usr/local/bin/ssh-fernwartung-down
+TEST (x /usr/bin/x11vnc) + ""				Nop  
+TEST (x /usr/bin/x11vnc) + "Fenster auswählen und freigeben (VNC)" Exec urxvtc -e /usr/bin/x11vnc -id pick -localhost
+TEST (x /usr/bin/x11vnc) + "Desktop freigeben (VNC)"	Exec urxvtc -e /usr/bin/x11vnc -localhost 
+TEST (x /usr/bin/vinagre) + "" Nop 
+TEST (x /usr/bin/vinagre) + "Anderen Desktop ansehen (VNC-Viewer)" Exec /usr/bin/vinagre localhost:15900
+ + "" Nop
+PipeRead 'fv-menu-from-file -o Netzwerk $[FVWM_USERDIR]/menus.d/".LOGINS_popup.menu.fvwm"'

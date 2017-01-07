@@ -1,0 +1,19 @@
+TITEL|Eigene Anwendungen
+Terminal|$[infostore.defaul_terminal]|Function FvwmXTerm||terminal.png
+Root-Terminal|$[infostore.defaul_terminal]|Function RootShell||root-terminal.png
+Bildbearbeitung (Gimp)|gimp|Function FvwmGimp||gnome-gimp.svg:$[MIconSize]
+Bildbearbeitung (Vektor, Inkskape)|inkscape|Function FvwmInkscape||inkscape.svg:$[MIconSize]
+Fotoverwaltung|shotwell|Function FvwmPictureManager||shotwell.svg:$[MIconSize]
+|Nop
+skype.desktop
+pidgin.desktop
+|Nop
+Bluetooth-Verbindungen|bluetooth-applet|bluetooth-applet||bt-logo.png
+|Nop
+Screencast|gtk-recordmydesktop|gtk-recordmydesktop||
+|Nop
+nedit.desktop|default_editor
+gvim.desktop|default_editor
+|Nop
+totem.desktop|default_video
+vlc.desktop|default_video

@@ -1,0 +1,7 @@
+#!/bin/sh
+echo "Unmounten von: " |logger -t mount
+sudo umount /home/jakob/trackoptimizer/home/ && { echo "trackoptimizer/home erfolgreich ungemountet"|logger -t ssh-mount ; } || { echo "unmounten von trackoptimizer/home fehlgeschlagen" |logger -t ssh-mount ; }  
+echo -n trackoptimizer/messwagen
+sudo umount /home/jakob/trackoptimizer/messwagen/ && echo erfolgreich || echo fehlgeschlagen!!!
+echo -n trackoptimizer/opt
+sudo 	umount /home/jakob/trackoptimizer/opt/ && echo erfolgreich || echo fehlgeschlagen!!!

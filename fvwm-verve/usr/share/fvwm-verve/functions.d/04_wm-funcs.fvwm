@@ -1,0 +1,394 @@
+DestroyFunc demaximize-and-move-Top
+AddToFunc   demaximize-and-move-Top
++ "M" Current (Maximized) Maximize False
++ "M" TestRc (Match) WarpToWindow 50 20p
++ "M" AnimatedMove Warp
++ "D" Current (Maximized) Maximize False
++ "D" TestRc (Match) break
++ "D" Current (!Maximized) Piperead "echo AnimatedMove $$((($[vp.width] - $[w.width])/2))p 0"
++ "D" Current (!Maximized) Maximize grow grow
++ "C" Raise
+
+DestroyFunc demaximize-and-move-Left
+AddToFunc   demaximize-and-move-Left
++ "M" Current (Maximized) Maximize False
++ "M" TestRc (Match) WarpToWindow 20p 30
++ "M" AnimatedMove Warp
++ "D" Current (Maximized) Maximize False
++ "D" TestRc (Match) break
++ "D" Current (!Maximized) Piperead "echo AnimatedMove $$((($[vp.width] - $[w.width])/2))p 0"
++ "D" Current (!Maximized) Maximize grow grow
++ "C" Raise
+
+DestroyFunc demaximize-and-move-Right
+AddToFunc   demaximize-and-move-Right
++ "M" Current (Maximized) Maximize False
++ "M" TestRc (Match) WarpToWindow -20p 20
++ "M" AnimatedMove Warp
++ "D" Current (Maximized) Maximize False
++ "D" TestRc (Match) break
++ "D" Current (!Maximized) Piperead "echo AnimatedMove $$((($[vp.width] - $[w.width])/2))p 0"
++ "D" Current (!Maximized) Maximize grow grow
++ "C" Raise
+
+DestroyFunc demaximize-and-move-Bottom
+AddToFunc   demaximize-and-move-Bottom
++ "M" Current (Maximized) Maximize False
++ "M" TestRc (Match) WarpToWindow 50 -20p
++ "M" AnimatedMove Warp
++ "D" Current (Maximized) Maximize False
++ "D" TestRc (Match) break
++ "D" Current (!Maximized) Piperead "echo AnimatedMove $$((($[vp.width] - $[w.width])/2))p 0"
++ "D" Current (!Maximized) Maximize grow grow
++ "C" Raise
+
+############
+## Diese Function ist in den Windowdecors Cooljakob* enthalten, da das WarpToWindow von der Position der Titelleiste abhängig ist!!!
+#DestroyFunc demaximize-and-move
+#AddToFunc   demaximize-and-move
+#+ "M" Current (Maximized) Maximize False
+#+ "M" WarpToWindow 50 20p
+#+ "M" AnimatedMove Warp
+#+ "D" Current (Maximized) Maximize False
+#+ "D" TestRc (Match) break
+#+ "D" Current (!Maximized) Piperead "echo AnimatedMove $$((($[vp.width] - $[w.width])/2))p 0"
+#+ "D" Current (!Maximized) Maximize grow grow
+#+ "C" Raise
+
+DestroyFunc move-or-winmenu-or-deiconify
+AddToFunc   move-or-winmenu-or-deiconify
++ "M" Move
++ "C" Popup Window-Ops
++ "D" Iconify
+
+DestroyFunc deiconify-and-focus
+AddToFunc   deiconify-and-focus
++ "I" Iconify -1
++ "I" Focus
+
+DestroyFunc deiconify-and-raise
+AddToFunc   deiconify-and-raise
++ "I" Iconify -1
++ "I" Raise
+
+DestroyFunc move-or-raiselower	
+AddToFunc   move-or-raiselower	
++ "M" Move
++ "C" RaiseLower
+
+DestroyFunc move-or-raise
+AddToFunc   move-or-raise
++ "M" Move
++ "C" Raise
+
+DestroyFunc move-or-lower
+AddToFunc   move-or-lower
++ "M" Move
++ "C" Lower
+
+DestroyFunc move-and-raise-or-raiselower	
+AddToFunc   move-and-raise-or-raiselower	
++ "M" Move
++ "M" Raise
++ "C" RaiseLower
+
+DestroyFunc move-or-raiselower-or-maximize-vertical
+AddToFunc   move-or-raiselower-or-maximize-vertical
++ "M" Move
++ "C" RaiseLower
++ "D" Maximize 0 100
+
+DestroyMenu resize-or-raiselower	
+AddToFunc   resize-or-raiselower	
++ "M" Resize
++ "C" RaiseLower
+
+DestroyFunc MoveOrRaise 
+AddToFunc MoveOrRaise
++                         "C"	Raise
++                         "M"	Raise
++                         "M"	Move
++                         "D"	Maximize grow grow
+
+DestroyFunc ResizeOrRaise
+AddToFunc ResizeOrRaise
++ I FuncPrintMsg "RESIZE" $[w.id]
++ M PipeRead 'echo Exec exec compton-trans -w $[w.id] 70'
++ "C" Raise
++ "M" Raise
++ "M" Resize
++ M Exec exec compton-trans -c 100
++ C Exec exec compton-trans -c 100
++ "D" Lower
+
+DestroyFunc  MaximizeFunc
+AddToFunc MaximizeFunc
++                          "M"	Maximize   0 100
++                          "C"	Maximize   0  80
++                          "D"	Maximize 100 100
+
+DestroyFunc  MoveOrIconify
+AddToFunc MoveOrIconify
++                          "I"	Raise
++                          "M"	Raise
++                          "M"	Move
++                          "D"	Iconify
+
+DestroyFunc bringup
+AddToFunc bringup
+  +	"I"	All (FvwmButtons) RaiseLower
+
+##############################################################################
+## >>> Multimedia-Keys
+##############################################################################
+# DestroyFunc FuncName
+# AddToFunc   FuncName
+# + I (Action to happen immediately)
+# + C (Action to happen on a mouse 'click)
+# + D (Action to happen on a mouse 'double click')
+# + H (Action to happen on a mouse 'hold')
+# + M (Action to happen on a mouse 'motion')
+
+DestroyFunc MMPrev-Seek
+AddToFunc   MMPrev-Seek
++ I Exec exec /usr/bin/mpc --quiet -h $MPD_IP -p $MPD_PORT prev
++ H Exec exec /usr/bin/mpc --quiet -h $MPD_IP -p $MPD_PORT seek -5
+
+DestroyFunc MMNext-Seek
+AddToFunc   MMNext-Seek
++ I Exec exec /usr/bin/mpc --quiet -h $MPD_IP -p $MPD_PORT next
++ H Exec exec /usr/bin/mpc --quiet -h $MPD_IP -p $MPD_PORT seek +5
+
+
+
+##############################################################################
+## >>> Volume-Button und ähnliches per id ändern
+##############################################################################
+DestroyFunc CHANGE_ICON
+AddToFunc CHANGE_ICON
++ I SendToModule FvwmButtons ChangeButton $0 Icon $1
+
+DestroyFunc CHANGE_TITLE
+AddToFunc CHANGE_TITLE
++ I SendToModule FvwmButtons ChangeButton $0 Title " $1 $2"
+
+##############################################################################
+## Move Windows to other Pages
+##############################################################################
+
+DestroyFunc PackMoveToPageLeft
+AddToFunc PackMoveToPageLeft
++ I SetEnv Move $1
++ I PipeRead "test $[page.nx] -ge 1 \
+	&& echo SetEnv x_new `expr $[page.nx] - 1` \
+	|| echo SetEnv x_new $[page.nx]"
++ I Test (EnvMatch Move m) WindowId $0 Raise
++ I Test (EnvMatch Move m) WindowId $0 MoveToPage $[x_new] $[page.ny] 
++ I GotoPage $[x_new] $[page.ny]
+
+AddToFunc PackWrapperPageLeft I NoWindow PackMoveToPageLeft $[w.id] $0
+
+DestroyFunc PackMoveToPageRight
+AddToFunc PackMoveToPageRight
++ I SetEnv Move $1
++ I PipeRead "test $[page.nx] -lt $[desk.pagesx] \
+	&& echo SetEnv x_new `expr $[page.nx] + 1` \
+	|| echo SetEnv x_new $[page.nx]"
++ I Test (EnvMatch Move m) WindowId $0 Raise
++ I Test (EnvMatch Move m) WindowId $0 MoveToPage $[x_new] $[page.ny] 
++ I GotoPage $[x_new] $[page.ny]
+
+AddToFunc PackWrapperPageRight I NoWindow PackMoveToPageRight $[w.id] $0
+
+DestroyFunc PackMoveToPageUp
+AddToFunc PackMoveToPageUp
++ I SetEnv Move $1
++ I PipeRead "test $[page.ny] -ge 1 \
+	&& echo SetEnv y_new `expr $[page.ny] - 1` \
+	|| echo SetEnv y_new $[page.ny]"
++ I Test (EnvMatch Move m) WindowId $0 Raise
++ I Test (EnvMatch Move m) WindowId $0 MoveToPage $[page.nx] $[y_new] 
++ I GotoPage $[page.nx] $[y_new]
+
+AddToFunc PackWrapperPageUp I NoWindow PackMoveToPageUp $[w.id] $0
+
+DestroyFunc PackMoveToPageDown
+AddToFunc PackMoveToPageDown
++ I SetEnv Move $1
++ I PipeRead "test $[page.ny] -lt $[desk.pagesy] \
+	&& echo SetEnv y_new `expr $[page.ny] + 1` \
+	|| echo SetEnv y_new $[page.ny]"
++ I Test (EnvMatch Move m) WindowId $0 Raise
++ I Test (EnvMatch Move m) WindowId $0 MoveToPage $[page.nx] $[y_new] 
++ I GotoPage $[page.nx] $[y_new]
+
+AddToFunc PackWrapperPageDown I NoWindow PackMoveToPageDown $[w.id] $0
+
+DestroyFunc WindowBringBack
+AddToFunc WindowBringBack
++ I SetEnv Move $1
++ I Test (EnvMatch Move m) WindowId $0 Raise
++ I Test (EnvMatch Move m) WindowId $0 MoveToPage 0 0
++ I GotoPage $[page.nx] $[y_new]
+
+AddToFunc WindowBringBackWrapper I NoWindow WindowBringBack $[w.id] $0
+
+
+##################
+# Expose
+##################
+DestroyFunc Expose
+AddToFunc Expose
++ I SetEnv FVWMCountWindows 0
++ I All (CurrentPage, !Iconic, CirculateHit, !Sticky) PipeRead 'echo SetEnv FVWMCountWindows $((FVWMCountWindows + 1))'
++ I PipeRead 'echo ModuleSynchronous FvwmRearrange -tile -maximize -m -mn `echo -e "$$(($$FVWMCountWindows ** 1/2 +1))"`; echo "Pick DeExpose \\$[w.id]"'
+
+DestroyFunc DeExpose
+AddToFunc DeExpose
++ I All (CurrentPage, !Iconic, CirculateHit, !Sticky) Maximize Off
++ I WindowId $0 WarpToWindow 50 50
+
+
+####################
+## Transparenz
+####################
+
+DestroyFunc TransparencyMove
+AddToFunc TransparencyMove
++ M PipeRead 'echo Exec exec compton-trans -w $[w.id] 70'
++ C Raise
++ M Raise
++ M PipeRead 'echo Move'
++ M Exec exec compton-trans -c 100
++ C Exec exec compton-trans -c 100
++ D Maximize grow grow
+
+DestroyFunc FocusChangeTransparency-transparent
+AddToFunc FocusChangeTransparency-transparent
++ I ThisWindow (HasPointer, AcceptsFocus) Exec exec compton-trans -i $0 1
++ I Any (!Focused, !HasPointer, Overlapped, AcceptsFocus) Exec exec compton-trans -i $[w.id] 0.3
+#+ I ThisWindow (!Focused, AcceptsFocus) PipeRead "(echo -n 'nofocused: ';xwininfo -id $[w.id] | grep '^xwininfo') >> /tmp/log"
++ I All (!Focused, AcceptsFocus) PipeRead "(echo -n 'nofocused: ';xwininfo -id $[w.id] | grep '^xwininfo') >> /tmp/log"
+
+DestroyFunc FocusChangeTransparency-full
+AddToFunc FocusChangeTransparency-full
++ I Current (HasPointer, AcceptsFocus) PipeRead 'echo Exec exec compton-trans -i $[w.id] 1'
++ I Current (HasPointer, AcceptsFocus) PipeRead "(echo -n 'focused: '; xwininfo -id $[w.id] | grep '^xwininfo') >> /tmp/log"
+
+#*FvwmEvent-NewWindow: StartDelay 4
+#*FvwmEvent-NewWindow: add_window FuncFocusWindow
+
+DestroyFunc FuncFocusWindow
+AddToFunc   FuncFocusWindow
+#+ I ThisWindow ("My Window") Move 200p 100p
+#+ I ThisWindow ("xterm") Move 200p 100p
+#+ I ThisWindow ("urxvtc") Move 200p 100p
++ I Focus
++ I WarpToWindow 50 50
+
+
+DestroyFunc FuncComposition
+AddToFunc   FuncComposition
++ I FuncWriteSetEnvToFileAndSet CompositOn $0 $[FVWM_USERDIR]/.settings
++ I PipeRead 'echo -n SetEnv prog `echo $[infostore.compositman]|awk -F " " \'{print $1}\'`'
++ I PipeRead 'echo -n SetEnv prog \"$(basename $[prog])\"'
++ I TEST (EnvMatch CompositOn true) Exec exec $[infostore.compositman]
++ I TEST (EnvMatch CompositOn false) Exec exec pkill -u $USER $prog
++ I FuncPrintMsg FuncComposition "$prog $0"
++ I UnsetEnv prog
+			
+DestroyFunc Thumbnail
+AddToFunc Thumbnail
++ I Raise
++ I PipeRead "xwd -silent -id $[w.id] | convert -scale 128x128 -frame 1x1 \
+    -mattecolor black -quality 0 xwd:- png:$[FVWM_USERDIR]/icon.tmp.$[w.id].png \
+    && echo WindowStyle IconOverride, Icon $[FVWM_USERDIR]/icon.tmp.$[w.id].png, StaysOnBottom \
+    || echo Nop"
++ I Iconify
+
+DestroyFunc DeThumbnail
+AddToFunc DeThumbnail
++ I Raise
++ M Move
++ D DestroyWindowStyle
++ D Exec exec rm -f $FVWM_USERDIR/icon.tmp.$[w.id].png
++ D Iconify Off
+
+#####
+# Name:     WheelToggleShade
+# Bound:    Mouse Buttons 4 and 5 (wheel up and down) on Titlebars
+# Purpose:  Shade or unshade the window when the Mouse wheel is rolled up or
+#           down on the Titlebar. Rolling the Wheel up calls the Function with
+#           argument `True` and rolling it down uses `False`, so rolling the wheel
+#           down when the window isnt shaded has no effect, which I like :)
+#
+#################
+DestroyFunc WheelToggleShade
+AddToFunc WheelToggleShade D WindowShade $0 
+
+#####
+# Name:     DestroyOnHold
+# Bound:    Titlebar Button 2 (X)
+# Purpose:  When clicked, Raise the window Immediately.
+#           If the button is pressed and released, Close the Window. If it is pressed
+#           and held, Destroy it, and issue a Beep to confirm.
+#
+#           There is a 100ms delay before issuing `Close` so I have a chance to see the
+#           animation when the button changes from ActiveDown to ActiveUp :).
+#
+#################
+DestroyFunc DestroyOnHold
+AddToFunc DestroyOnHold I Raise
++ C Schedule 100 Close
++ H Destroy
++ H Beep
+
+##############################################
+## Menü-Window-Ops
+##############################################
+DestroyFunc FuncWindowOps 
+AddToFunc FuncWindowOps
++ I Load menus.d/menu-window.fvwm
+
+#############################################
+## Restart-Fvwm-Function
+#############################################
+DestroyFunc FvwmRestart
+AddToFunc   FvwmRestart
++ I PipeRead 'fv-built-trayapplist $FVWM_USERDIR/.systray.log $FVWM_USERDIR/.trayapplist'
++ I Restart
+
+
+#############################################
+## Quit-Fvwm-Function
+#############################################
+DestroyFunc FvwmQuit
+AddToFunc   FvwmQuit
++ I PipeRead 'fv-built-trayapplist $FVWM_USERDIR/.systray.log $FVWM_USERDIR/.trayapplist'
++ I Quit
+
+#############################################
+## Set-Background-Function
+#############################################
+DestroyFunc FvwmBackground
+AddToFunc   FvwmBackground
++ I FuncWriteInfoStoreToFileAndSet desktop_background $0 $[FVWM_USERDIR]/.settings
++ I $[fvwm_wallpapersetter]$[infostore.desktop_background]
++ I FuncPrintMsg "FvwmBackground" $[infostore.desktop_background]
+
+#############################################
+## Volume-Functions
+#############################################
+DestroyFunc FvwmSetVolume
+AddToFunc   FvwmSetVolume
++ I PipeRead 'echo -n InfoStoreAdd Vol $(amixer -c $[infostore.AlsaCard] sset Master Playback Switch 5%"$0"|tail -n1|cut -d " " -f 6|sed -e 's/%//' -e 's/\\\\[//' -e 's/\\\\]//')'
++ I SendToModule *FvwmScript-Volume SendString 1 1 $[infostore.Vol] 
+#+ I SendToModule FvwmButtons ChangeButton Vol Title " Volume ($[infostore.Vol]%)"
+
+DestroyFunc FvwmMuteVolume
+AddToFunc   FvwmMuteVolume
++ I PipeRead 'echo -n InfoStoreAdd Vol $(amixer -c $[infostore.AlsaCard] sset Master Playback Switch toggle|tail -n1|cut -d " " -f 6|sed -e 's/%//' -e 's/\\\\[//' -e 's/\\\\]//')'
++ I SendToModule *FvwmScript-Volume SendString 1 2 $[infostore.Vol] 
+
+
+

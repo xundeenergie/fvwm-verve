@@ -1,0 +1,9 @@
+TITEL|Internet-Browser $[infostore.default_browser]|Internet-Browser $[infostore.default_browser]
+firefox.desktop|default_browser
+iceweasel.desktop|default_browser
+chromium.desktop|default_browser
+dillo.desktop|default_browser
+galeon.desktop|default_browser
+konqueror.desktop|default_browser
+midori.desktop|default_browser
+opera.desktop|default_browser

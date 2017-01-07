@@ -1,0 +1,27 @@
+#Test (x /usr/bin/fetchmail)	+ "fetchmail"%gnome-mailcheck.svg:$[MIconSize]%		Exec exec /usr/bin/fetchmail
+#Test (x /usr/sbin/fetchnews)	+ "fetchnews"%gnome-news.svg:$[MIconSize]%		Exec exec sudo /usr/sbin/fetchnews
+#				+ ""	Nop
+#Test (x gimp)			+ %gnome-gimp.svg:$[MIconSize]%"Bildbearbeitungsprogramm (Gimp)" Function FvwmGimp
+#Test (x inkscape)		+ %inkscape.svg:$[MIconSize]%"Inkscape Vektorgraphik"			Function FvwmInkscape
+#Test (x shotwell)		+ %shotwell.svg:$[MIconSize]%"Shotwell Bildverwaltung"	Function FvwmPictureManager
+#TEST (x konqueror)		+ "Konqueror - Dateien"%konqueror16.png%	Exec konqueror -profile filemanagement
+#TEST (x skype.sh)			+ "Skype"%skype.svg:$[MIconSize]%		Exec /usr/bin/pasuspender /usr/bin/skype.sh
+#TEST (x pidgin)			+ "Pidgin"%xchat.svg:$[MIconSize]%	Exec /usr/bin/pidgin
+#TEST (x nedit)			+ "Nedit"%nedit16.png%			Exec `export LC_ALL=ISO-8850-15; /usr/bin/nedit`
+#TEST (x /usr/bin/bluetooth-applet)	+ "Bluetooth-Verbindungen"%bt-logo.png%		Exec /usr/bin/bluetooth-applet &
+#				+ "Netzwerk-Verbindungen"%gnome-networktool.svg:$[MIconSize]%	Exec exec $[infostore.default_netapplet]
+#TEST (x xcalc)			+ "Taschenrechner"%gnome-calculator.svg:$[MIconSize]%		Exec xcalc
+#				+ ""	Nop
+#TEST (x kmobiletools)		+ "Kmobiletools"%kmobiletools16.png%	Exec /usr/bin/kmobiletools
+#TEST (x /usr/bin/totem)		+ "Totem - Videos"%totem16.png%			Exec totem
+#Test (x /usr/bin/vlc)		+ %vlc.png%"VLC - Videos"			Exec exec vlc
+TEST (f /dev/tvcard) AddToMenu WORK_MENU_popup "TV-Programme $[CS_RUN]" Title
+TEST (f /dev/tvcard) TEST (EnvMatch CS_RUN 0) PipeRead 'echo + \\"Channelupdate läuft\\" Title'
+TEST (f /dev/tvcard) TEST (EnvMatch CS_RUN 1) PipeRead 'echo + \%tvtime.svg:\$[MIconSize]\%\"Fernseher\"	FuncTV'
+TEST (f /dev/tvcard) TEST (EnvMatch CS_RUN 1) PipeRead 'echo + \%tvtime.svg:\$[MIconSize]\%\"Fernseher\\ \\-\\ Kanalsuche\\ \\(update\\)\"	Function FuncTVchupdate'
+
+
+###############################################################################
+## SUBMENÜS zum Abschnitt "oft genutzte Programme"
+###############################################################################
+

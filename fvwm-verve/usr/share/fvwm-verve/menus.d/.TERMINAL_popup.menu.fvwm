@@ -1,0 +1,5 @@
+TITEL|Terminals|Terminals
+urxvt|/usr/bin/urxvtcd|/usr/bin/urxvtcd|default_terminal|terminal.svg:$[MIconSize]
+xterm|/usr/bin/xterm|/usr/bin/xterm|default_terminal|terminal.svg:$[MIconSize]
+aterm|/usr/bin/aterm|/usr/bin/aterm|default_terminal|terminal.svg:$[MIconSize]
+gnome-terminal|/usr/bin/gnome-terminal|/usr/bin/gnome-terminal|default_terminal|terminal.svg:$[MIconSize]

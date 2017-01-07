@@ -1,0 +1,1 @@
+watch --no-title "echo IP-Adressen:;routel|awk '\$0 ~ /host/ && \$0 !~ /lo local/{print \$3,\"(\"\$6\")\"}'|sort -r"

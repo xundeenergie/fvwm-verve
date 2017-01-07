@@ -1,0 +1,48 @@
+#####
+# FvwmButtons is an incredible piece of software.
+#
+# It can create freeform panels of any size, shape (including Non-Rectangular windows), 
+# Colour and function. It can swallow other applications, even applications not designed
+# for docking, have "panels" that slide out consisting of other panels, has a "startup-notification"
+# like feature, hundreds of possible bindings, uses the powerful fvwm Colorsets feature, and
+# can even change dynamically and respond to window manager events.
+#
+# The widgets can be transparent, use Xft fonts, and using fvwm's font definitions can render drop shadows
+# at any direction, offset, size and colour. Buttons can all use different Colorsets, and can have different
+# reliefs, shapes, anything! 
+#
+# FvwmButtons is even tolerant to errors in configuration, and can workaround bad or impossible 
+# definitions!
+#
+# As it's an fvwm module, it has 100% integration with the window manager and can use
+# internal fvwm commands, functions, etc.
+# 
+# as you can tell, i am a big FvwmButtons fan :)
+#
+# I've written a quick introduction into making panels with FvwmButtons, you can read it here
+# http://forums.gentoo.org/viewtopic.php?t=162177
+#
+# To use Startup-notification, make an action like this:
+#   Action(Mouse 1) `Exec "rxvt" exec rxvt`
+# the button will remain pressed until a window called "rxvt" appears.
+# 
+# The configuration below start with an alias, 'FvwmShelf', you can have as mny button bars
+# as you like, if you give each one a seperate alias they can all have a different configuration.
+# 
+# FvwmApplet-DigitalClock is a modified version of the FvwmScript script that comes with
+# fvwm-themes, I just changed it to print the date and time.
+#
+# Screenshot: http://dev.gentoo.org/~taviso/screenshots/april-04-clean.png
+#########
+Load /buttons.d/button-head.fvwm
+Load /buttons.d/button-apps.fvwm
+Load /buttons.d/button-bottom.fvwm
+
+#TEST (f $[FVWM_USERDIR]/buttons.d/button-head.fvwm) PipeRead `exec cat $[FVWM_USERDIR]/buttons.d/button-admin-head.fvwm`
+#TEST (!f $[FVWM_USERDIR]/buttons.d/button-head.fvwm) PipeRead `exec cat $[FV_SYSTEMDIR]/buttons.d/button-admin-head.fvwm`
+#
+#TEST (f $[FVWM_USERDIR]/buttons.d/button-apps.fvwm) PipeRead `exec cat $[FVWM_USERDIR]/buttons.d/button-admin-apps.fvwm`
+#TEST (!f $[FVWM_USERDIR]/buttons.d/button-apps.fvwm) PipeRead `exec cat $[FV_SYSTEMDIR]/buttons.d/button-admin-apps.fvwm`
+#
+#TEST (f $[FVWM_USERDIR]/buttons.d/button-bottom.fvwm) PipeRead `exec cat $[FVWM_USERDIR]/buttons.d/button-admin-bottom.fvwm`
+#TEST (!f $[FVWM_USERDIR]/buttons.d/button-bottom.fvwm) PipeRead `exec cat $[FV_SYSTEMDIR]/buttons.d/button-admin-bottom.fvwm`

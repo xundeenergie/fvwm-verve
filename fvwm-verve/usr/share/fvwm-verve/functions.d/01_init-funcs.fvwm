@@ -1,0 +1,150 @@
+####################
+# Section: Functions
+#
+# This section defines various functions.  Not all of these are used by
+# the default bindings, but they can be useful for a user who wants to
+# customize things.
+#
+#
+# The following functions operate on a window or menu.  The
+# names are systematic: foo means "do foo"; foo-or-bar means
+# "do foo, if mouse is moving, bar if click"; and foo-or-bar-or-baz
+# adds "baz, if double-clicked".
+#
+################
+#
+# DestroyFunc FuncName
+# AddToFunc   FuncName
+# + I (Action to happen immediately)
+# + C (Action to happen on a mouse 'click)
+# + D (Action to happen on a mouse 'double click')
+# + H (Action to happen on a mouse 'hold')
+# + M (Action to happen on a mouse 'motion')
+#
+###########
+#
+# Section: Init and restart functions
+#
+# This section defines the functions InitFunction and RestartFunction.
+# InitFunction is executed automatically when fvwm first starts.
+# RestartFunction is executed automatically when fvwm restarts itself.
+# They share a common hook, init-restart.hook, and two specific hooks,
+# init.hook and restart.hook.
+#
+# init-restart.hook should be used for starting fvwm modules, such as the
+# button bar.  init-hook should be used to start other applications; they
+# should not be started again, when fvwm is restarted, since they don't
+# die like fvwm modules do.  restart.hook exists mostly for completeness;
+# tell me if you find any use for it.
+#
+# InitFunction runs the script setup-background, which looks in 
+# ~/.fvwm2 to see if the user wants some specific background color or
+# image.
+
+
+#####
+# Fvwm executes StartFunction when Fvwm is initialized, and at restart.
+# A Good place to start Modules.
+#
+# FvwmCommandS Allows you to run Fvwm Commands from a Terminal, like this:
+#   $ FvwmCommand 'Module FvwmBanner'
+# Or any other Command.
+#
+# You can test for Initialization from within StartFunction, this is a good
+# place to set the Background or start your favourite applications.
+#
+# osd_cat comes from the xosd package.
+#################
+
+DestroyFunc StartFunction
+AddToFunc   StartFunction
+ + I Module FvwmButtons FvwmShelf
+ + I Module FvwmCommandS
+ + I Module FvwmAnimate
+ + I Module FvwmEvent
+ + I Module FvwmProxy
+ + I Module FvwmEvent
+TEST (x Meteo-fetch) + I Exec Meteo-fetch
+ + I Module FvwmBanner 
+ + I FvwmBackground $[infostore.desktop_background]
+# + I Exec /usr/lib/evolution/3.4/evolution-alarm-notify&
+
+########################
+# InitFunction wird nur beim ersten Start von FVWM ausgeführt
+########################
+DestroyFunc InitFunction
+AddToFunc   InitFunction
+ + I Function FuncMkShmdir
+# + I Exec exec gnome-keyring-daemon --daemonize --login&
+ + I Exec /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1&
+ + I Exec exec /usr/lib/notification-daemon/notification-daemon &
+# + I Exec exec /usr/lib/x86_64-linux-gnu/xfce4/notifyd/xfce4-notifyd
+# + I Exec exec /usr/lib/notify-osd
+ Test (x /usr/bin/udev-notify) + I Exec exec /usr/bin/udev-notify
+ + I Exec exec $[infostore.default_netapplet] &
+# + I Exec exec /usr/bin/lxappearance &
+# + I Exec exec gnome-settings-daemon&
+# + I Exec exec gnome-screensaver&
+ + I Exec exec xscreensaver -no-splash
+ + I Exec exec /usr/bin/xss-lock -- /usr/bin/xscreensaver-command -lock
+TEST (f $[FV_SYSTEMDIR]/.autostart.fvwm) + I Exec exec fv-start-programs sys-autostart $[FV_SYSTEMDIR]/.autostart.fvwm
+TEST (f $[FVWM_USERDIR]/.autostart.fvwm) + I Exec exec fv-start-programs autostart $[FVWM_USERDIR]/.autostart.fvwm
+TEST (f $[FVWM_USERDIR]/.trayapplist.fvwm)  + I Exec exec fv-start-programs reload_applets $[FVWM_USERDIR]/.trayapplist
+ + I Exec $[infostore.default_btapp]&
+ + I Exec xset -dpms 
+ + I FuncComposition $[infostore.CompositOn]
+# + I FvwmComposit 
+# + I Test (Init) Exec exec fvwm-root --dither --retain-pixmap $[fvwm_wallpaper]
+# + I Exec root-tail  -g  1200x800+35+80 -font 8x13 /var/log/syslog,white $[HOME]/.xsession-errors,green -font 8x13 /var/log/mail.warn,red,'ALERT' --update --justify --noinitial --noflicker &
+# + I Exec /usr/bin/gtk-theme-switch2 /usr/share/themes/Adwaita &
+# + I Exec exec $[HOME]/bin/mpd-fvwm&
+# + I Exec xscreensaver -no-splash &
+# + I Exec cdde&
+# + I Exec xterm -ls -geometry +150+85 &
+# + I Exec exec $[infostore.default_browser] &
+# + I Piperead 'echo Style \"$(echo -n "*"; basename `readlink -f $[infostore.default_browser]`|sed -e "s/^./*/")\" SkipMapping, !FPGrabFocus, !FPFocusByProgram, StartsOnPage 0 2 0'
+# + I Exec exec $[infostore.default_mailclient]&
+# + I Piperead 'echo Style \"$(echo -n "*"; basename `readlink -f $[infostore_default_mailclient]`|sed -e "s/^./*/")\" SkipMapping, !FPGrabFocus, !FPFocusByProgram, StartsOnPage 0 2 1'
+# + I Exec exec dropbox start&
+# + I Exec exec wuala -silent&
+#+ I Function FvwmXTerm
+# + I Exec exec fbsetbg -l 
+
+DestroyMenu SessionInitFunction
+AddToFunc SessionInitFunction
++ I Nop
+
+DestroyFunc SessionRestartFunction
+AddToFunc SessionRestartFunction
++ I FuncPrintMsg "restart" "Session RESTART FVWM"
+#+ I PipeRead 'fv-built-trayapplist $FVWM_USERDIR/.systray.log $FVWM_USERDIR/.trayapplist'
++ I Nop
+
+DestroyFunc RestartFunction
+AddToFunc RestartFunction
++ I FuncPrintMsg "restart" "RESTART FVWM"
+#+ I PipeRead 'fv-built-trayapplist $FVWM_USERDIR/.systray.log $FVWM_USERDIR/.trayapplist'
++ I Nop
+
+#####
+# ExitFunction is executed when you ask Fvwm to Quit.
+# Test (ToRestart) is true before a Restart.
+#################
+DestroyFunc ExitFunction
+AddToFunc   ExitFunction
++ I PipeRead 'fv-built-trayapplist $FVWM_USERDIR/.systray.log $FVWM_USERDIR/.trayapplist'
++ I Test (!ToRestart) Exec rm -f $[FVWM_USERDIR]/icon.tmp.*
++ I KillModule FvwmAnimate
++ I Exec sync
++ I Exec exec dropbox stop
+#+ I Exec exec killall cdde
+ + I Exec exec killall $[infostore.default_netapplet] &
+# + I Exec exec gnome-settings-daemon&
+ + I Exec killall $[infostore.default_btapp]&
+
+DestroyFunc FuncMkShmdir
+AddToFunc FuncMkShmdir
++ I Exec exec test -d /dev/shm/fvwm-$[USER] || /bin/mkdir -p /dev/shm/fvwm-$[USER] 
+
+
+

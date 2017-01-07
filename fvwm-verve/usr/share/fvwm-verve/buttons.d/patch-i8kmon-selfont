@@ -1,0 +1,44 @@
+--- /usr/bin/i8kmon	2014-10-24 13:17:02.792556726 +0200
++++ /usr/local/bin/i8kmon	2014-10-24 14:24:39.206323123 +0200
+@@ -22,6 +22,8 @@
+     userconfig	~/.i8kmon
+     i8kfan	/usr/bin/i8kfan
+     acpi    "acpi"
++    font1	"fixed"
++    font2	"6x10"
+     geometry	{}
+     use_conf    1
+     auto	1
+@@ -340,9 +342,11 @@
+ 	set geometry 24x24
+     }
+     if {[lindex [split $geometry x] 1] >= 36} {
+-	set font -bitstream-*-medium-r-normal-*-12-*-*-*-*-*-iso8859-1
++	#set font -bitstream-*-medium-r-normal-*-12-*-*-*-*-*-iso8859-1
++	set font $config(font1)
+     } else {
+-	set font -bitstream-*-medium-r-normal-*-10-*-*-*-*-*-iso8859-1
++	#set font -bitstream-*-medium-r-normal-*-10-*-*-*-*-*-iso8859-1
++	set font $config(font2)
+     }
+     wm geometry .i8kmon $geometry
+ 
+@@ -492,6 +496,7 @@
+     -g|--geometry <geom>    set applet geometry
+     -t|--timeout <secs>     set poll timeout
+     -u|--unit C|F           set temperature display unit
++    -f|--font <font>	    set font for applet
+ 
+ "
+ }
+@@ -536,6 +541,10 @@
+ 	    --unit - -u {
+ 		set config(unit) [lindex $argv [incr i]]
+ 	    }
++	    --font - -f {
++		set config(font1) [lindex $argv [incr i]]
++		set config(font2) $config(font1)
++	    }
+ 	    -- {
+ 		continue
+ 	    }

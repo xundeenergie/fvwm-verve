@@ -1,0 +1,7 @@
+Style FvwmPowerButton BorderWidth 0, HandleWidth 0, Sticky, NoTitle, StaysOnTop, NeverFocus, !Borders
+DestroyModuleConfig FvwmPowerButton: *
+*FvwmPowerButton: Geometry 140x160-128-150
+*FvwmPowerButton: Rows 12
+*FvwmPowerButton: Columns 22
+*FvwmPowerButton: Colorset 10
+*FvwmPowerButton: Font "xft:$[infostore.default_font]:style=$[infostore.default_fontstyle]:pixelsize=$[infostore.default_fontsize]"

@@ -1,0 +1,74 @@
+#!/bin/bash
+# Dieses Skript für cron aktualisiert die Wetterdaten für das Fvwm-Meteo-Applet
+
+. /usr/bin/functions-jakob
+
+mfetch () {
+	#ping -c 1 -q api.previmeteo.com  > /dev/null 2>&1
+	#if [ $? -eq 0 ]
+	#then
+		URL="$URL/ig/api?weather="
+		LANGUAGE=de
+		mDIR="/dev/shm/meteo-$u"
+		[ ! -e "$mDIR" ] && { sudo -u $u  /bin/mkdir -p $mDIR ; }
+		FILE=meteo_fetch_file
+		if test -e $mDIR/"meteo_city"
+		then
+			CITY=`cat $mDIR/"meteo_city" 2>/dev/null || cat /etc/meteo/previmeteo.town`
+		else
+			CITY=`awk '{print $0}' $h/.meteo/previmeteo.town 2>/dev/null`
+			test -z $CITY && CITY=`cat /etc/meteo/previmeteo.town`
+		fi
+		wgeturl=`echo $URL$CITY"&hl="$LANGUAGE`  
+echo $wgeturl
+		sudo -u $u wget $wgeturl -O $mDIR/$FILE > /dev/null 2>&1
+		iconv -f latin1 -t utf8 $mDIR/$FILE -o $mDIR/$FILE
+		sed -i -e "s/>/>\n/g" "$mDIR/$FILE"
+		wgeturl=`echo "$DOMAIN$(awk '/<icon data="/','/"\/>/' "$mDIR/$FILE" | cut -d "\"" -f 2 | sed -e "s/^$/ /" -e "s/^ *$/empty/"|head -n1)"` 
+		sudo -u $u wget -A png  $wgeturl -O  $mDIR/"meteo_fetch_icon1.png" > /dev/null 2>&1 
+		if [ $? -eq 0 ] 
+		then
+			echo "Wetterdaten für $u erfolgreich geholt"|logger -t "Meteo-fetch $u"
+			[ `pgrep -u $u fvwm` ] && sudo -E -u $u Meteo-update|logger -t "Meteo-fetch $u"
+		else
+			echo "Wetterdaten für $u holen gescheitert"|logger -t "Meteo-fetch $u"
+		fi
+	#else
+	#	[ `pgrep -u $u fvwm` ] && sudo -E -u $u Meteo-update|logger -t "Meteo-fetch $u"
+	#fi
+
+
+}
+
+
+
+
+U=`id -u`
+[ -z $U ] && USER=root
+
+if [ `id -u` -ge 1000 ] 
+then
+	USR=`awk -F ":" '$1 == uid{print $1";"$6}' uid=$USER /etc/passwd`
+else
+	USR=`awk -F ":" '$3 >= 1000||$3 == 0{print $1";"$6}' /etc/passwd`
+fi
+
+export DOMAIN="http://api.previmeteo.com"
+
+for i in $USR
+do echo ${i%%;*} ${i##*;}
+done|while read u h
+do
+	if [  -e "$h"/.meteo/previmeteo.key ] 
+	then
+		export API_KEY=`cat "$h/.meteo/previmeteo.key"`	
+		export URL="$DOMAIN/$API_KEY"
+		mfetch		
+	else
+		continue
+		echo $u
+		export API_KEY=`cat "/etc/meteo/previmeteo.key"`
+		export URL="$DOMAIN/$API_KEY"
+		mfetch
+	fi
+done

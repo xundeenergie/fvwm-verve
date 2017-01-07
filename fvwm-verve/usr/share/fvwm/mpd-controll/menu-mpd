@@ -1,0 +1,11 @@
+DestroyMenu recreate mpd-outputs
+AddToMenu mpd-outputs "MPD-Server zur Auswahl" Title
+#+ "Dieser Rechner - localhost" Function FuncSetNewMpd $[MPD_HOST] $[MPD_PORT] $[MPD_NAME] $[MPD_IP]
+Read /dev/shm/fvwm-$[USER]/mpd-hosts.list.cache
++ "Frühere Verbindungen" Popup MPD_recent
+AddToMenu mpd-outputs "Outpus: $[MPD_NAME]:$[MPD_PORT]" Title
+PipeRead $[FVWM_SCRIPTDIR]/mpd-controll/scripts/fvwm-menu-mpd-outputs
+
+DestroyMenu recreate MPD_recent
+AddToMenu MPD_recent "Frühere Verbindungen" Title
+Read $[FVWM_USERDIR]/.mpd-host.list.recent

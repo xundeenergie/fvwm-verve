@@ -1,0 +1,13 @@
+##################################################################
+#### Einlesen der Buttonkonfiguration
+###  IS_ADMIN 0 bedeutet, User ist Admin (Mitglied der Gruppe sudo)
+###  IS_ADMIN 1 bedeutet, User ist unprivilegierter User 
+##################################################################
+# Die Konfiguration des Modules (Aussehen, Größe...) ist im Verzeichnis modules
+
+Function FuncPrintMsg "Load Button" "Load-FvwmShelf"
+Function FuncPrintMsg "IS_ADMIN" "$IS_ADMIN"
+TEST (EnvMatch IS_ADMIN 0) Load /buttons.d/button-admin-shelf.fvwm 
+TEST (EnvMatch IS_ADMIN 1) Load /buttons.d/button-shelf.fvwm
+
+Load /buttons.d/button-power.fvwm

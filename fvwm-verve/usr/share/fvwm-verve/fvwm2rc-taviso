@@ -1,0 +1,411 @@
+#####
+# fvwm2 initialisation file, using fvwm-2.5.11 on Gentoo Linux.
+#   -Tavis Ormandy <taviso@gentoo.org>
+#
+# Screenshots: http://dev.gentoo.org/~taviso/screenshots/
+#
+# To turn this file into plain text, try 
+#   $ lynx -width=999 -nolist -dump http://dev.gentoo.org/~taviso/fvwm2rc.html
+#
+# FAQ:
+#   1.  What is that icon set?
+#   1a. http://forums.gentoo.org/viewtopic.php?p=853150&highlight=#853150
+#
+#   2.  I'm not using Gentoo Linux, why isnt your "Translucent" colorset option working for me?
+#   2a. http://www.fvwm.org/documentation/faq/#3.23
+#
+#   3.  Where can I find your Xdefaults?
+#   3a. http://dev.gentoo.org/~taviso/xdefaults.html
+#
+# This work is licensed under the Creative Commons Attribution License. 
+# To view a copy of this license, visit http://creativecommons.org/licenses/by/2.0/ 
+# 
+# $Header: /home/taviso/.fvwm/RCS/.fvwm2rc,v 1.43 2004/06/20 13:16:43 taviso Exp $
+#################
+
+#####
+# You can set simple options like this, using variables.
+# If you need something more complex, you can get your configuration 
+# pre-processed with FvwmCPP or FvwmM4.
+#################
+#SetEnv fvwm_video_path $[HOME]/Videos
+#SetEnv fvwm_video_exec "mplayer -vo x11"
+#
+#SetEnv fvwm_audio_path $[HOME]/Musik
+#SetEnv fvwm_audio_exec "beep-media-player --play"
+#
+#SetEnv fvwm_image_path $[HOME]/Bilder
+#SetEnv fvwm_image_exec xv
+#
+#SetEnv fvwm_rom_path $[HOME]/stuff/zsnes
+#SetEnv fvwm_rom_exec zsnes
+#
+#SetEnv fvwm_wallpaper_dir $[HOME]/wallpaper
+#SetEnv fvwm_wallpaper $[fvwm_wallpaper_dir]/circles_dark_blue_purple.png
+
+#####
+# You can automatically move the viewport into adjacent pages when the pointer
+# hits the screen edge, but I dont like this.
+#
+# EdgeThickness disables edge scrolling and EdgeCommand, which I never use. set this
+# to 1 or 2 to enable them.
+#################
+#EdgeResistance 15 100
+#EdgeThickness 0
+
+#####
+# http://www.fvwm.org/documentation/faq/#5.5
+#################
+#IgnoreModifiers L2
+
+#####
+# You can use EwmhBaseStruts to stop Maximised windows, and new windows from obscuring 
+# TaskBars/ButtonBars or anything else you always want to be visible.
+#
+# This Setting makes sure my ButtonBar on the left and taskbar along the bottom is always
+# visible, if you would like some windows to ignore this setting when being placed or Maximized,
+# you can set the EWMHPlacementIgnoreWorkingArea or EWMHMaximizeIgnoreWorkingArea Style options.
+#
+# you can also use the ewmhiwa flag on ceratin Maximize commands, so you could have one menu 
+# option for normal maximization, and one for full-screen maximization.
+#################
+#EwmhBaseStruts 0 128 0 28
+EwmhBaseStruts 0 0 0 0
+
+######
+# Fvwm uses a default ClickTime of 150ms, which is way too short for me.
+# A Click that lasts <= ClickTime is considered a `Click` in functions,
+# > ClickTime is a `Hold`.
+# Remember that if you have a function that has actions on Click (C) and
+# DoubleClick (D), fvwm will have to wait at least this long so it can tell which
+# action you are trying to make.
+#################
+ClickTime 550
+
+#####
+# Use 9 pages per desktop, arranged in a square, like this:
+#
+#   +-----+-----+-----+
+#   |     |     |     |
+#   +-----+-----+-----+
+#   |     |     |     |
+#   +-----+-----+-----+
+#   |     |     |     |
+#   +-----+-----+-----+
+#################
+#DeskTopSize 3x3
+
+######
+# Use an arrow rather than the `X` cursor on the root window.
+#################
+CursorStyle root top_left_arrow
+CursorStyle stroke hand2
+
+######
+# Use colormaps according to Focus, rather than where the Mouse is.
+#################
+#ColormapFocus FollowsFocus
+
+######
+# Default window Styles.
+#
+# I like single pixel borders, which look cleaner and simpler that the default 3d borders.
+#
+# It can be a little tricky to grab the handles, but I usually use a Key Binding for that
+# anyway, you can always make the handles stick out a bit more if you use them more than I do.
+#
+# SloppyFocus is the one true Focus policy :) (focus follows mouse, except on root)
+#
+# If I click in a window, I like it to be raised (MouseFocusClickRaises)
+#
+# GrabFocus is terrible, windows are always stealing focus and keystrokes end up in the wrong
+# windows and you lose your train of thought, etc. So turn it off here, and back on for windows
+# that play nice with it.
+#
+# Set up an IconBox (an area that Windows jump to by default when Iconified) along the left.
+# You can set more than one of these, as one gets filled the next one is used. You might also
+# be interested in this FAQ: http://www.fvwm.org/documentation/faq/#3.15
+#
+# Syntax Reminder:
+#
+# IconBox [screen scr-spec] l t r b
+#
+# Fvwm offers several placement policies, which decide where new windows should appear, I've
+# found that TileCascadePlacement makes a decent guess at where the windows should be, but there are
+# plenty more to choose from.
+#
+# If you find that a window is being placed in some awkward location, it may be setting it's own
+# geometry, you can ask fvwm to ignore this with either NoPPosition or NoUSPosition, for example:
+#   Style wmtimer NoUSPosition
+# you might also find the ExplainWindowPlacement BugOpt useful (search the man page).
+#
+# IconAlpha looks great, but requires a lot of redrawing while being moved...so I have disabled
+# it (by setting to 100) for Hilighted Icons, this also creates a cool MouseOver effect :)
+#
+# If you want to stop Thumbnails getting too big, you can use the IconSize option.
+#################
+##Style * Font "xft:Bitstream Vera Sans Mono:style=Roman:size=11"
+#Style * Font "Shadow=1 1 SE:xft:Aquafont:size=11", BorderWidth 1, HandleWidth 1
+#Style * Colorset 13, HilightColorset 14, MWMFunctions, MWMDecor, HintOverride
+#Style * DecorateTransient, NoPPosition, IconBox 20 20 100 -15, IconGrid 3 3, IconFill left top
+#Style * SloppyFocus, MouseFocusClickRaises, TileCascadePlacement, WindowShadeSteps 20
+#Style * GrabFocusOff, NoIconTitle, !AllowMaximizeFixedSize, FPReleaseFocus, IconTitleFormat %n
+#
+## comment these lines if you dont like Icons to have Titles.
+#Style * IconTitle, IconTitleColorset 12, HilightIconTitleColorset 12, IconTitleRelief 0
+#Style * IconFont "xft:Aquafont:size=11minspacing=True", IconTitleFormat %n, IconBackgroundPadding 2,
+#Style * IconBackgroundRelief 0, IconBackGroundColorset 12
+#
+# This is another nice Placement Policy, which tries to avoid obscuring existing windows,
+# you can set penalties on certain window types so some are less likely to be obscured than
+# others. Check the manpage for even more Placement Policies.
+#Style * MinOverlapPercentPlacement
+#Style * MinOverlapPercentPlacementPenalties 2 5 1 2 0.5 50
+
+# FvwmEvent can bind Commands to Events
+DestroyModuleConfig FvwmEvent: *
+*FvwmEvent: deiconify DeThumbnail
+*FvwmEvent: add_window NewWindowFunc
+*FvwmEvent: new_desk "SendToModule DeskControl ChangeButton desk Title $$[desk.n]"
+
+# Animations are controlled by this module
+# You could also use Frame, Lines, Turn, Twist, Random and None
+#DestroyModuleConfig FvwmAnimate: *
+#*FvwmAnimate: Effect Flip
+#*FvwmAnimate: Delay 0
+#*FvwmAnimate: Iterations 30
+##*FvwmAnimate: Twist 1
+#*FvwmAnimate: Width 2
+
+#####
+# Hit Alt+Esc to toggle FvwmProxy, which allows you to see all windows on your
+# desktop, even if they've been obscured..really cool.
+##################
+DestroyModuleConfig FvwmProxy: *
+*FvwmProxy: Font "xft:snap;-artwiz-snap-*-r-*-*-*-*-*-*-*-*-iso8859-1"
+*FvwmProxy: ProxyMove false
+
+#Key Escape  A   M   SendToModule FvwmProxy ShowToggle
+
+
+######
+## WindowOps, Main window controls menu.
+##################
+#DestroyMenu MenuFvwmWindowOps
+#AddToMenu MenuFvwmWindowOps
+#+ %paper_geometry.png%"Resize" Pick Resize
+#+ %document_view.png%"Iconify" Pick Iconify
+#+ %hardware_camera.png%"Thumbnail" Pick Thumbnail
+#+ %graphics_convert_polaroid.png%"Maximise" Pick Maximize
+#+ %hardware_mouse.png%"Move" Popup FvwmMoveMethods
+#+ %window-blind.png%"Shade" Pick WindowShade Toggle
+#+ %document_database_view.png%"Zoom Window" Pick Exec exec xmag -source $[w.width]x$[w.height]+$[w.x]+$[w.y] -mag 2
+#+ %cards_fanned-out.png%"Jiggle Window" Pick Jiggle 5
+#+ "" Nop
+#+ %capture_mouse-trap.png%"Stick" Pick Stick
+#+ %hardware_mouse.png%"Scroll" Pick Module FvwmScroll
+#+ %graphics_convert_polaroid.png%"Refresh" Pick RefreshWindow
+#+ %label_tag_version.png%"Identify" Pick Module FvwmIdent
+#+ "" Nop
+#+ %bomb.png%"Close"%alt_f4.png% Pick Close
+#+ %warning_symbol.png%"Destroy"%win_x.png% Pick Destroy
+#+ "" Nop
+
+DestroyMenu MenuFvwmModules
+AddToMenu MenuFvwmModules
++ %graphics_3d_wireframe.png%"Start Animation" Module FvwmAnimate
++ %map_sign.png%"Identify Window" Module FvwmIdent
++ %reorder_non-linear.png%"Start FvwmIconMan" Module FvwmIconMan
++ %graphics_presentation.png%"Display Banner" Module FvwmBanner
++ %hardware_monitor.png%"Start FvwmConsole" Module FvwmConsole -terminal xterm
++ %hand_slides.png%"Start FvwmPager" Module FvwmPager *
++ %graphics_presentation_person.png%"Start FvwmBacker" Module FvwmBacker
++ %paper_geometry.png%"Scroll Window" Module FvwmScroll 50 50
++ %reorder_non-linear.png%"Start FvwmTaskBar" Module FvwmTaskBar
++ %window.png%"AutoRaise Windows" Module FvwmAuto 200 Raise Nop
++ "" Nop
++ %warning_symbol.png%"Stop Module" Popup MenuFvwmStopModule
+
+DestroyMenu MenuFvwmStopModule
+AddToMenu MenuFvwmStopModule
++ %bomb.png%"Close FvwmButtons" KillModule FvwmButtons
++ %reorder_non-linear.png%"Close Icon Managers" KillModule FvwmIconMan
++ %hand_slides.png%"Close Pagers" KillModule FvwmPager
++ %graphics_presentation_person.png%"Stop FvwmBacker" KillModule FvwmBacker
++ %reorder_non-linear.png%"Stop FvwmTaskBar" KillModule FvwmTaskBar
++ %window.png%"Disable AutoRaise" KillModule FvwmAuto
+
+# CentreWindow xoff yoff [Animated]
+# To use full screen, CentreWindow 0 0
+AddToFunc CentreWindow I PipeRead "echo $2Move $$(((($[vp.width]-$[w.width])/2)-$0))p $$(((($[vp.height]-$[w.height])/2)-$1))p"
+
+# XXX: This will be a visual alert for something, apps can run 
+# FvwmCommand 'Next (CurrentPage) Jiggle 3', or whatever :)
+AddToFunc Jiggle I PipeRead "for ((y=$0;y>=0;y--)) do printf 'AnimatedMove w+%up w+%up\\nAnimatedMove w-%up w-%up\\n' ${y} ${y} ${y} ${y}; done"
+
+#####
+# Name:     PackWindowUp
+# Bound:    Alt+Shift+Up When a window is active
+# Purpose:  Interrogate all windows on the current page, find the window with an edge
+#           closest to active window, and slide the Active window upto that edge, or
+#           the Page edge, if no window is in the way.
+#
+#           The Wrappers are required to look after the Context while we're testing
+#           windows. Could also do it with a load of variables, but this is nicer.
+#
+#           See PackWindowLeft for a description of the logic (i know it looks a little
+#           cryptic).
+#
+#           Sometimes terminals seem to need WindowRefresh, but 99% of the time it just
+#           works, it creates a little flicker so I'll leave it out until it starts to bug
+#           me.
+#
+#           Windows are also Raised, you can disable this.
+#
+#################
+DestroyFunc PackWindowUp
+AddToFunc PackWindowUp
++ I SetEnv low_w 0
++ I WindowId $3 Raise
++ I All (CurrentPage, !Iconic, AcceptsFocus, \
+        !Shaded) PipeRead "test `expr $[w.y] + $[w.height]` -gt $[low_w] \
+        -a `expr $[w.y] + $[w.height]` -lt $0 \
+        -a \\( \\( $[w.x] -gt $1 -a $[w.x] -lt `expr $1 + $2` \\) \
+            -o \\( $1 -gt $[w.x] -a $1 -lt `expr $[w.x] + $[w.width]` \\) \
+            -o \\( $1 -le $[w.x] -a `expr $1 + $2` -ge `expr $[w.x] + $[w.width]` \\) \
+            -o \\( $[w.x] -lt $1 -a `expr $[w.x] + $[w.width]` -gt `expr $1 + $2` \\) \
+        \\) \
+        && echo SetEnv low_w `expr $[w.y] + $[w.height]` \
+        || echo Nop"
++ I WindowId $3 AnimatedMove keep $[low_w]p
+#+ I WindowId $3 RefreshWindow
+
+AddToFunc PackWrapperUp I NoWindow PackWindowUp $[w.y] $[w.x] $[w.width] $[w.id]
+
+#####
+# Name:     PackWindowDown
+# Bound:    Alt+Shift+Down When a window is active.
+# Purpose:  See PackWindowUp.
+#
+#################
+DestroyFunc PackWindowDown
+AddToFunc PackWindowDown
++ I SetEnv high_w $[vp.height]
++ I WindowId $3 Raise
++ I All (CurrentPage, !Iconic, AcceptsFocus, \
+        !Shaded) PipeRead "test $[w.y] -lt $[high_w] \
+        -a $[w.y] -gt `expr $0 + $4`  \
+        -a \\( \\( $[w.x] -gt $1 -a $[w.x] -lt `expr $1 + $2` \\) \
+            -o \\( $1 -gt $[w.x] -a $1 -lt `expr $[w.x] + $[w.width]` \\) \
+            -o \\( $1 -le $[w.x] -a `expr $1 + $2` -ge `expr $[w.x] + $[w.width]` \\) \
+            -o \\( $[w.x] -lt $1 -a `expr $[w.x] + $[w.width]` -gt `expr $1 + $2` \\) \
+        \\) \
+        && echo SetEnv high_w $[w.y] \
+        || echo Nop"
++ I PipeRead "echo WindowId $3 AnimatedMove keep `expr $[high_w] - $4`p"
+#+ I WindowId $3 RefreshWindow
+
+AddToFunc PackWrapperDown I NoWindow PackWindowDown $[w.y] $[w.x] $[w.width] $[w.id] $[w.height]
+
+#####
+# Name:     PackWindowLeft
+# Bound:    Alt+Shift+Left When a window is active
+# Purpose:  See PackWindowUp.
+#
+# The Logic works likes this:
+#   1. Set Destination to the Left Edge
+#   2. For every window, Run these tests:
+#               + Is the Window's Right edge further _Right_ than furthest edge seen yet?
+#       And:    + Is it's Right edge Further _Left_ than Target Windows Left edge? (ie, in the way)
+#           Yes:
+#                   + Does the window start inside Target Window, and end below?
+#               Or  + Does it start above, and end inside?
+#               Or  + Is it the same vertical position/height/size, or start inside and end inside?
+#               Or  + Does it start above, and end below?
+#                   Yes:
+#                       This is the new Destination.
+#                   No:
+#                       Nop
+#           No:
+#               Nop
+#   3. Move to Destination.
+#
+#################
+DestroyFunc PackWindowLeft
+AddToFunc PackWindowLeft
++ I SetEnv left_w 0
++ I WindowId $3 Raise
++ I All (CurrentPage, !Iconic, AcceptsFocus, \
+        !Shaded) PipeRead "test `expr $[w.x] + $[w.width]` -gt $[left_w] \
+        -a `expr $[w.x] + $[w.width]` -lt $1 \
+        -a \\( \\( $[w.y] -gt $0 -a $[w.y] -lt `expr $0 + $4` \\) \
+            -o \\( $[w.y] -lt $0 -a `expr $[w.y] + $[w.height]` -gt $0 \\) \
+            -o \\( $[w.y] -ge $0 -a `expr $[w.y] + $[w.height]` -le `expr $0 + $4` \\) \
+            -o \\( $[w.y] -lt $0 -a `expr $[w.y] + $[w.height]` -gt `expr $0 + $4` \\) \
+        \\) \
+        && echo SetEnv left_w `expr $[w.x] + $[w.width]`  \
+        || echo Nop"
++ I WindowId $3 AnimatedMove $[left_w]p keep
+#+ I WindowId $3 RefreshWindow
+
+AddToFunc PackWrapperLeft I NoWindow PackWindowLeft $[w.y] $[w.x] $[w.width] $[w.id] $[w.height]
+
+DestroyFunc PackWindowRight
+AddToFunc PackWindowRight
++ I SetEnv right_w $[vp.width]
++ I WindowId $3 Raise
++ I All (CurrentPage, !Iconic, AcceptsFocus, \
+        !Shaded) PipeRead "test $[w.x] -lt $[right_w] \
+        -a $[w.x] -gt `expr $1 + $2` \
+        -a \\( \\( $[w.y] -gt $0 -a $[w.y] -lt `expr $0 + $4` \\) \
+            -o \\( $[w.y] -lt $0 -a `expr $[w.y] + $[w.height]` -gt $0 \\) \
+            -o \\( $[w.y] -ge $0 -a `expr $[w.y] + $[w.height]` -le `expr $0 + $4` \\) \
+            -o \\( $[w.y] -lt $0 -a `expr $[w.y] + $[w.height]` -gt `expr $0 + $4` \\) \
+        \\) \
+        && echo SetEnv right_w $[w.x] \
+        || echo Nop"
++ I PipeRead "echo WindowId $3 AnimatedMove `expr $[right_w] - $2`p keep"
+#+ I WindowId $3 RefreshWindow
+
+AddToFunc PackWrapperRight I NoWindow PackWindowRight $[w.y] $[w.x] $[w.width] $[w.id] $[w.height]
+
+#####
+# Miscellaneous Functions
+#################
+AddToFunc Move-or-Raise I Raise
++ M Move
++ D WindowShade Toggle
+
+AddToFunc Move-or-Iconify I Raise
++ M Move
++ D Iconify
+
+AddToFunc Resize-or-Raise I Raise
++ M Resize
++ D Lower
+
+#####
+# Telling a window that is already moving to AnimatedMove is not a good idea!
+# This function makes sure the user doesnt accidentally catch a window twice, by
+# setting one of the windows states while it is being moved.
+#
+# Every window has around 30 user definable states which you can test in 
+# functions, you can use them for anything you like.
+##
+DestroyFunc LockingSlide
+AddToFunc LockingSlide
++ I Test (!State 2) Break
++ I State 2 False
++ I AnimatedMove $0 $1
++ I State 2 True
+
+#####
+# Use This to execute commands on new windows as they appear.
+########
+DestroyFunc NewWindowFunc
+AddToFunc NewWindowFunc
++ I ThisWindow (xmessage) Jiggle 2
+#+ I ThisWindow (xterm) Maximize
+#+ I ThisWindow (MyTerm) Maximize
+#+ I ThisWindow (AnnoyingWindow) Close
+

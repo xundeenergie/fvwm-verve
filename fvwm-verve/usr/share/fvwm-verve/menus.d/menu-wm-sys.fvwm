@@ -1,0 +1,30 @@
+#################################################################################
+## Abschnitt System-Tools
+#################################################################################
+
+AddToMenu WORK_MENU_popup "System-Tools" Title
+ + "Netzwerk"%preferences-system-network.png%			Popup Netzwerk
+ + ""			Nop
+ + "Virtuelle Maschinen"	Popup VirtM
+TEST (x gnome-control-center) + "Gnome-Control-Center"%control-center2.svg:$[MIconSize]%	Exec /usr/bin/gnome-control-center
+TEST (x system-config-printer) + "Drucker-Verwaltung"%gnome-dev-printer.svg:$[MIconSize]%	Exec /usr/bin/system-config-printer
+TEST (x /usr/bin/gtklp) + "Drucken"%gnome-dev-printer.svg:$[MIconSize]%				Exec /usr/bin/gtklp
+TEST (x /usr/bin/simple-scan)		+ "Schnell-Scannen"%xsane.svg:$[MIconSize]%		Exec /usr/bin/simple-scan
+TEST (x /usr/bin/sysinfo) + "Systeminformationen"%gnome-info.svg:$[MIconSize]% 			Exec /usr/bin/sysinfo
++ "" Nop
+
+###############################################################################
+## SUBMENÜS zum Abschnitt "System-Tools"
+###############################################################################
+
+DestroyMenu recreate Netzwerk
+AddToMenu Netzwerk "Netzwerk" Title
+AddToMenu Netzwerk "Fernwartung" Title
+TEST (!EnvMatch FW 1) + "Fernwartung aktivieren" Exec /usr/bin/x-terminal-emulator -e /usr/local/bin/ssh-fernwartung-up
+TEST (!EnvMatch FW 1) + "Fernwartung deaktivieren" Exec /usr/bin/x-terminal-emulator -e /usr/local/bin/ssh-fernwartung-down
+TEST (x /usr/bin/x11vnc) + ""				Nop  
+TEST (x /usr/bin/x11vnc) + "Fenster auswählen und freigeben (VNC)" Exec urxvtc -e /usr/bin/x11vnc -id pick -localhost
+TEST (x /usr/bin/x11vnc) + "Desktop freigeben (VNC)"	Exec urxvtc -e /usr/bin/x11vnc -localhost 
+TEST (x /usr/bin/vinagre) + "" Nop 
+TEST (x /usr/bin/vinagre) + "Anderen Desktop ansehen (VNC-Viewer)" Exec /usr/bin/vinagre
+

@@ -1,0 +1,226 @@
+#---------------------------------------------------------------------
+#-  File          : ~/.fvwm/windowdecors/brushedmetal/config
+#-  Contents      : fvwm window decoration description
+#-  Author        : Uwe Pross - taken from fvwm-theme                                         
+#---------------------------------------------------------------------
+
+SetEnv COLOR      rgb:80/80/80
+SetEnv HICOLOR    rgb:d0/d0/d0
+SetEnv FG_COLOR   rgb:d0/d0/d0
+SetEnv FG_HICOLOR black
+# SetEnv HICOLOR firebrick
+SetEnv MaxDeskNumber 1
+ ImagePath +:$[HOME]/.fvwm/config.d/windowdecors/brushedmetal/images
+SetEnv XPMPath $[HOME]/.fvwm/config.d/windowdecors/brushedmetal/images
+
+#---------------------------------------------------------------------
+DestroyDecor BrushedMetalDecor
+AddToDecor BrushedMetalDecor
++ TitleStyle ActiveUp          TiledPixmap $[XPMPath]/title-activeup.xpm -- Flat 
++ TitleStyle ActiveDown        TiledPixmap $[XPMPath]/title-activedown.xpm -- Flat
++ TitleStyle Inactive          TiledPixmap $[XPMPath]/title-inactive.xpm -- Flat
++ TitleStyle ToggledActiveUp   TiledPixmap $[XPMPath]/title-activeup.xpm -- Flat
++ TitleStyle ToggledActiveDown TiledPixmap $[XPMPath]/title-activedown.xpm -- Flat
++ TitleStyle ToggledInactive   TiledPixmap $[XPMPath]/title-inactive.xpm -- Flat
+
++ ButtonStyle 1 ActiveUp   Pixmap $[XPMPath]/options-activeup.xpm -- Flat
++ ButtonStyle 1 ActiveDown Pixmap $[XPMPath]/options-activedown.xpm -- Flat
++ ButtonStyle 1 Inactive   Pixmap $[XPMPath]/options-inactive.xpm -- Flat
+
++ ButtonStyle 3 ActiveUp   Pixmap $[XPMPath]/options-activeup.xpm -- Flat
++ ButtonStyle 3 ActiveDown Pixmap $[XPMPath]/options-activedown.xpm -- Flat
++ ButtonStyle 3 Inactive   Pixmap $[XPMPath]/options-inactive.xpm -- Flat
+
++ ButtonStyle 5 ActiveUp   Pixmap $[XPMPath]/options-activeup.xpm -- Flat
++ ButtonStyle 5 ActiveDown Pixmap $[XPMPath]/options-activedown.xpm -- Flat
++ ButtonStyle 5 Inactive   Pixmap $[XPMPath]/options-inactive.xpm -- Flat
+
++ ButtonStyle 7 ActiveUp   Pixmap $[XPMPath]/titleleft-activeup.xpm -- Flat
++ ButtonStyle 7 ActiveDown Pixmap $[XPMPath]/titleleft-activedown.xpm -- Flat
++ ButtonStyle 7 Inactive   Pixmap $[XPMPath]/titleleft-inactive.xpm -- Flat
+
++ ButtonStyle 2 ActiveUp   Pixmap $[XPMPath]/close-activeup.xpm -- Flat
++ ButtonStyle 2 ActiveDown Pixmap $[XPMPath]/close-activedown.xpm -- Flat
++ ButtonStyle 2 Inactive   Pixmap $[XPMPath]/close-inactive.xpm -- Flat
+
++ ButtonStyle 4 ActiveUp   Pixmap $[XPMPath]/maximize-activeup.xpm -- Flat
++ ButtonStyle 4 ActiveDown Pixmap $[XPMPath]/maximize-activedown.xpm -- Flat
++ ButtonStyle 4 ToggledActiveUp Pixmap $[XPMPath]/maximize-activedown.xpm -- Flat
++ ButtonStyle 4 ToggledActiveDown Pixmap $[XPMPath]/maximize-activedown.xpm -- Flat
++ ButtonStyle 4 Inactive   Pixmap $[XPMPath]/maximize-inactive.xpm -- Flat
+
++ ButtonStyle 6 ActiveUp   Pixmap $[XPMPath]/iconify-activeup.xpm -- Flat
++ ButtonStyle 6 ToggledActiveUp Pixmap $[XPMPath]/iconify-activedown.xpm -- Flat
++ ButtonStyle 6 ActiveDown Pixmap $[XPMPath]/iconify-activedown.xpm -- Flat
++ ButtonStyle 6 Inactive   Pixmap $[XPMPath]/iconify-inactive.xpm -- Flat
+
++ ButtonStyle 8 ActiveUp   Pixmap $[XPMPath]/titleright-activeup.xpm -- Flat
++ ButtonStyle 8 ActiveDown Pixmap $[XPMPath]/titleright-activedown.xpm -- Flat
++ ButtonStyle 8 Inactive   Pixmap $[XPMPath]/titleright-inactive.xpm -- Flat
+
++ ButtonStyle All - Clear
++ ButtonStyle 1 - MWMDecorMenu
++ ButtonStyle 3 - MWMDecorMenu
++ ButtonStyle 5 - MWMDecorMin
++ ButtonStyle 2 - MWMDecorMin
++ ButtonStyle 4 - MWMDecorMin
++ ButtonStyle 6 - MWMDecorMax
++ ButtonStyle 8 - MWMDecorMenu
+
++ TitleStyle Centered Height 15
+
++ BorderStyle Active Colorset 
++ BorderStyle Inactive Solid $[HICOLOR] -- HiddenHandles NoInset 
++ BorderStyle Active   Solid $[COLOR]   -- HiddenHandles NoInset 
+
+Style BrushedMetalStyle \
+    UseDecor BrushedMetalDecor, \
+    Colorset, BorderColorset, \
+    HilightColorset, HilightBorderColorset, \
+    BorderWidth 4, HandleWidth 4, \
+    ForeColor $[FG_COLOR], BackColor $[COLOR], \
+    HilightFore $[FG_HICOLOR], HilightBack $[HICOLOR], \
+    Button 1, Button 2, Button 3, Button 4, Button 5, Button 6, Button 7, Button 8
+
+
+#-------------------------------------------------------------------------------
+#- menus
+#-------------------------------------------------------------------------------
+DestroyMenu MoveWindowToPageMenu
+AddToMenu MoveWindowToPageMenu "Move window to another page" Title
++ "Desk left" MoveToDesk  0 -1 0 $[MaxDeskNumber]
++ "Desk right" MoveToDesk  0 +1 0 $[MaxDeskNumber]
++ "" Nop
++ "Page up" MoveToPage +0p -1p
++ "Page left" MoveToPage -1p  0p
++ "Page right" MoveToPage +1p  0p
++ "Page down" MoveToPage +0p +1p
+
+DestroyMenu MaximizeMenu
+AddToMenu MaximizeMenu "Maximize" Title
++ "Maximize" Maximize 100 100
++ "Maximize vertical" Maximize 0 100
++ "Maximize horizontal" Maximize 100 0
++ "" Nop
++ "Grow" Maximize True grow grow
++ "Grow vertical" Maximize True 0 grow
++ "Grow horizontal" Maximize True grow 0
++ "" Nop
++ "Iconify" Iconify
+
+DestroyMenu IconifyMenu
+AddToMenu IconifyMenu "Iconify" Title
++ "Iconify" Iconify
++ "" Nop
++ "Stick all icons" All (Currentpage, Iconic, CirculateHit) Stick on
++ "Stick all windows" All (Currentpage, !Iconic, CirculateHit) Stick on
++ "" Nop
++ "Unstick all icons" All (Currentpage, Iconic, CirculateHit) Stick off
++ "Unstick all windows" All (Currentpage, !Iconic, CirculateHit) Stick off
+
+DestroyMenu WindowOptionsMenu
+AddToMenu WindowOptionsMenu "Window menu" Title
++ "&Maximize/Normal" Maximize 100 100
++ "(Un)S&tick" Stick
++ "&Shade" WindowShade
++ "&Iconify" Iconify
++ "" Nop
++ "Move to Top" Pick AnimatedMove keep 0p
++ "Move to Left" Pick AnimatedMove 0p keep
++ "Move to Right" Pick PipeRead "echo AnimatedMove $$(($[vp.width] - $[w.width]))p keep"
++ "Move to Bottom" Pick PipeRead "echo AnimatedMove keep $$(($[vp.height] - $[w.height]))p"
++ "" Nop
++ %window.png%"Centre Window" Pick CentreWindow (126/2) (28/2) Animated
++ "" Nop
++ %hardware_mouse.png%"Pack Up"%alt_sft_up.png% Pick PackWrapperUp
++ %hardware_mouse.png%"Pack Left"%alt_sft_left.png% Pick PackWrapperLeft
++ %hardware_mouse.png%"Pack right"%alt_sft_right.png% Pick PackWrapperRight
++ %hardware_mouse.png%"Pack down"%alt_sft_down.png% Pick PackWrapperDown
++ "" Nop
++ %numbers_counter.png%"Move To Page" Popup MenuPageList
++ %hardware_mouse.png%"Interactive Move" Pick Move
++ "" Nop
++ "Raise" Raise
++ "Lower" Lower
++ "" Nop
++ "Ident" Module FvwmIdent
++ "" Nop
++ "Stays on Top" Layer 0 5
++ "Stays on Bottom" Layer 0 3
++ "Raise on Click" Layer 0 4
++ "" Nop
++ "&Close " Delete
++ "&Kill " Destroy
++ "Neu zeichnen" PlaceAgain Anim Icon
+DestroyMenu DeleteMenu
+AddToMenu DeleteMenu
++ "Delete" Delete
++ "" Nop
++ "Kill" Destroy
+
+#-------------------------------------------------------------------------------
+#- functions
+#-------------------------------------------------------------------------------
+DestroyFunc ResizeOrRaiseOrLowerFunc
+AddToFunc ResizeOrRaiseOrLowerFunc C Raise
++ M Resize
++ D Lower
+
+DestroyFunc MoveOrRaiseOrLowerFunc
+AddToFunc MoveOrRaiseOrLowerFunc
++ I Raise
+# + I Current (!Raised) Raise
+# + C TestRc (NoMatch) Lower
++ M Move
++ D Maximize 100 100
+
+SetEnv APP_NAME XTerm
+SetEnv APP_NAME *
+Style $[APP_NAME] UseStyle BrushedMetalStyle
+
+#-------------------------------------------------------------------------------
+#- mouse defs
+#-------------------------------------------------------------------------------
+## window frame and side
+#Mouse ($[APP_NAME]) 1 F A Function ResizeOrRaiseOrLowerFunc
+#Mouse ($[APP_NAME]) 2 F A Menu WindowOptionsMenu Nop
+#Mouse ($[APP_NAME]) 3 F A RaiseLower
+#
+#Mouse ($[APP_NAME]) 1 S A Function ResizeOrRaiseOrLowerFunc
+#Mouse ($[APP_NAME]) 2 S A Menu WindowOptionsMenu Nop
+#Mouse ($[APP_NAME]) 3 S A RaiseLower
+#
+### title bar + 2 decoration buttons
+#Mouse ($[APP_NAME]) 1 T38 A Function MoveOrRaiseOrLowerFunc
+#Mouse ($[APP_NAME]) 2 T38 A WindowShade
+#Mouse ($[APP_NAME]) 3 T38 A RaiseLower
+#
+### window title buttons
+#Mouse ($[APP_NAME]) 1 1 A Menu WindowOptionsMenu Delete
+#Mouse ($[APP_NAME]) 2 1 A Stick
+#Mouse ($[APP_NAME]) 3 1 A Menu MoveWindowToPageMenu
+#
+#Mouse ($[APP_NAME]) 1 6 A Iconify on
+#Mouse ($[APP_NAME]) 2 6 A All (CurrentPage,!Fvwm*B*) Iconify on
+#Mouse ($[APP_NAME]) 3 6 A Menu IconifyMenu Iconify
+#
+#Mouse ($[APP_NAME]) 1 4 A Maximize 100 100
+#Mouse ($[APP_NAME]) 2 4 A Maximize True grow grow
+#Mouse ($[APP_NAME]) 3 4 A Menu MaximizeMenu
+#
+#Mouse ($[APP_NAME]) 1 2 A Delete
+#Mouse ($[APP_NAME]) 2 2 A Nop
+#Mouse ($[APP_NAME]) 3 2 A Menu DeleteMenu
+#
+#Mouse ($[APP_NAME]) 1 3 A Stick
+#Mouse  3 3 A Menu FvwmMoveMethods
+#
+#Mouse ($[APP_NAME]) 1 5 A Maximize 0 grow
+#Mouse ($[APP_NAME]) 2 5 A Maximize grow grow
+#Mouse ($[APP_NAME]) 3 5 A Maximize grow 0
+#
+#Mouse ($[APP_NAME]) 0 7 A Nop
+
+## end of file
+#Key	Super_L	A	A	All (FvwmButtons) Raise
+#Stroke 258 3 A N Exec xterm

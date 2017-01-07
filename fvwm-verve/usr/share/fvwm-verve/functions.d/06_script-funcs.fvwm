@@ -1,0 +1,40 @@
+DestroyFunc KillMkBackUp
+AddToFunc   KillMkBackUp	
+#Test (x /usr/local/bin/killrsnapshot)  		+ I 	Exec exec sudo /usr/local/bin/killrsnapshot
++I Exec exec /usr/bin/pkexec /bin/systemctl stop mkbackup@manually.service
+
+
+DestroyFunc StartMkBackUp
+AddToFunc   StartMkBackUp	
+#Test (x /usr/local/bin/mkbackup-manually)  		+ I 	Exec exec sudo /usr/local/bin/mkbackup-manually
++I Exec exec /usr/bin/pkexec /bin/systemctl start mkbackup@manually.service
+
+DestroyFunc FetchMailNews
+AddToFunc   FetchMailNews
+Test (x /usr/bin/fetchmail)  		+ I 	Exec exec /usr/bin/fetchmail
+Test (x /usr/sbin/fetchnews)	+ I	Exec exec /usr/bin/pkexec /usr/sbin/fetchnews
+
+DestroyFunc FetchMail
+AddToFunc   FetchMail
+Test (x /usr/bin/fetchmail)  		+ I 	Exec exec /usr/bin/fetchmail
+
+DestroyFunc FetchNews
+AddToFunc   FetchNews
+Test (x /usr/sbin/fetchnews)	+ I	Exec exec /usr/bin/pkexec /usr/sbin/fetchnews
+
+DestroyFunc PPPconnect
+AddToFunc PPPconnect
+ + I TEST (!f /var/run/ppp0.pid) TEST (x $[FVWM_USERDIR]/scripts/pon)Exec $[FVWM_USERDIR]/scripts/pon
+ + I TEST (f /var/run/ppp0.pid) TEST (x $[FVWM_USERDIR]/scripts/poff)Exec $[FVWM_USERDIR]/scripts/poff
+
+AddToFunc vpncFunc
+TEST (f /var/run/vpnc/pid)	+ "I"	Exec sudo /usr/sbin/vpnc-disconnect
++ "I"	Exec sudo /usr/sbin/vpnc tunet-only
+
+AddToFunc vpncDEFunc
+  +	"I"	Exec sudo vpnc-disconnect 
+
+DestroyFunc gmrun
+AddToFunc gmrun
++ I Exec gmrun 
+

@@ -1,0 +1,789 @@
+##########	Meteo FVWM Script
+##########	Weather forecast
+##########	by sebaro
+##########
+##########	rev.2011-02-20
+
+WindowTitle {Meteo}
+WindowSize 320 160
+#WindowPosition 954 10
+
+##### Global Style
+Colorset 10
+Font "xft:DejaVu Sans:size=8:bold"
+#Font "xft:Bitstream Vera Sans Mono:style=Roman:size=8:bold"
+
+Init
+Begin
+
+  ##### Widgets Style
+  Set $MainColorset=(GetScriptArgument 1)
+  If $MainColorset <> {} Then
+  Begin
+   ChangeColorset 0 $MainColorset
+   ChangeColorset 1 $MainColorset
+   ChangeColorset 2 $MainColorset
+   ChangeColorset 3 $MainColorset
+   ChangeColorset 4 $MainColorset
+   ChangeColorset 5 $MainColorset
+   ChangeColorset 6 $MainColorset
+   ChangeColorset 7 $MainColorset
+   ChangeColorset 8 $MainColorset
+   ChangeColorset 9 $MainColorset
+   ChangeColorset 10 $MainColorset
+   ChangeColorset 11 $MainColorset
+   ChangeColorset 12 $MainColorset
+   ChangeColorset 13 $MainColorset
+   ChangeColorset 14 $MainColorset
+   ChangeColorset 15 $MainColorset
+   ChangeColorset 16 $MainColorset
+   ChangeColorset 17 $MainColorset
+   ChangeColorset 18 $MainColorset
+   ChangeColorset 19 $MainColorset
+   ChangeColorset 20 $MainColorset
+  End
+  #Set $defaultColorset = {10}
+  Set $warnColorset = {12}
+  Set $nowTempFont = {xft:DejaVu Sans:size=14:bold}
+  Set $DOMAIN = "http://api.previmeteo.com"
+  #Set $APIKEYFILE = (GetOutput {echo $[FVWM_USERDIR]/meteo/previmeteo.key} 1 -1)
+  #Set $YOURAPIKEY = (GetOutput {cat $FVWM_USERDIR/meteo/previmeteo.key} 1 -1)
+  Set $APIKEYFILE = (GetOutput {echo $[HOME]/.meteo/previmeteo.key} 1 -1)
+  Set $YOURAPIKEY = (GetOutput {cat $HOME/.meteo/previmeteo.key} 1 -1)
+  If $YOURAPIKEY == {} Then
+    Set $YOURAPIKEY = (GetOutput {cat /etc/meteo/previmeteo.key} 1 -1)
+
+  ##### Settings
+  Set $homeDir = (GetOutput {echo $[FVWM_SCRIPTDIR]} 1 -1) {/Meteo/}
+  Set $setMyCity=(GetScriptArgument 2)
+  If $setMyCity == {} Then
+  Begin
+    Set $setMyCity = {Vienna}
+  End
+  Set $lang = {de}
+  Set $setTempScale = {celsius}
+  Set $setStandard = {metric}
+  Set $user = $[USER]
+  Set $putTmp = /dev/shm/meteo-(GetOutput {echo $USER} 1 -1})/
+#  Set $putTmp = (GetOutput {echo $putTmp} 1 -1) 
+#  Set $putTmp = /dev/shm/meteo-jakob/
+  Do {exec mkdir -p }  $putTmp 
+  Set $updateTime = {600}
+
+  ##### Widgets
+  ChangeFont 3 $nowTempFont
+  Set $noIcon = $homeDir {icons/noicon.png}
+  Set $quitButton =  {close-activeup.xpm}
+  ChangeIcon 20 $quitButton
+  For $i = 2 To 19 Do
+    HideWidget $i
+  Key Return A 19 1
+  Key Escape A 19 2
+
+  ##### Fetch Data
+  Set $fetchFile = $putTmp {meteo_fetch_file}
+  Set $fetchFileStatus = $putTmp {meteo_fetch_file_status}
+  Do {exec echo "" > "} $fetchFileStatus {"}
+  Set $fetchIcon1gif = $putTmp {meteo_fetch_icon1.gif}
+  Set $fetchIcon2gif = $putTmp {meteo_fetch_icon2.gif}
+  Set $fetchIcon3gif = $putTmp {meteo_fetch_icon3.gif}
+  Set $fetchIcon4gif = $putTmp {meteo_fetch_icon4.gif}
+  Set $fetchIcon5gif = $putTmp {meteo_fetch_icon5.gif}
+  Set $fetchIcon1 = $putTmp {meteo_fetch_icon1.png}
+  Set $fetchIcon2 = $putTmp {meteo_fetch_icon2.png}
+  Set $fetchIcon3 = $putTmp {meteo_fetch_icon3.png}
+  Set $fetchIcon4 = $putTmp {meteo_fetch_icon4.png}
+  Set $fetchIcon5 = $putTmp {meteo_fetch_icon5.png}
+  Set $fetchIcon1Status = $putTmp {meteo_fetch_icon1_status}
+  Do {exec echo "" > "} $fetchIcon1Status {"}
+  Set $fetchIcon2Status = $putTmp {meteo_fetch_icon2_status}
+  Do {exec echo "" > "} $fetchIcon2Status {"}
+  Set $fetchIcon3Status = $putTmp {meteo_fetch_icon3_status}
+  Do {exec echo "" > "} $fetchIcon3Status {"}
+  Set $fetchIcon4Status = $putTmp {meteo_fetch_icon4_status}
+  Do {exec echo "" > "} $fetchIcon4Status {"}
+  Set $fetchIcon5Status = $putTmp {meteo_fetch_icon5_status}
+  Do {exec echo "" > "} $fetchIcon5Status {"}
+  Set $gWeather = $DOMAIN {/} $YOURAPIKEY {/ig/api?weather=}
+Do {exec echo } $fetchIcon1 {|logger}
+  
+##### Temperature Data
+  Set $degree = {°}
+  Set $degreeF = {℉}
+  Set $degreeC = {℃}
+
+  ##### Variables
+  Set $myCity = $setMyCity
+  Set $tempScale = $setTempScale
+  Set $standard = $setStandard
+  Set $doFetch = {true}
+
+  ##### Curly Brackets
+  Set $leftCB = (GetOutput {printf "\173"} 1 -1)
+  Set $rightCB = (GetOutput {printf "\175"} 1 -1)
+End
+
+PeriodicTasks
+Begin
+  ##### Get Data
+  If $doFetch == {true} Then
+  Begin
+    Set $newTitle = {Hole Wetter für } $myCity { ...}
+    ChangeTitle 1 $newTitle
+    Do {exec wget "} $gWeather $myCity {&hl=} $lang {" -O "} $fetchFile {" &&  sed -i -e "s/>/>\n/g" "} $fetchFile {" && iconv -f latin1 -t utf8 "} $fetchFile {" -o "} $fetchFile {" && echo "1" > "} $fetchFileStatus {" || echo "0" > "} $fetchFileStatus {"}
+    Set $fetchReady = {false}
+    Set $doFetch = {false}
+  End
+
+  ##### Fetching
+  If $fetchReady == {false} Then
+  Begin
+    Set $getFetch = {cat "} $fetchFileStatus {"}
+    If (GetOutput $getFetch 1 -1) == 1 Then
+    Begin
+      Do {exec echo "" > "} $fetchFileStatus {"}
+      Set $fileEmptyCheck = {cat "} $fetchFile {" | grep "problem_cause"}
+      If (GetOutput $fileEmptyCheck 1 -1) == {} Then
+      Begin
+        For $i = 2 To 18 Do
+          ShowWidget $i
+        ChangeColorset 1 $defaultColorset
+        Set $fetchReady = {true}
+        Set $doRefresh = {true}
+      End
+      Else
+      Begin
+        For $i = 2 To 19 Do
+          HideWidget $i
+        Set $fetchReady = {true}
+        ChangeColorset 1 $warnColorset
+        Set $newTitle = {Keine Wetterdaten für } $myCity {!}
+        ChangeTitle 1 $newTitle
+      End
+    End
+    If (GetOutput $getFetch 1 -1) == 0 Then
+    Begin
+      Do {exec echo "" > "} $fetchFileStatus {"}
+      For $i = 2 To 19 Do
+        HideWidget $i
+      Set $fetchReady = {true}
+      ChangeColorset 1 $warnColorset
+      Set $newTitle = {Hole Wetter für } $myCity { failed!}
+      ChangeTitle 1 $newTitle
+    End
+  End
+
+  ##### Print Data
+  If $doRefresh == {true} Then
+  Begin
+    ## Set City
+    ChangeColorset 1 $defaultColorset
+    Set $newTitle =  {Wetter für } $myCity
+    ChangeTitle 1 $newTitle
+
+    ## Weather Icons
+    Set $getIcons = {awk '/<icon data="/','/"\/>/' "} $fetchFile {" | cut -d "\"" -f 2 | sed -e "s/^$/ /" -e "s/^ *$/empty/"}
+    If (GetOutput $getIcons 1 -1) <> {empty} Then
+    Begin
+      Do {exec wget -A png "} $DOMAIN (GetOutput $getIcons 1 -1) {" -O "} $fetchIcon1 {" && convert } $fetchIcon1 { } $fetchIcon1 { && echo "1" > "} $fetchIcon1Status {" || echo "0" > "} $fetchIcon1Status {" && /usr/bin/Meteo-update }
+      Do {exec echo } $myCity { > /dev/shm/meteo_city}
+      Do {exec echo } $myCity { > $[FVWM_USERDIR]/previmeteo.town}
+      Set $icon1Checked = {false}
+    End
+    Else
+    Begin
+      ChangeIcon 2 $noIcon
+      Set $icon1Checked = {true}
+    End
+    If (GetOutput $getIcons 2 -1) <> {empty} Then
+    Begin
+      Do {exec wget -A png "} $DOMAIN (GetOutput $getIcons 2 -1) {" -O "} $fetchIcon2 {" && convert } $fetchIcon2 { } $fetchIcon2 { && echo "1" > "} $fetchIcon2Status {" || echo "0" > "} $fetchIcon2Status {"}
+      Set $icon2Checked = {false}
+    End
+    Else
+    Begin
+      ChangeIcon 8 $noIcon
+      Set $icon2Checked = {true}
+    End
+    If (GetOutput $getIcons 3 -1) <> {empty} Then
+    Begin
+      Do {exec wget -A png "} $DOMAIN (GetOutput $getIcons 3 -1) {" -O "} $fetchIcon3gif {" && convert } $fetchIcon3gif { } $fetchIcon3 { && echo "1" > "} $fetchIcon3Status {" || echo "0" > "} $fetchIcon3Status {"}
+      Do {exec convert } $fetchIcon3 { } $fetchIcon3
+      Set $icon3Checked = {false}
+    End
+    Else
+    Begin
+      ChangeIcon 11 $noIcon
+      Set $icon3Checked = {true}
+    End
+    If (GetOutput $getIcons 4 -1) <> {empty} Then
+    Begin
+      Do {exec wget -A png "} $DOMAIN (GetOutput $getIcons 4 -1) {" -O "} $fetchIcon4gif {" && convert } $fetchIcon4gif { } $fetchIcon4 { && echo "1" > "} $fetchIcon4Status {" || echo "0" > "} $fetchIcon4Status {"}
+      Do {exec convert } $fetchIcon4 { } $fetchIcon4
+      Set $icon4Checked = {false}
+    End
+    Else
+    Begin
+      ChangeIcon 14 $noIcon
+      Set $icon4Checked = {true}
+    End
+    If (GetOutput $getIcons 5 -1) <> {empty} Then
+    Begin
+      Do {exec wget -A png "} $DOMAIN (GetOutput $getIcons 5 -1) {" -O "} $fetchIcon5gif {" && convert } $fetchIcon5gif { } $fetchIcon5 { && echo "1" > "} $fetchIcon5Status {" || echo "0" > "} $fetchIcon5Status {"}
+      Do {exec convert } $fetchIcon5 { } $fetchIcon5
+      Set $icon5Checked = {false}
+    End
+    Else
+    Begin
+      ChangeIcon 17 $noIcon
+      Set $icon5Checked = {true}
+    End
+    Set $showIcons = {true}
+
+    ## Temperature Now
+    If $tempScale == {celsius} Then
+    Begin
+      Set $getTempNowC = {awk '/<temp_c data="/','/"\/>/' "} $fetchFile {" | cut -d "\"" -f 2}
+      If (GetOutput $getTempNowC 1 -1) <> {} Then
+        Set $tempNow = (GetOutput $getTempNowC 1 -1) $degreeC
+      Else
+        Set $tempNow = {Temp: N/A}
+    End
+    Else
+    Begin
+      Set $getTempNowF = {awk '/<temp_f data="/','/"\/>/' "} $fetchFile {" | cut -d "\"" -f 2}
+      If (GetOutput $getTempNowF 1 -1) <> {} Then
+        Set $tempNow = (GetOutput $getTempNowF 1 -1) $degreeF
+      Else
+        Set $tempNow = {Temp: N/A}
+    End
+    ChangeTitle 3 $tempNow
+
+    ## Condition Now
+    Set $getCondNow = {awk '/<condition data="/','/"\/>/' "} $fetchFile {" | cut -d "\"" -f 2}
+    If (GetOutput $getCondNow 1 -1) <> {} Then
+      Set $condNow = (GetOutput $getCondNow 1 -1)
+    Else
+      Set $condNow = {Condition: N/A}
+    ChangeTitle 4 $condNow
+
+    ## Wind Now
+    Set $getWindNow = {awk '/<wind_condition data="/','/"\/>/' "} $fetchFile {" | cut -d "\"" -f 2}
+    If (GetOutput $getWindNow 1 -1) <> {} Then
+    Begin
+      Set $windNow = (GetOutput $getWindNow 1 -1)
+      If $standard <> {metric} Then
+      Begin
+        Set $windSpeed = {awk '/<wind_condition data="/','/"\/>/' "} $fetchFile {" | sed -e "s/[^0-9]//g"}
+        Set $mph = (GetOutput $windSpeed 1 -1)
+        If (RemainderOfDiv (Mult $mph 161) 100) > 49 Then
+        Begin
+	  Set $kmph = (Add (Div (Mult $mph 161) 100) 1)
+          Set $toMetric = {echo "} $windNow {" | sed -e "s/} $mph {/} $kmph {/" -e "s/km\/h/mph/"}
+	End
+        Else
+	Begin
+          Set $kmph = (Div (Mult $mph 161) 100)
+          Set $toMetric = {echo "} $windNow {" | sed -e "s/} $mph {/} $kmph {/" -e "s/mph/km\/h/"}
+        End
+        Set $windNow = (GetOutput $toMetric 1 -1)
+      End
+      Else
+      Begin
+      End
+    End
+    Else
+      Set $windNow = {Wind: N/A}
+    ChangeTitle 5 $windNow
+
+    ## Humidity Now
+    Set $getHumNow = {awk '/<humidity data="/','/"\/>/' "} $fetchFile {" | cut -d "\"" -f 2}
+    If (GetOutput $getHumNow 1 -1) <> {} Then
+      Set $humNow = (GetOutput $getHumNow 1 -1)
+    Else
+      Set $humNow = {Luftfeuchtigkeit: N/A}
+    ChangeTitle 6 $humNow
+
+    ## Days Of Week
+    Set $getDay = {awk '/<day_of_week data="/','/"\/>/' "} $fetchFile {" | cut -d "\"" -f 2 | sed -e "s/^$/ /" -e "s/^ *$/empty/"}
+    Set $dayWidget = 7
+    For $i = 1 To 4 Do
+    Begin
+      If (GetOutput $getDay $i -1) <> {empty} Then
+        ChangeTitle $dayWidget (GetOutput $getDay $i -1)
+      Else
+        ChangeTitle $dayWidget {N/A}
+      Set $dayWidget = (Add $dayWidget 3)
+    End
+
+    Set $getUnitSystem = {awk '/<unit_system data="/','/"\/>/' "} $fetchFile {" | cut -d "\"" -f 2}
+    If (GetOutput $getUnitSystem 1 -1) <> {} Then
+      Set $unitSystem = (GetOutput $getUnitSystem 1 -1)
+    Else
+      Set $unitSystem = {}
+
+    If $unitSystem == {US} Then
+	Set $Tempunit = {fahrenheit}
+    If $unitSystem == {SI} Then
+	Set $Tempunit = {celsius}
+
+    ## High & Low Temperatures
+    Set $getHighTemps = {awk '/<high data="/','/"\/>/' "} $fetchFile {" | cut -d "\"" -f 2 | sed -e "s/^$/ /" -e "s/^ *$/empty/"}
+    Set $getLowTemps = {awk '/<low data="/','/"\/>/' "} $fetchFile {" | cut -d "\"" -f 2 | sed -e "s/^$/ /" -e "s/^ *$/empty/"}
+    Set $tempsWidget = 9
+    For $i = 1 To 4 Do
+    Begin
+      If (GetOutput $getHighTemps $i -1) <> {empty} Then
+      Begin
+        Set $highTemp = (GetOutput $getHighTemps $i -1)
+#	If $Tempunit == {celsius} Then
+#            Set $highTemp = (Add (Div (Mult $highTemp 9) 5) 32)
+#        If $tempScale == {celsius} Then
+#        Begin
+#          If (RemainderOfDiv (Mult (Add $highTemp -32) 5) 9) < 5 Then
+#            Set $highTemp = (Div (Mult (Add $highTemp -32) 5) 9) $degree
+#          Else
+#            Set $highTemp = (Add (Div (Mult (Add $highTemp -32) 5) 9) 1) $degree
+#        End
+#        Else
+          Set $highTemp = $highTemp $degree 
+      End
+      Else
+        Set $highTemp = {N/A}
+      If (GetOutput $getLowTemps $i -1) <> {empty} Then
+      Begin
+        Set $lowTemp = (GetOutput $getLowTemps $i -1)
+#	If $Tempunit == {celsius} Then
+#          Set $lowTemp = (Add (Div (Mult $lowTemp 9) 5) 32)
+#        If $tempScale == {celsius} Then
+#        Begin
+#          If (RemainderOfDiv (Mult (Add $lowTemp -32) 5) 9) < 5 Then
+#            Set $lowTemp = (Div (Mult (Add $lowTemp -32) 5) 9) $degree
+#          Else
+#            Set $lowTemp = (Add (Div (Mult (Add $lowTemp -32) 5) 9) 1) $degree
+#        End
+#        Else
+          Set $lowTemp = $lowTemp $degree 
+      End
+      Else
+        Set $lowTemp = {N/A}
+      Set $dayTemps = $highTemp { : } $lowTemp
+      ChangeTitle $tempsWidget $dayTemps
+      Set $tempsWidget = (Add $tempsWidget 3)
+    End
+    Set $doRefresh = {false}
+  End
+
+  ## Show Icons
+  If $showIcons == {true} Then
+  Begin
+    If $icon1Checked == {false} Then
+    Begin
+      Set $checkIcon1Status = {cat "} $fetchIcon1Status {"}
+      If (GetOutput $checkIcon1Status 1 -1) == 1 Then
+      Begin
+        Do {exec echo "" > "} $fetchIcon1Status {"}
+        ChangeIcon 2 $fetchIcon1
+        Set $icon1Checked = {true}
+      End
+      If (GetOutput $checkIcon1Status 1 -1) == 0 Then
+      Begin
+        Do {exec echo "" > "} $fetchIcon1Status {"}
+        ChangeIcon 2 $noIcon
+        Set $icon1Checked = {true}
+      End
+    End
+    If $icon2Checked == {false} Then
+    Begin
+      Set $checkIcon2Status = {cat "} $fetchIcon2Status {"}
+      If (GetOutput $checkIcon2Status 1 -1) == 1 Then
+      Begin
+        Do {exec echo "" > "} $fetchIcon2Status {"}
+        ChangeIcon 8 $fetchIcon2
+        Set $icon2Checked = {true}
+      End
+      If (GetOutput $checkIcon2Status 1 -1) == 0 Then
+      Begin
+        Do {exec echo "" > "} $fetchIcon2Status {"}
+        ChangeIcon 8 $noIcon
+        Set $icon2Checked = {true}
+      End
+    End
+    If $icon3Checked == {false} Then
+    Begin
+      Set $checkIcon3Status = {cat "} $fetchIcon3Status {"}
+      If (GetOutput $checkIcon3Status 1 -1) == 1 Then
+      Begin
+        Do {exec echo "" > "} $fetchIcon3Status {"}
+        ChangeIcon 11 $fetchIcon3
+        Set $icon3Checked = {true}
+      End
+      If (GetOutput $checkIcon3Status 1 -1) == 0 Then
+      Begin
+        Do {exec echo "" > "} $fetchIcon3Status {"}
+        ChangeIcon 11 $noIcon
+        Set $icon3Checked = {true}
+      End
+    End
+    If $icon4Checked == {false} Then
+    Begin
+      Set $checkIcon4Status = {cat "} $fetchIcon4Status {"}
+      If (GetOutput $checkIcon4Status 1 -1) == 1 Then
+      Begin
+        Do {exec echo "" > "} $fetchIcon4Status {"}
+        ChangeIcon 14 $fetchIcon4
+        Set $icon4Checked = {true}
+      End
+      If (GetOutput $checkIcon4Status 1 -1) == 0 Then
+      Begin
+        Do {exec echo "" > "} $fetchIcon4Status {"}
+        ChangeIcon 14 $noIcon
+        Set $icon4Checked = {true}
+      End
+    End
+    If $icon5Checked == {false} Then
+    Begin
+      Set $checkIcon5Status = {cat "} $fetchIcon5Status {"}
+      If (GetOutput $checkIcon5Status 1 -1) == 1 Then
+      Begin
+        Do {exec echo "" > "} $fetchIcon5Status {"}
+        ChangeIcon 17 $fetchIcon5
+        Set $icon5Checked = {true}
+      End
+      If (GetOutput $checkIcon5Status 1 -1) == 0 Then
+      Begin
+        Do {exec echo "" > "} $fetchIcon5Status {"}
+        ChangeIcon 17 $noIcon
+        Set $icon5Checked = {true}
+      End
+    End
+    If $icon1Checked == {true} Then
+    Begin
+      If $icon2Checked == {true} Then
+      Begin
+        If $icon3Checked == {true} Then
+        Begin
+          If $icon4Checked == {true} Then
+          Begin
+            If $icon5Checked == {true} Then
+            Begin
+              Set $showIcons = {false}
+             End
+          End
+        End
+      End
+    End
+  End 
+
+  ##### Change City
+  If $changeCity == {true} Then
+  Begin
+    If $cityAction == {new} Then
+    Begin
+      ChangeColorset 1 $defaultColorset
+      Set $newTitle = {Wetter für }
+      ChangeTitle 1 $newTitle
+      ShowWidget 19
+      ChangeTitle 19 $myCity
+    End
+    If $cityAction == {apply} Then
+    Begin
+      Set $getNewCity = {echo "} (GetTitle 19) {" | sed -e "s/^[ ]*//" -e "s/[ ]*$//" -e "s/\\\//g"}
+      Set $newCity = (GetOutput $getNewCity 1 -1)
+      If $newCity == {} Then
+        Set $invalidCity = {true}
+      Else
+      Begin
+        Set $findBadChars = {echo "} $newCity {" | grep "[^a-zA-Z ',-]"}
+        Set $findAlphaChars = {echo "} $newCity {" | grep "[a-zA-Z]"}
+        If (GetOutput $findBadChars 1 -1) == {} Then
+        Begin
+          If (GetOutput $findAlphaChars 1 -1) <> {} Then
+            Set $invalidCity = {false}
+          Else
+            Set $invalidCity = {true}
+        End
+        Else
+          Set $invalidCity = {true}
+      End
+      If $invalidCity == {true} Then
+      Begin
+        ChangeColorset 1 $warnColorset
+        Set $newTitle = {Falsche Stadt/fehlerhafter Stadtname}
+        ChangeTitle 1 $newTitle
+      End
+      Else
+      Begin
+        Set $myCity = $newCity
+#        Do {exec sed -i -e "s/^.*Set \$setMyCity.*$/  Set \$setMyCity = } $leftCB $myCity $rightCB {/" } $homeDir {Meteo}
+        Set $doFetch = {true}
+      End
+      HideWidget 19
+    End
+    If $cityAction == {cancel} Then
+    Begin
+      Set $newTitle = {Wetter für } $myCity
+      ChangeTitle 1 $newTitle
+      HideWidget 19
+    End
+    Set $changeCity = {false}
+  End
+
+  ##### Change Temperature Scale
+  If $changeTempScale == {true} Then
+  Begin
+    If $tempScale == {celsius} Then
+      Set $tempScale = {fahrenheit}
+    Else
+      Set $tempScale = {celsius}
+    Do {exec sed -i -e "s/^.*Set \$setTempScale.*$/  Set \$setTempScale = } $leftCB $tempScale $rightCB {/" } $homeDir {Meteo}
+    Set $doRefresh = {true}
+    Set $changeTempScale = {false}
+  End
+
+  ##### Change Standard
+  If $changeStandard == {true} Then
+  Begin
+    If $standard == {metric} Then
+      Set $standard = {english}
+    Else
+      Set $standard = {metric}
+    Do {exec sed -i -e "s/^.*Set \$setStandard.*$/  Set \$setStandard = } $leftCB $standard $rightCB {/" } $homeDir {Meteo}
+    Set $doRefresh = {true}
+    Set $changeStandard = {false}
+  End
+
+  ##### Update Weather
+  If (RemainderOfDiv (GetTime) $updateTime) == 0 Then
+  Begin
+    Set $doFetch = {true}
+    Do {/usr/bin/Meteo-update }
+  End
+End
+
+Widget		1
+Property
+  Type		ItemDraw
+  Size		250 20
+  Position		10 5
+  Flags		NoFocus NoReliefString Left
+Main
+  Case message of
+    SingleClic :
+    Begin
+      Set $cityAction = {new}
+      Set $changeCity = {true}
+    End
+  End
+
+Widget		2
+Property
+  Type		ItemDraw
+  Size		40 40
+  Position		10 30
+  Flags		NoFocus NoReliefString
+Main
+  Case message of
+  End
+
+Widget		3
+Property
+  Type		ItemDraw
+  Size		120 30
+  Position		55 25
+  Flags		NoFocus NoReliefString Left
+Main
+  Case message of
+    SingleClic :
+    Begin
+      Set $changeTempScale = {true}
+    End
+  End
+
+Widget		4
+Property
+  Type		ItemDraw
+  Size		120 20
+  Position		55 50
+  Flags		NoFocus NoReliefString Left
+Main
+  Case message of
+  End
+
+Widget		5
+Property
+  Type		ItemDraw
+  Size		140 20
+  Position		170 30
+  Flags		NoFocus NoReliefString Left
+Main
+  Case message of
+    SingleClic :
+    Begin
+      Set $changeStandard = {true}
+    End
+  End
+
+Widget		6
+Property
+  Type		ItemDraw
+  Size		140 20
+  Position		170 50
+  Flags		NoFocus NoReliefString Left
+Main
+  Case message of
+  End
+
+Widget		7
+Property
+  Type		ItemDraw
+  Size		40 20
+  Position		32 75
+  Flags		NoFocus NoReliefString
+Main
+  Case message of
+  End
+
+Widget		8
+Property
+  Type		ItemDraw
+  Size		40 40
+  Position		32 95
+  Flags		NoFocus NoReliefString
+Main
+  Case message of
+  End
+
+Widget		9
+Property
+  Type		ItemDraw
+  Size		64 20
+  Position		20 135
+  Flags		NoFocus NoReliefString
+Main
+  Case message of
+  End
+
+Widget		10
+Property
+  Type		ItemDraw
+  Size		40 20
+  Position		104 75
+  Flags		NoFocus NoReliefString
+Main
+  Case message of
+  End
+
+Widget		11
+Property
+  Type		ItemDraw
+  Size		40 40
+  Position		104 95
+  Flags		NoFocus NoReliefString
+Main
+  Case message of
+  End
+
+Widget		12
+Property
+  Type		ItemDraw
+  Size		64 20
+  Position		92 135
+  Flags		NoFocus NoReliefString
+Main
+  Case message of
+  End
+
+Widget		13
+Property
+  Type		ItemDraw
+  Size		40 20
+  Position		176 75
+  Flags		NoFocus NoReliefString
+Main
+  Case message of
+  End
+
+Widget		14
+Property
+  Type		ItemDraw
+  Size		40 40
+  Position		176 95
+  Flags		NoFocus NoReliefString
+Main
+  Case message of
+  End
+
+Widget		15
+Property
+  Type		ItemDraw
+  Size		64 20
+  Position		164 135
+  Flags		NoFocus NoReliefString
+Main
+  Case message of
+  End
+
+Widget		16
+Property
+  Type		ItemDraw
+  Size		40 20
+  Position		248 75
+  Flags		NoFocus NoReliefString
+Main
+  Case message of
+  End
+
+Widget		17
+Property
+  Type		ItemDraw
+  Size		40 40
+  Position		248 95
+  Flags		NoFocus NoReliefString
+Main
+  Case message of
+  End
+
+Widget		18
+Property
+  Type		ItemDraw
+  Size		64 20
+  Position		236 135
+  Flags		NoFocus NoReliefString
+Main
+  Case message of
+  End
+
+Widget		19
+Property
+  Type		TextField
+  Size		200 20
+  Position		90 5
+  Flags		NoReliefString Left
+Main
+  Case message of
+    1 :
+    Begin
+      Set $cityAction = {apply}
+      Set $changeCity = {true}
+    End
+    2 :
+    Begin
+      Set $cityAction = {cancel}
+      Set $changeCity = {true}
+    End
+  End
+
+Widget		20
+Property
+  Type		ItemDraw
+  Size		16 16
+  Position		303 1
+  Flags		NoFocus NoReliefString
+Main
+  Case message of
+    SingleClic :
+    Begin
+      Quit
+    End
+  End

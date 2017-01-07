@@ -1,0 +1,9 @@
+#!/bin/bash
+echo "Mounten von: " |logger -t mount
+mount /home/jakob/trackoptimizer/home/ && { echo "trackoptimizer/home erfolgreich gemountet"|logger -t ssh-mount ; } || { echo "mounten von trackoptimizer/home fehlgeschlagen" |logger -t ssh-mount ; }  
+echo -n trackoptimizer/messwagen |logger -t mount
+mount /home/jakob/trackoptimizer/messwagen/ && { echo erfolgreich|logger -t ssh-mount; } || {echo fehlgeschlagen!!!|logger -t ssh-mount; }
+echo -n trackoptimizer/opt
+mount /home/jakob/trackoptimizer/opt/ && echo erfolgreich || echo fehlgeschlagen!!!
+echo -n trackoptimizer/trackoptimizer-home
+mount /home/jakob/trackoptimizer/trackoptimizer-home	

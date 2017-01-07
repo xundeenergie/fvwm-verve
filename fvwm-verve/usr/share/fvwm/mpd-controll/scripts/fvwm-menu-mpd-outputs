@@ -1,0 +1,81 @@
+#!/bin/bash
+if [ "$APPLET_ACTIVE" = "true" ] ; then
+  export MPC="/usr/bin/mpc"
+  echo "+ %noicon-green.png%\"App ist aktiv -> ausschalten\" FuncMpdAppletDeActivate"
+  echo "+ \"\" Nop"
+else
+  export MPC="/bin/false " 
+  echo "+ %noicon-red.png%\"App ist inaktiv -> einschalten\" FuncMpdAppletActivate"
+fi
+export CON=" -h $MPD_IP -p $MPD_PORT"
+export IFS="	"
+HOSTNAME=`cat /etc/hostname`
+#echo $MPC $CON
+#if [ ! -e /dev/shm/fvwm-$USER/mpd-hosts.list.cache ] 
+if [ ! `eval "$MPC $CON"` ] 
+then
+	echo "AddToMenu mpd-outputs \"Server nicht erreichbar\" Title"
+	exit 1
+else
+	/usr/bin/mpc -h $MPD_IP -p $MPD_PORT outputs |sed -e 's/^Output //' -e 's/ is //' -e 's/enabled/1/' -e 's/disabled/0/' -e 's/[\(\)]/	/g'| \
+	while read i j k
+	do
+	  if [ $k -eq 1 ]
+	  then
+	    echo "+ %noicon-green.png%\"$j\" Exec exec $MPC $CON disable $i" 
+	    if [ `echo $MPD_HOST|awk '$0 ~ hn {print "0"} $0 !~ hn {print "1"}' hn=$HOSTNAME` -eq 1 -a `echo $j |awk '$0 ~ /mp3|ogg/{print "0"} $0 !~ /mp3|ogg/{print "1"}'` -eq 0 ]
+	    then
+	      echo "+ \"->&Stream empfangen \" Exec exec $FVWM_SCRIPTDIR/mpd-controll/scripts/mpd-importstream http://$MPD_HOST:`echo $j|awk '{print $NF}'`"
+	      echo "+ \"\" Nop"
+	    fi
+	  else
+	    echo "+ %noicon-red.png%\"$j\" Exec exec $MPC $CON enable $i"
+	  fi
+	done
+
+	echo "AddToMenu mpd-outputs \"Playlist - Wiederholungen\" Title"
+	/usr/bin/mpc -h $MPD_IP -p $MPD_PORT  status|grep volume|sed -e 's/:/ /g;s/  */ /g'|while IFS=" " read vol vols rep reps ran rans sin sins con cons
+	do
+		if [ "$reps" == "on" ]
+		then
+			echo  "+ %noicon-green.png%\"$rep\" Exec exec $MPC $CON $rep off"
+		else	
+			echo  "+ %noicon-red.png%\"$rep\" Exec exec $MPC $CON $rep on"
+		fi
+
+		if [ "$rans" == "on" ]
+		then
+			echo  "+ %noicon-green.png%\"$ran\" Exec exec $MPC $CON $ran off"
+		else	
+			echo  "+ %noicon-red.png%\"$ran\" Exec exec $MPC $CON $ran on"
+		fi
+
+		if [ "$sins" == "on" ]
+		then
+			echo  "+ %noicon-green.png%\"$sin\" Exec exec $MPC $CON $sin off"
+		else	
+			echo  "+ %noicon-red.png%\"$sin\" Exec exec $MPC $CON $sin on"
+		fi
+
+		if [ "$con" == "on" ]
+		then
+			echo  "+ %noicon-green.png%\"$con\" Exec exec $MPC $CON $con off"
+		else	
+			echo  "+ %noicon-red.png%\"$con\" Exec exec $MPC $CON $con on"
+		fi
+	done
+
+
+	echo "AddToMenu mpd-outputs \"\" Nop"
+	echo "+ \"Datenbank update\" Exec $MPC $CON update"
+
+fi
+
+echo "AddToMenu mpd-outputs \"Clients\" Title"
+
+echo "TEST (x /usr/bin/ncmpc) + \"%mpd.png%mpd-Client (ncmpc)\" Exec exec /usr/bin/xterm -e /usr/bin/ncmpc $CON"
+echo "TEST (x /usr/bin/ncmpcpp) + \"%mpd.png%mpd-Client (ncmpcpp)\" Exec exec /usr/bin/xterm -e /usr/bin/ncmpcpp $CON"
+echo "TEST (x /usr/bin/gmpc) + \"%mpd.png%mpd-Client (gmpc)\" Exec exec /usr/bin/gmpc "
+echo "TEST (x /usr/bin/ario) + \"%mpd.png%mpd-Client (ario)\" Exec exec /usr/bin/ario "
+echo "TEST (x /usr/bin/sonata) + \"%mpd.png%mpd-Client (sonata)\" Exec exec /usr/bin/sonata "
+

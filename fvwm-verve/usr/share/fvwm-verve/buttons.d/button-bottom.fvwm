@@ -1,0 +1,12 @@
+*FvwmShelf: (22x2 Frame 0, Title(Side) " XKill", Left, Icon xkill.png, \
+	Action(Mouse 1) Exec exec xkill, \
+	)
+*FvwmShelf: (22x2 Frame 0, Title(Side) " Fvwm Console", Left, Icon terminal.svg:$[MIconSize], , ActiveIcon terminal.svg:$[AIconSize], \
+	Action(Mouse 1) Module FvwmConsole -terminal urxvtc, \
+	)
+*FvwmShelf: (22x2 Frame 0, Title(Side) " Power", Left, Icon gnome-shutdown.svg:$[MIconSize], ActiveIcon gnome-shutdown.svg:$[AIconSize],  \
+	Action(Mouse 1) `Function FuncPower`, \
+	)
+*FvwmShelf: (22x3 Frame 0, Padding 2 2, Left, Swallow(UseOld) "cpumon" `Exec exec nice xosview -xrm 'xosview*foreground:$[fg.cs10]' -xrm 'xosview*background:$[bg.cs10]' -xrm 'xosview*meterLabelColor: $[fg.cs10]' -title cpumon -cpu -net -ints -swap -page +battery -load -disk -wireless +mem`, \
+	Action (Mouse 1) "Exec xosview +battery +net", \
+	)

@@ -1,0 +1,40 @@
+#!/bin/sh
+
+# Dieses Skript für cron aktualisiert die Wetterdaten für das Fvwm-Meteo-Applet
+#for u in `ps aux|grep fvwm|grep -v 'grep'|awk '{print $1}'|sort|uniq|sed -e '/root/d'`
+for u in `ps aux|grep fvwm|grep -v 'grep'|awk '{print $1}'|sort|uniq`
+do
+	if [ `id -u $u` -eq 0 ]
+	then
+		export FVWM_USERDIR="/etc/X11/xdm/.fvwm"
+	else
+		[ -z $FVWM_USERDIR ] && export FVWM_USERDIR="$HOME/.fvwm"
+	fi
+	V="$1"
+	#DIR=/dev/shm/
+	DIR="/dev/shm/meteo-$USER/"
+	FILE=meteo_fetch_file
+	FONT=/usr/share/fonts/truetype/ttf-bitstream-vera/VeraMoBd.ttf
+	if test -z "$V"
+	then
+		if test -e $DIR"meteo_fetch_icon1.png"
+		then
+			PIC="$DIR"meteo_fetch_icon1.png
+			TEMP=$(awk '/<temp_c data="/','/"\/>/' "$DIR$FILE" | cut -d "\"" -f 2 | sed -e "s/gif/png/g" | sed -e "s/^$/ /" -e "s/^ *$/empty/"|head -n1)"°"
+			WVEL=$(awk '/<wind_condition data="/','/"\/>/' "$DIR$FILE" | cut -d "\"" -f 2 | sed -e "s/gif/png/g" | sed -e "s/^$/ /" -e "s/^ *$/empty/"|awk '{print $4}')"km"
+		else
+			PIC=/usr/share/fvwm/Meteo/icons/noicon.png
+			TEMP="N/A"
+			WVEL="n/a"
+		fi
+	else
+		PIC=/usr/share/fvwm/Meteo/icons/sunny.png
+		TEMP="N/A"
+		WVEL="n/a"
+	fi
+
+	
+	/usr/bin/convert -geometry 27x27 -fill black -pointsize 12 -font $FONT -draw "text 4,14 '`echo $TEMP`'" $PIC $DIR"meteo_fetch_icon_button.png"
+	/usr/bin/mogrify -geometry 27x27 -fill black -pointsize 8 -font $FONT -draw "text 4,24 '`echo $WVEL`'" $DIR"meteo_fetch_icon_button.png"
+	FvwmCommand "CHANGE_ICON Meteo $DIR'meteo_fetch_icon_button.png'" &&  echo "Wettericon-Update erfolgreich"|logger -t "Meteo-update $USER"
+done

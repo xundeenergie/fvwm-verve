@@ -1,0 +1,23 @@
+DestroyModuleConfig FvwmPager: *
+*FvwmPager: Colorset * 10
+*FvwmPager: BalloonColorset * 16
+*FvwmPager: Font none
+*FvwmPager: SmallFont none
+*FvwmPager: Balloons All
+*FvwmPager: BalloonFont "xft:$[infostore.small_font]:style=$[infostore.small_fontstyle]:size=$[infostore.small_fontsize];pixelsize=$[infostore.small_fontsize]:antialias=True"
+*FvwmPager: BalloonYOffset +2
+*FvwmPager: BalloonBorderWidth 1
+*FvwmPager: UseSkipList
+*FvwmPager: MoveThreshold 0
+*FvwmPager: SolidSeparators
+*FvwmPager: WindowBorderWidth 1
+#*FvwmPager: MiniIcons
+
+*FvwmPager: Rows	1
+*FvwmPager: Columns	1
+*FvwmPager: Geometry:	-0+0
+*FvwmPager: Font		none
+*FvwmPager: SmallFont	"xft:$[infostore.small_font]:style=$[infostore.small_fontstyle]:size=$[infostore.small_fontsize];pixelsize=$[infostore.small_fontsize]"
+*FvwmPager: LabelsBelow
+
+Style FvwmPager NoTitle, Sticky, WindowListSkip, StaysOnBottom

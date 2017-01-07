@@ -1,0 +1,660 @@
+####################
+# Section: Functions
+#
+# This section defines various functions.  Not all of these are used by
+# the default bindings, but they can be useful for a user who wants to
+# customize things.
+#
+#
+# The following functions operate on a window or menu.  The
+# names are systematic: foo means "do foo"; foo-or-bar means
+# "do foo, if mouse is moving, bar if click"; and foo-or-bar-or-baz
+# adds "baz, if double-clicked".
+#
+################
+#
+# DestroyFunc FuncName
+# AddToFunc   FuncName
+# + I (Action to happen immediately)
+# + C (Action to happen on a mouse 'click)
+# + D (Action to happen on a mouse 'double click')
+# + H (Action to happen on a mouse 'hold')
+# + M (Action to happen on a mouse 'motion')
+#
+###########
+#
+# Section: Init and restart functions
+#
+# This section defines the functions InitFunction and RestartFunction.
+# InitFunction is executed automatically when fvwm first starts.
+# RestartFunction is executed automatically when fvwm restarts itself.
+# They share a common hook, init-restart.hook, and two specific hooks,
+# init.hook and restart.hook.
+#
+# init-restart.hook should be used for starting fvwm modules, such as the
+# button bar.  init-hook should be used to start other applications; they
+# should not be started again, when fvwm is restarted, since they don't
+# die like fvwm modules do.  restart.hook exists mostly for completeness;
+# tell me if you find any use for it.
+#
+# InitFunction runs the script setup-background, which looks in 
+# ~/.fvwm2 to see if the user wants some specific background color or
+# image.
+
+
+#####
+# Fvwm executes StartFunction when Fvwm is initialized, and at restart.
+# A Good place to start Modules.
+#
+# FvwmCommandS Allows you to run Fvwm Commands from a Terminal, like this:
+#   $ FvwmCommand 'Module FvwmBanner'
+# Or any other Command.
+#
+# You can test for Initialization from within StartFunction, this is a good
+# place to set the Background or start your favourite applications.
+#
+# osd_cat comes from the xosd package.
+#################
+
+DestroyFunc StartFunction
+AddToFunc   StartFunction
+ +	"I"	Module FvwmButtons -g 126x$[vp.height]-0+0 FvwmShelf
+ +	"I"	Module FvwmCommandS
+ +	"I"	Module FvwmAnimate
+ +	"I"	Module FvwmEvent
+ +	"I"	Module FvwmProxy
+ +	"I"	Module FvwmEvent
+ +	"I"	FvwmEvent FvwmEvent-NewWindow
+ +	"I"	FvwmEvent FvwmEvent-Transparency
+# +	"I"	Exec /usr/lib/evolution/3.4/evolution-alarm-notify&
+# +	"I"	Exec exec fbsetbg -f /home/jakob/Wallpaper/Bluete.png
+# +	"I"	Exec exec fbsetbg -l 
+########################
+# InitFunction wird nur beim ersten Start von FVWM ausgeführt
+########################
+DestroyFunc InitFunction
+AddToFunc   InitFunction
+ +	"I"	Function FuncMkShmdir
+# +	"I"	Exec exec gnome-keyring-daemon --daemonize --login&
+ +	"I"	Exec /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1&
+ +	"I"	Exec exec /usr/lib/notification-daemon/notification-daemon &
+ +	"I"	Exec exec /usr/bin/network-management -t&
+ +	"I"	Exec exec gnome-settings-daemon&
+ +	"I"	Exec exec gnome-screensaver&
+# +	"I"	Exec compton &
+ +	"I"	Exec exec bluetooth-applet&
+# +	"I"	Exec exec blueman-applet&
++	"I"	Exec xset -dpms 
+# +	"I"	Test (Init) Exec exec fvwm-root --dither --retain-pixmap $[fvwm_wallpaper]
+# +	"I"	Exec root-tail  -g  1200x800+35+80 -font 8x13 /var/log/syslog,white $[HOME]/.xsession-errors,green -font 8x13 /var/log/mail.warn,red,'ALERT' --update --justify --noinitial --noflicker &
+# +	"I"	Exec /usr/bin/gtk-theme-switch2 /usr/share/themes/Adwaita &
+ +	"I"	Exec exec $[HOME]/bin/mpd-fvwm&
+ +	"I"	Exec xscreensaver -no-splash &
+# +	"I"	Exec cdde&
+# +	"I"	Function FvwmXTerm
+# +	"I"	Exec xterm -ls -geometry +150+85 &
+ + 	"I"	Exec exec /usr/bin/x-www-browser &
+ +	"I"	Piperead 'echo Style \"$(echo -n "*"; basename `readlink -f /usr/bin/x-www-browser`|sed -e "s/.//")\" SkipMapping, !FPGrabFocus, !FPFocusByProgram, StartsOnPage 0 2 0'
+# + 	"I"	Exec exec /usr/bin/x-mail-client&
+# +	"I"	Piperead 'echo Style \"$(echo -n "*"; basename `readlink -f /usr/bin/x-mail-client`|sed -e "s/.//")\" SkipMapping, !FPGrabFocus, !FPFocusByProgram, StartsOnPage 0 2 1'
+# +	"I"	Exec exec dropbox start&
+# +	"I"	Exec exec wuala -silent&
++	I	Function FvwmXTerm
+# +	"I"	Exec exec fbsetbg -l 
+
+DestroyMenu SessionInitFunction
+AddToFunc SessionInitFunction
++ I Nop
+
+DestroyFunc RestartFunction
+AddToFunc RestartFunction
+#Read /etc/X11/fvwm2/restart.hook
++ I Nop
+#Read /etc/X11/fvwm2/init-restart.hook
+#Read .fvwm2/restart.hook
+
+#####
+# ExitFunction is executed when you ask Fvwm to Quit.
+# Test (ToRestart) is true before a Restart.
+#################
+DestroyFunc ExitFunction
+AddToFunc   ExitFunction
++ I Test (!ToRestart) Exec rm -f $[FVWM_USERDIR]/icon.tmp.*
++ I KillModule FvwmAnimate
++ I Exec sync
++ I Exec exec dropbox stop
+#+ I Exec exec killall cdde
+
+DestroyFunc KillMkBackUp
+AddToFunc   KillMkBackUp	
+Test (x /usr/local/bin/killrsnapshot)  		+ I 	Exec exec sudo /usr/local/bin/killrsnapshot
+
+DestroyFunc StartMkBackUp
+AddToFunc   StartMkBackUp	
+Test (x /usr/local/bin/mkbackup-hourly)  		+ I 	Exec exec sudo /usr/local/bin/mkbackup-hourly
+
+#DestroyFunc Thumbnail
+#AddToFunc Thumbnail
+#+ I Raise
+#+ I PipeRead "xwd -silent -id $[w.id] | convert -scale 128x128 -frame 1x1 \
+#    -mattecolor black -quality 0 xwd:- png:$[HOME]/.fvwm/icon.tmp.$[w.id].png \
+#    && echo WindowStyle IconOverride, Icon $[HOME]/.fvwm/icon.tmp.$[w.id].png, StaysOnBottom \
+#    || echo Nop"
+#+ I Iconify
+#
+#DestroyFunc DeThumbnail
+#AddToFunc DeThumbnail
+#+ I Raise
+#+ M Move
+#+ D DestroyWindowStyle
+#+ D Exec exec rm -f $HOME/.fvwm/icon.tmp.$[w.id].png
+#+ D Iconify Off
+#
+DestroyFunc Debug
+AddToFunc Debug
++ I Echo DEBUG $0
+
+DestroyFunc FetchMailNews
+AddToFunc   FetchMailNews
+Test (x /usr/bin/fetchmail)  		+ I 	Exec exec /usr/bin/fetchmail
+Test (x /usr/sbin/fetchnews)	+ I	Exec exec sudo /usr/sbin/fetchnews
+
+DestroyFunc FetchMail
+AddToFunc   FetchMail
+Test (x /usr/bin/fetchmail)  		+ I 	Exec exec /usr/bin/fetchmail
+
+DestroyFunc FetchNews
+AddToFunc   FetchNews
+Test (x /usr/sbin/fetchnews)	+ I	Exec exec sudo /usr/sbin/fetchnews
+
+DestroyFunc PPPconnect
+AddToFunc PPPconnect
+ + I TEST (!f /var/run/ppp0.pid) TEST (x $[FVWM_USERDIR]/scripts/pon)Exec $[FVWM_USERDIR]/scripts/pon
+ + I TEST (f /var/run/ppp0.pid) TEST (x $[FVWM_USERDIR]/scripts/poff)Exec $[FVWM_USERDIR]/scripts/poff
+ + I Echo ppp-connect
+
+
+###########
+#
+# Funktionen, welche alle Programme launchen, damit sie vom Aufruf unabhÃ¤ngig sind
+#
+#
+
+DestroyFunc FvwmXTerm
+AddToFunc   FvwmXTerm
+#+	"I"	Exec exec xterm
+ +	"I"	PipeRead 'echo SetEnv xpid `pidof urxvtd`'
+ +	"I"	Test (R /proc/14556/cmdline) Exec exec urxvtc -ls -geometry +150+85
+ +	"I"	TestRc (NoMatch) Exec exec urxvtcd -ls -geometry +150+85
+
+DestroyFunc RootShell
+AddToFunc RootShell
+#  +	"I"	Exec xterm -ls -vb -sb -sl 2000 -T Root -n Root -j -rw +vb -bg \#FFD0C0 -e  'su -'
+#  +	"I"	Exec urxvtc -vb -sb -sl 2000 -T Root -n Root -j +vb -bg \#FFD0C0 -e  su -
+ +	"I"	Test (R /proc/14556/cmdline) Exec urxvtc -vb -sb -sl 2000 -T Root -n Root -j +vb -bg \#FFD0C0 -e  su -
+ +	"I"	TestRc (NoMatch) Exec exec urxvtcd -vb -sb -sl 2000 -T Root -n Root -j +vb -bg \#FFD0C0 -e  su -
+
+DestroyFunc FvwmBrowser
+AddToFunc   FvwmBrowser
++	"I"	PipeRead 'echo \"$(echo -n "StartOnCurrentDesk /usr/bin/x-www-browser *"; basename `readlink -f /usr/bin/x-www-browser`|sed -e "s/.//")\"'
+
+DestroyFunc FvwmMailClient
+AddToFunc   FvwmMailClient
+#+	"I"	StartOnCurrentDesk /usr/bin/x-mail-client "E-Mail - Evolution"
++	"I"	StartOnCurrentDesk /usr/bin/x-mail-client "*ail"
+
+DestroyFunc FvwmOoffice
+AddToFunc   FvwmOoffice
++	"I"	StartOnCurrentDesk /usr/bin/ooffice OpenOffice.org
+
+DestroyFunc FvwmGimp
+AddToFunc   FvwmGimp
++	"I"	StartOnCurrentDesk /usr/bin/gimp Gimp
+
+DestroyFunc FvwmKonq
+AddToFunc   FvwmKonq
++	"I"	StartOnCurrentDesk /usr/bin/konqueror Konqueror
+
+DestroyFunc FvwmDolphin
+AddToFunc   FvwmDolphin
++	"I"	StartOnCurrentDesk /usr/bin/dolphin Dolphin
+
+DestroyFunc FvwmNautilus
+AddToFunc   FvwmNautilus
++	"I"	StartOnCurrentDesk `/usr/bin/nautilus --no-desktop` Nautilus
+
+DestroyFunc FvwmGimp
+AddToFunc   FvwmGimp
++	"I"	StartOnCurrentDesk `/usr/bin/gimp` 'gimp'
+
+DestroyFunc FvwmInkscape
+AddToFunc   FvwmInkscape
++	"I"	StartOnCurrentDesk `/usr/bin/inkscape` 'inkscape'
+
+DestroyFunc FvwmSynaptic
+AddToFunc   FvwmSynaptic
++	"I"	StartOnCurrentDesk `/usr/bin/gksudo /usr/sbin/synaptic` 'Synaptic*'
+
+
+#
+#
+#
+###########
+DestroyFunc LOGINS_MENU
+AddToFunc LOGINS_MENU
++	"I"	PipeRead `cat $[FVWM_USERDIR]/config.d/menue.fvwm`
++	"I"	Menu MenuLogins
+
+DestroyFunc WORK_MENU
+AddToFunc WORK_MENU
+#+ I PipeRead 'echo SetEnv FW `/usr/bin/pgrep -f fernwartung -u "$[USER]" 1>/dev/null 2>&1; echo "$?"`'
++	"I"	PipeRead `cat $[FVWM_USERDIR]/config.d/menue-workmenue.fvwm`
++	"I"	PipeRead `exec cat $[FVWM_HOSTCONFIGDIR]/menu-workmenu.fvwm`
++	"I"	Menu WORK_MENU_popup
+
+DestroyFunc SHORTCUT
+AddToFunc SHORTCUT
++	"I"	PipeRead `cat $[FVWM_USERDIR]/config.d/menue.fvwm`
++	"I"	Menu ShortCut
+
+##############################################
+# MPD-SteuerApplet Funktionen und Menü laden #
+##############################################
+
+Read $[FVWM_SCRIPTDIR]/mpd-controll/function-mpd
+Read $[FVWM_SCRIPTDIR]/mpd-controll/menu-mpd
+
+##############################################
+
+DestroyFunc move-or-winmenu-or-deiconify
+AddToFunc   move-or-winmenu-or-deiconify
++ "M" Move
++ "C" Popup Window-Ops
++ "D" Iconify
+
+DestroyFunc deiconify-and-focus
+AddToFunc   deiconify-and-focus
++ "I" Iconify -1
++ "I" Focus
+
+DestroyFunc deiconify-and-raise
+AddToFunc   deiconify-and-raise
++ "I" Iconify -1
++ "I" Raise
+
+DestroyFunc move-or-raiselower	
+AddToFunc   move-or-raiselower	
++ "M" Move
++ "C" RaiseLower
+
+DestroyFunc move-or-raise
+AddToFunc   move-or-raise
++ "M" Move
++ "C" Raise
+
+DestroyFunc move-or-lower
+AddToFunc   move-or-lower
++ "M" Move
++ "C" Lower
+
+DestroyFunc move-and-raise-or-raiselower	
+AddToFunc   move-and-raise-or-raiselower	
++ "M" Move
++ "M" Raise
++ "C" RaiseLower
+
+DestroyFunc move-or-raiselower-or-maximize-vertical
+AddToFunc   move-or-raiselower-or-maximize-vertical
++ "M" Move
++ "C" RaiseLower
++ "D" Maximize 0 100
+
+DestroyMenu resize-or-raiselower	
+AddToFunc   resize-or-raiselower	
++ "M" Resize
++ "C" RaiseLower
+
+AddToFunc vpncFunc
+TEST (f /var/run/vpnc/pid)	+ "I"	Exec sudo /usr/sbin/vpnc-disconnect
++ "I"	Exec sudo /usr/sbin/vpnc tunet-only
+
+AddToFunc vpncDEFunc
+  +	"I"	Exec sudo vpnc-disconnect 
+
+DestroyFunc MoveOrRaise 
+AddToFunc MoveOrRaise
+#+ I PipeRead 'echo Exec exec transset-df -i $[w.id] 0.7'
+#+ M PipeRead 'echo Move'
+#+ M Exec exec transset-df -p 1
+
++                         "C"	Raise
++                         "M"	Raise
++                         "M"	Move
++                         "D"	Maximize grow grow
+
+DestroyFunc ResizeOrRaise
+AddToFunc ResizeOrRaise
++                          "C"	Raise
++                          "M"	Raise
++                          "M"	Resize
++                          "D"	Lower
+
+DestroyFunc  MaximizeFunc
+AddToFunc MaximizeFunc
++                          "M"	Maximize   0 100
++                          "C"	Maximize   0  80
++                          "D"	Maximize 100 100
+
+DestroyFunc  MoveOrIconify
+AddToFunc MoveOrIconify
++                          "I"	Raise
++                          "M"	Raise
++                          "M"	Move
++                          "D"	Iconify
+
+DestroyFunc bringup
+AddToFunc bringup
+  +	"I"	All (FvwmButtons) RaiseLower
+
+DestroyFunc RestartSound
+AddToFunc RestartSound
+  +	"I"	Exec killall esd
+  +	"I"	Exec esdctl unlock
+
+DestroyFunc StartOnCurrentDesk
+AddToFunc StartOnCurrentDesk
++ I PipeRead `echo Style "$1" SkipMapping, !FPGrabFocus, !FPFocusByProgram, StartsOnPage $[desk.n] $[page.nx] $[page.ny]`
++ I Exec exec $0 &
+
+DestroyFunc gmrun
+AddToFunc gmrun
++ I Exec gmrun 
+
+###############################################################################
+## >>> WALLPAPER BROWSER
+###############################################################################
+# (taviso's config)
+# If you have xv installed, clicking the title will start a slide show.
+###############
+DestroyFunc WallpaperBrowser
+AddToFunc WallpaperBrowser I PipeRead 'test ! -d "$0/.thumbs" && mkdir "$0/.thumbs"; \
+    for i in "$0/"*; do \
+        test -f "$0/.thumbs/${i##*/}" \
+            -a "${i}" -ot "$0/.thumbs/${i##*/}" || { \
+                convert -quality 0 -scale 67 "${i}" "png:$0/.thumbs/${i##*/}" 2>/dev/null \
+                    || continue; \
+            }; \
+    done; \
+    fvwm-menu-directory --icon-title folder_view.png --icon-file __PIXMAP__ \
+    --icon-dir folder_paper_closed.png --dir "$0" --exec-file "^$[fvwm_wallpapersetter]" \
+    --exec-t="^eog *" | sed -e "s#FuncFvwmMenuDirectory#WallpaperBrowser#g" \
+    -e "s#__PIXMAP__\\(.*\\)\\\"\\(.*/\\)\\(.*\\)\\\"#\\2.thumbs/\\3\\1\\2\\3#g" -e "s@file:// @file://@g"'
+
+
+##############################################################################
+## >>> MODULE
+##############################################################################
+# (jakobs config)
+DestroyFunc ModuleBrowser
+AddToFunc ModuleBrowser I PipeRead 'fvwm-menu-directory --icon-title folder_view.png --icon-dir folder_paper_closed.png \
+		--dir $[FVWM_MODULEDIR] --title "" --exec-file "^Module" |\
+		sed -e "s#Exec xterm -e##g" -e "s#$[FVWM_MODULEDIR]/##g" -e "s#Fvwm##1" -e "s#\\"##3" -e "s#\\"##3"' 
+
+##############################################################################
+## >>> APPLETS
+##############################################################################
+# (jakobs config)
+DestroyFunc AppletBrowser
+AddToFunc AppletBrowser I PipeRead 'fvwm-menu-directory --icon-title folder_view.png --icon-dir folder_paper_closed.png \
+		--dir $[FVWM_APPLETDIR] --title "" --exec-file "^FvwmCommand \\"FvwmScript" |\
+		sed -e "s#$[FVWM_APPLETDIR]/##g" -e "s#\\"##4" ' 
+
+
+##############################################################################
+## >>> MANPAGES
+##############################################################################
+# (jakobs config)
+DestroyFunc ManpageBrowser
+AddToFunc ManpageBrowser I PipeRead 'fvwm-menu-directory --icon-title folder_view.png --icon-dir folder_paper_closed.png \
+		--dir "/usr/share/man/man1" --title "" --exec-file "^xterm -e man" |\
+		grep "^Destroy\\|^AddTo\\|^+ Dynamic\\|^+ Missing\\|^+ \\"Fvwm*"|sed -e "s#\\.1\\.gz##g" -e "s#/usr/share/man/man1/##g" -e "s#\\"##3" -e "s#\\"##3" '
+		
+
+
+##############################################################################
+## >>> LOGINS
+##############################################################################
+# (jakobs config)
+#DestroyFunc LoginsPopup
+#AddToFunc LoginsPopup
+#+ I Destroy recreate "Logins-dynamic"
+#+ I AddToMenu "Logins-dynamic"
+#+ I PipeRead 'cat $[HOME]/.fvwm_button_shells|grep '^[^#]'|while read a b e; do echo " + %$b%$a  $e"; done'
+
+##############################################################################
+## >>> WM-Menu
+##############################################################################
+# (jakobs config)
+#DestroyFunc WM_MENU_FUNC
+#AddToFunc WM_MENU_FUNC 
+#+ I SetEnv d $0
+#+ I Echo $0 $d $[SESSION_MANAGER_NAME]
+#+ I test ( EnvMatch $d "/usr/share/man/man1" ) ManpageBrowser
+##+ I test ( EnvIsSet $d  ) ManpageBrowser
+#+ I test ( EnvMatch $d "$[FVWM_MODULEDIR]" ) Function ModuleBrowser
+#+ I test ( EnvMatch $d "/home/jakob/Wallpaper" ) Function WallpaperBrowser
+
+
+##############################################################################
+## >>> mpd-playpause
+##############################################################################
+DestroyFunc CHANGE_ICON
+AddToFunc CHANGE_ICON
++ I SendToModule FvwmButtons ChangeButton $0 Icon $1
+
+DestroyFunc CHANGE_TITLE
+AddToFunc CHANGE_TITLE
++ I SendToModule FvwmButtons ChangeButton $0 Title " $1 $2"
+
+
+##############################################################################
+## >>> LOCK-Screen
+##############################################################################
+DestroyFunc LOCK_SCREEN
+AddToFunc LOCK_SCREEN
+TEST (x xscreensaver-command)	+ I Exec exec xscreensaver-command --lock && xset dpms force suspend
+TEST (x gnome-screensaver-command)	+ I Exec exec gnome-screensaver-command -la && xset dpms force suspend
++ I Exec exec amixer -c 0 -- sset Master mute -q
++ I KillModule FvwmButtons FvwmPowerButton
+
+##############################################################################
+## >>> LOCK-Screen-loud
+##############################################################################
+DestroyFunc LOCK_SCREEN_LOUD
+AddToFunc LOCK_SCREEN_LOUD
+TEST (x xscreensaver-command)	+ I Exec exec xscreensaver-command --lock && xset dpms force suspend
+TEST (x gnome-screensaver-command)	+ I Exec exec gnome-screensaver-command -la && xset dpms force suspend
++ I KillModule FvwmButtons FvwmPowerButton
+
+##############################################################################
+## Move Windows to other Pages
+##############################################################################
+
+DestroyFunc PackMoveToPageLeft
+AddToFunc PackMoveToPageLeft
++ I SetEnv Move $1
++ I PipeRead "test $[page.nx] -ge 1 \
+	&& echo SetEnv x_new `expr $[page.nx] - 1` \
+	|| echo SetEnv x_new $[page.nx]"
++ I Test (EnvMatch Move m) WindowId $0 Raise
++ I Test (EnvMatch Move m) WindowId $0 MoveToPage $[x_new] $[page.ny] 
++ I GotoPage $[x_new] $[page.ny]
+
+AddToFunc PackWrapperPageLeft I NoWindow PackMoveToPageLeft $[w.id] $0
+
+DestroyFunc PackMoveToPageRight
+AddToFunc PackMoveToPageRight
++ I SetEnv Move $1
++ I PipeRead "test $[page.nx] -lt $[desk.pagesx] \
+	&& echo SetEnv x_new `expr $[page.nx] + 1` \
+	|| echo SetEnv x_new $[page.nx]"
++ I Test (EnvMatch Move m) WindowId $0 Raise
++ I Test (EnvMatch Move m) WindowId $0 MoveToPage $[x_new] $[page.ny] 
++ I GotoPage $[x_new] $[page.ny]
+
+AddToFunc PackWrapperPageRight I NoWindow PackMoveToPageRight $[w.id] $0
+
+DestroyFunc PackMoveToPageUp
+AddToFunc PackMoveToPageUp
++ I SetEnv Move $1
++ I PipeRead "test $[page.ny] -ge 1 \
+	&& echo SetEnv y_new `expr $[page.ny] - 1` \
+	|| echo SetEnv y_new $[page.ny]"
++ I Test (EnvMatch Move m) WindowId $0 Raise
++ I Test (EnvMatch Move m) WindowId $0 MoveToPage $[page.nx] $[y_new] 
++ I GotoPage $[page.nx] $[y_new]
+
+AddToFunc PackWrapperPageUp I NoWindow PackMoveToPageUp $[w.id] $0
+
+DestroyFunc PackMoveToPageDown
+AddToFunc PackMoveToPageDown
++ I SetEnv Move $1
++ I PipeRead "test $[page.ny] -lt $[desk.pagesy] \
+	&& echo SetEnv y_new `expr $[page.ny] + 1` \
+	|| echo SetEnv y_new $[page.ny]"
++ I Test (EnvMatch Move m) WindowId $0 Raise
++ I Test (EnvMatch Move m) WindowId $0 MoveToPage $[page.nx] $[y_new] 
++ I GotoPage $[page.nx] $[y_new]
+
+AddToFunc PackWrapperPageDown I NoWindow PackMoveToPageDown $[w.id] $0
+
+########################
+## PowerButton
+########################
+
+SetEnv PB 0 # PB = PowerButton
+
+DestroyFunc FuncPower
+AddToFunc FuncPower
++ I Test (EnvMatch PB 0) Module FvwmButtons FvwmPowerButton
++ I TestRc (NoMatch) KillModule FvwmButtons FvwmPowerButton
++ I Test (EnvMatch PB 0) SetEnv PB 1
++ I TestRc (NoMatch) SetEnv PB 0
+
+#######################
+## Suspend-Button
+#######################
+ 
+DestroyFunc FuncSuspendButton
+AddToFunc FuncSuspendButton
++ I Function FuncPower
+#+ I Exec exec sudo /usr/sbin/pm-suspend
++ I Exec exec dbus-send --system --print-reply --dest="org.freedesktop.UPower" /org/freedesktop/UPower org.freedesktop.UPower.Suspend
++ I KillModule FvwmButtons FvwmPowerButton
+
+##################
+# PowerOffFunc
+##################
+
+DestroyFunc PowerOff
+AddToFunc PowerOff
++ I KillModule FvwmButton FvwmPowerButton
+#+ I Exec exec sudo /sbin/poweroff
++ I Exec exec dbus-send --system --print-reply --dest="org.freedesktop.ConsoleKit" /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Stop
+
+##################
+# PowerRebootFunc
+##################
+
+DestroyFunc PowerReboot
+AddToFunc PowerReboot
++ I KillModule FvwmButton FvwmPowerButton
+#+ I Exec exec sudo /sbin/poweroff
++ I Exec exec dbus-send --system --print-reply --dest="org.freedesktop.ConsoleKit" /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Restart
+
+##################
+# Expose
+##################
+DestroyFunc Expose
+AddToFunc Expose
++ I SetEnv FVWMCountWindows 0
++ I All (CurrentPage, !Iconic, CirculateHit, !Sticky) PipeRead 'echo SetEnv FVWMCountWindows $((FVWMCountWindows + 1))'
++ I PipeRead 'echo ModuleSynchronous FvwmRearrange -tile -maximize -m -mn `echo -e "$$(($$FVWMCountWindows ** 1/2 +1))"`; echo "Pick DeExpose \\$[w.id]"'
+
+DestroyFunc DeExpose
+AddToFunc DeExpose
++ I All (CurrentPage, !Iconic, CirculateHit, !Sticky) Maximize Off
++ I WindowId $0 WarpToWindow 50 50
+
+
+####################
+## Transparenz
+####################
+
+DestroyFunc TransparencyMove
+AddToFunc TransparencyMove
++ M PipeRead 'echo Exec exec compton-trans -w $[w.id] 70'
++ C Raise
++ M Raise
++ M PipeRead 'echo Move'
++ M Exec exec compton-trans -c 100
++ C Exec exec compton-trans -c 100
++ D Maximize grow grow
+
+DestroyFunc FocusChangeTransparency-transparent
+AddToFunc FocusChangeTransparency-transparent
++ I ThisWindow (HasPointer, AcceptsFocus) Exec exec compton-trans -i $0 1
++ I Any (!Focused, !HasPointer, Overlapped, AcceptsFocus) Exec exec compton-trans -i $[w.id] 0.3
+#+ I ThisWindow (!Focused, AcceptsFocus) PipeRead "(echo -n 'nofocused: ';xwininfo -id $[w.id] | grep '^xwininfo') >> /tmp/log"
++ I All (!Focused, AcceptsFocus) PipeRead "(echo -n 'nofocused: ';xwininfo -id $[w.id] | grep '^xwininfo') >> /tmp/log"
+
+DestroyFunc FocusChangeTransparency-full
+AddToFunc FocusChangeTransparency-full
++ I Current (HasPointer, AcceptsFocus) PipeRead 'echo Exec exec compton-trans -i $[w.id] 1'
++ I Current (HasPointer, AcceptsFocus) PipeRead "(echo -n 'focused: '; xwininfo -id $[w.id] | grep '^xwininfo') >> /tmp/log"
+
+*FvwmEvent-NewWindow: StartDelay 4
+*FvwmEvent-NewWindow: add_window FuncFocusWindow
+
+DestroyFunc FuncFocusWindow
+AddToFunc   FuncFocusWindow
+#+ I ThisWindow ("My Window") Move 200p 100p
++ I ThisWindow ("xterm") Move 200p 100p
++ I ThisWindow ("urxvtc") Move 200p 100p
++ I Focus
++ I WarpToWindow 50 50
+
+DestroyFunc FuncCompositionOn
+AddToFunc   FuncCompositionOn
++ I Exec exec compton &
++ I Exec pkill -u $[USER] root-tail
+
+DestroyFunc FuncCompositionOff
+AddToFunc   FuncCompositionOff
++ I Exec exec pkill -u $[USER] compton
++ I Exec root-tail  -g  1200x800+35+80 -font 8x13 /var/log/syslog,white $[HOME]/.xsession-errors,green -font 8x13 /var/log/mail.warn,red,'ALERT' --update --justify --noinitial --noflicker &
+
+DestroyFunc FilesBrowser
+AddToFunc FilesBrowser
++ I DestroyMenu ConfigFVWMMenu
++ I AddToMenu ConfigFVWMMenu
++ I AddToMenu ConfigFVWMMenu "Fvwm-Config-Files" Title
++ I + DynamicPopDownAction DestroyMenu ConfigFVWMMenu
++ I PipeRead 'echo "+ \"config%noicon-yellow.png%\" Exec exec nedit ~/.fvwm/config" ; find $[FVWM_USERDIR]/config.d/ -iname \"*\\.fvwm\"|sort|while read i; \
+do echo "+ \"`basename $i`%noicon-green.png%\" Exec exec nedit $i"; done'
+
+DestroyFunc FuncVNC
+AddToFunc FuncVNC
++ I Exec urxvtc -e /usr/bin/x11vnc -id $[w.id] -localhost
+
+DestroyFunc FuncTV
+AddToFunc FuncTV
++ I Exec exec /usr/bin/svlc --fullscreen --video-filter=deinterlace:auto .config/vlc/channels.conf
+
+DestroyFunc FuncTVchupdate
+AddToFunc FuncTVchupdate
++ I Exec exec /usr/local/bin/dvb-channelupdate
+
+DestroyFunc FuncMkShmdir
+AddToFunc FuncMkShmdir
++ I Exec exec test -d /dev/shm/fvwm-$[USER] || /usr/bin/mkdir -p /dev/shm/fvwm-$[USER] && echo TEST

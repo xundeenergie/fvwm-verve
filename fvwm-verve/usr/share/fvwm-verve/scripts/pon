@@ -1,0 +1,6 @@
+#!/bin/bash
+sudo /usr/bin/pon `cat $HOME/.ppp_provider`
+exec `echo touch /dev/shm/ppp-connect`
+#sleep 30
+#/usr/sbin/vpnc tunet-all
+test -f /var/run/ppp0.pid || rm /dev/shm/ppp-connect

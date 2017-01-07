@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# Erstellen von ImagePath-Ergänzungseinträgen von Fvwm basierend auf theme.index-Files 
+
+THEMENAME="${1}"
+SIZES="scalable"
+[ -n "$2" ] && SIZES="${2}"
+
+SEARCHPATH="$HOME/icons;$FVWM_USERDIR;$FV_SYSTEMDIR;/usr/share/icons;/usr/share/pixmaps"
+
+export IFS=";"
+for i in $SEARCHPATH; do
+  THEMEINDEX=$(printf %s "${i}/$THEMENAME/index.theme")
+  if [ -e "$THEMEINDEX" ] ;then
+    IFS=","
+    for j in $(awk -F "=" '$1 ~ /^Directories/{print $2}' $THEMEINDEX); do
+      printf $s "ImagePath +:$i/$THEMENAME/$j
+"
+    done |grep "${SIZES}"
+  fi
+done

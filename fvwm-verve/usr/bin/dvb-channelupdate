@@ -1,0 +1,33 @@
+#!/bin/bash
+# Dieses Skript scanned bei eingesteckter TV-Karte die Channels und gibt eine Wiedergabeliste für VLC in jedes einzelne User-Verzeichnis aus.
+
+. /usr/bin/functions-jakob
+
+ICON=.fvwm/icons/Flat-SVG/scalable/apps/tvtime.svg
+BIN="/usr/bin/w_scan"
+COUNTRY="AT"
+OPTIONS="-c $COUNTRY -X"
+OUTPUT="channels.conf"
+
+if [ $UID -eq 0 ]
+then
+	dbusnotifying -i $ICON Channelscan für TV-Karte gestartet
+	fuser -f /dev/dvb/adapter0/frontend0 -k && dbusnotifying -i $ICON TV-Anwendung musste zum \nChannelscan beendet werden
+	$($BIN $OPTIONS > /tmp/$OUTPUT)
+
+	awk -F ":" '$3 >= 1000 && $1 != "nobody" {print $1}' /etc/passwd|while read i
+	do
+		[ -d /home/"$i"/.config/vlc ] || sudo -u "$i" mkdir -p /home/"$i"/.config/vlc 
+		cp /tmp/$OUTPUT /home/"$i"/.config/vlc/.
+		chown "$i:$i" /home/"$i"/.config/vlc/$OUTPUT
+	done
+	dbusnotifying -i $ICON "Channelscan abgeschlossen. 
+TV-Anwendung kann wieder gestartet werden"
+else
+	dbusnotifying -i $ICON Channelscan für TV-Karte gestartet
+	fuser -f /dev/dvb/adapter0/frontend0 -k && dbusnotifying -i $ICON TV-Anwendung musste zum Channelscan beendet werden
+	[ -d /home/"$USER"/.config/vlc ] || mkdir -p /home/"$USER"/.config/vlc 
+	$($BIN $OPTIONS > /home/$USER/.config/vlc/$OUTPUT)
+	dbusnotifying -i $ICON "Channelscan abgeschlossen. 
+TV-Anwendung kann wieder gestartet werden"
+fi

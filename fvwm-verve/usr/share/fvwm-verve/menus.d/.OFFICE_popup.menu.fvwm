@@ -1,0 +1,10 @@
+TITEL|Office-Suits
+Libreoffice|/usr/bin/libreoffice --nologo|/usr/bin/libreoffice|default_office|libreoffice-startcenter.svg:$[MIconSize]
+|Nop|Nop
+Textverarbeitung|/usr/bin/lowriter|/usr/bin/lowriter|default_office|libreoffice-writer.svg:$[MIconSize]
+Tabellenkalkulation|/usr/bin/localc|/usr/bin/localc|default_office|libreoffice-calc.svg:$[MIconSize]
+Datenbanken|/usr/bin/lobase|/usr/bin/lobase|default_office|libreoffice-base.svg:$[MIconSize]
+Zeichnungen|/usr/bin/lodraw|/usr/bin/lodraw|default_office|libreoffice-draw.svg:$[MIconSize]
+Präsentationen|/usr/bin/loimpress|/usr/bin/loimpress|default_office|libreoffice-impress.svg:$[MIconSize]
+Formeleditor|/usr/bin/lomath|/usr/bin/lomath|default_office|libreoffice-math.svg:$[MIconSize]
+HTML-Editor|/usr/bin/loweb|/usr/bin/loweb|default_office|

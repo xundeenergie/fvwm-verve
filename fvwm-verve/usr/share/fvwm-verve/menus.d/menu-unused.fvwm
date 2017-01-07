@@ -1,0 +1,36 @@
+###########################################################################################################
+### Die folgenden Menüs müssen noch überprüft werden!!!
+
+#DestroyMenu MenuUtilities
+#AddToMenu MenuUtilities
+#AddToMenu MenuUtilities "Werkzeuge" Title top
+#Test (x nautilus) + %folder_view.png%"Nautilus File Manager" Exec exec nautilus --no-desktop
+#TEST (x konqueror) + "Konqueror - Dateien"%konqueror16.png%		Exec konqueror -profile filemanagement
+#Test (x rox) + %floppy_disk.png%"ROX Filer" Exec exec rox
+#Test (x vmware) + %hardware_computers.png%"VMware Workstation" Exec exec vmware
+#Test (x fsv) + %document_graph.png%"3D File System Explorer" Exec exec fsv
+#Test (x xmag) + %document_database_view.png%"Magnifying Glass"%ctl_alt_x.png% Exec exec xmag
+#Test (x xwininfo) + %window.png%"Window Information" Exec exec xmessage "`xwininfo`"
+#Test (x xterm) + %gears.png%"Process Information" Exec exec xterm  -e top
+#+ "" Nop
+#+ %bulletin-board.png%"Show Desktop"%win_i.png% All (AcceptsFocus CurrentPage !Iconic !Shaded) Thumbnail
+#
+
+#DestroyMenu FvwmMoveMethods
+#AddToMenu FvwmMoveMethods
+#+ "Move to Top" Pick AnimatedMove keep 0p
+#+ "Move to Left" Pick AnimatedMove 0p keep
+#+ "Move to Right" Pick PipeRead "echo AnimatedMove $$(($[vp.width] - $[w.width]))p keep"
+#+ "Move to Bottom" Pick PipeRead "echo AnimatedMove keep $$(($[vp.height] - $[w.height]))p"
+#+ "" Nop
+#+ %window.png%"Centre Window" Pick CentreWindow (126/2) (28/2) Animated
+#+ "" Nop
+#+ %hardware_mouse.png%"Pack Up"%alt_sft_up.png% Pick PackWrapperUp
+#+ %hardware_mouse.png%"Pack Left"%alt_sft_left.png% Pick PackWrapperLeft
+#+ %hardware_mouse.png%"Pack right"%alt_sft_right.png% Pick PackWrapperRight
+#+ %hardware_mouse.png%"Pack down"%alt_sft_down.png% Pick PackWrapperDown
+#+ "" Nop
+#+ %numbers_counter.png%"Move To Page" Popup MenuPageList
+#+ "" Nop
+#+ %hardware_mouse.png%"Interactive Move" Pick Move
+#

@@ -1,0 +1,10 @@
+TITEL|Bildschirm abschalten in 
+nie|xset|xset -dpms|default_dpms|
+10s|xset|xset dpms 10 10 10|default_dpms|
+30s|xset|xset dpms 30 30 30|default_dpms|
+1min|xset|xset dpms 60 60 60|default_dpms|
+2min|xset|xset dpms 120 120 120|default_dpms|
+3min|xset|xset dpms 180 180 180|default_dpms|
+4min|xset|xset dpms 240 240 240|default_dpms|
+5min|xset|xset dpms 300 300 300|default_dpms|
+10min|xset|xset dpms 600 600 600|default_dpms|

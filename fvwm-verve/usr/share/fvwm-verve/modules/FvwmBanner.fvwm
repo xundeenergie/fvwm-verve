@@ -1,0 +1,10 @@
+*FvwmBanner: NoDecor
+#    Tells FvwmBanner to create a window that Fvwm will not manage and not decorate.
+
+*FvwmBanner: Pixmap $[FV_SYSTEMDIR]/icons/web-verve-logo.png
+#    Tells FvwmBanner to display file instead of the built in pixmap.
+
+*FvwmBanner: Timeout 3
+#    Tells FvwmBanner to display for sec seconds instead of default of 3 seconds.
+
+Style FvwmBanner NoTitle, StaysOnTop, WindowListSkip, CirculateSkip

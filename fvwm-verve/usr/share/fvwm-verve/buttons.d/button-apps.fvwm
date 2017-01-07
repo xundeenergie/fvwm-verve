@@ -1,0 +1,90 @@
+*FvwmShelf: (11x2 Frame 0, Title(Side) " Term", Left, Icon terminal.svg:$[MIconSize], , ActiveIcon terminal.svg:$[AIconSize], \
+		Action(Mouse 1) FvwmXTerm, \
+		Action(Mouse 2) Menu select_TERMINAL_popup, \
+		Action(Mouse 3) Menu default_TERMINAL_popup, \
+		)
+*FvwmShelf: (13x2 Frame 0, Title(Side) " Dateien", Left, Icon file-manager.svg:$[MIconSize],  ActiveIcon file-manager.svg:$[AIconSize], \
+		Action(Mouse 1) "Function FvwmFiles", \
+		Action(Mouse 2) Menu select_FILES_popup, \
+		Action(Mouse 3) Menu default_FILES_popup, \
+		)
+TEST (x dropbox) *FvwmShelf: (4x2 Frame 0, Left, Icon dropbox.svg:$[MIconSize], ActiveIcon dropbox.svg:$[AIconSize], \
+		Action(Mouse 1) Menu select_DROPBOX_popup, \
+		Action(Mouse 3) Menu default_DROPBOX_popup, \
+		)
+TEST (!x dropbox) *FvwmShelf: (4x2 Frame 0)
+TEST (x wuala) *FvwmShelf: (4x2 Frame 0, Left, Icon wuala.svg:$[MIconSize], ActiveIcon wuala.svg:$[AIconSize] \
+		Action(Mouse 1) "Exec exec wuala -silent",\
+		Action(Mouse 2) "Exec exec wuala shutdown", \
+		)
+TEST (!x wuala) *FvwmShelf: (4x2 Frame 0)
+#*FvwmShelf: (22x2 Frame 0, Title(Side) " Fotoverwaltung", Left, Icon shotwell.svg:$[MIconSize], ActiveIcon shotwell.svg:$[AIconSize] \
+#		Action(Mouse 1) FvwmPictureManager, \
+#		)
+#*FvwmShelf: (17x2 Frame 0, Title(Side) " Editor", Left, Icon gedit-icon.svg:$[MIconSize],  ActiveIcon gedit-icon.svg:$[AIconSize], \
+#		Action(Mouse 1) FvwmEditor, \
+#		Action(Mouse 2) Menu select_EDITOR_popup, \
+#		Action(Mouse 3) Menu default_EDITOR_popup, \
+#		)
+#*FvwmShelf: (22x2 Frame 0, Title(Side) " Internet", Left, Icon gnome-globe.svg:$[MIconSize],  ActiveIcon gnome-globe.svg:$[AIconSize], \
+#		Action(Mouse 1) `Function FvwmBrowser`, \
+#		Action(Mouse 2) Menu select_INTERNET_popup, \
+#		Action(Mouse 3) Menu default_INTERNET_popup, \
+#		)
+
+PipeRead '/usr/bin/fvwm-xdg-button PHOTO.desktop EDITOR.desktop INTERNET.desktop'
+
+*FvwmShelf: (22x2 Frame 0, Title(Side) " Email", Left, Icon gnome-mailcheck.svg:$[MIconSize],  ActiveIcon gnome-mailcheck.svg:$[AIconSize], \
+		Action(Mouse 1) FvwmMailClient, \
+		Action(Mouse 2) Menu select_MAIL_popup, \
+		Action(Mouse 3) Menu default_MAIL_popup, \
+		)
+*FvwmShelf: (22x2 Frame 0, Title(Side) " Office", Left, Icon libreoffice-main.svg:$[MIconSize], ActiveIcon libreoffice-main.svg:$[AIconSize],  \
+		Action(Mouse 1) FvwmOffice, \
+		Action(Mouse 2) Menu select_OFFICE_popup, \
+		Action(Mouse 3) Menu default_OFFICE_popup, \
+		)
+*FvwmShelf: (22x2 Frame 0, Title(Side) " Taschenrechner", Left, Icon gnome-calc2.svg:$[MIconSize], ActiveIcon gnome-calc2.svg:$[AIconSize],  \
+		Action(Mouse 1) `Exec exec gcalctool`, \
+		)
+#*FvwmShelf: (12x2 Frame 0, Title(Side) " Skype", Left, Icon skype.svg:$[MIconSize], ActiveIcon skype.svg:$[AIconSize],  \
+#		Action(Mouse 1) `Exec exec /usr/bin/skype`, \
+#		)
+#*FvwmShelf: (12x2 Frame 0, Title(Side) " Ekiga", Left, Icon ekiga.svg:$[MIconSize], ActiveIcon ekiga.svg:$[AIconSize],  \
+#		Action(Mouse 1) `Exec exec /usr/bin/ekiga`, \
+#		)
+TEST (x droidcam) TEST (x empathy) *FvwmShelf: (12x2 Frame 0, Title(Side) " Messenger", Left, Icon apps/im-local-xmpp.svg:$[MIconSize], ActiveIcon apps/im-local-xmpp.svg:$[AIconSize],  \
+		Action(Mouse 1) FvwmMessenger, \
+		Action(Mouse 2) `Exec exec /usr/bin/empathy`, \
+		Action(Mouse 3) Menu default_MESSENGER_popup, \
+		)
+TEST (!x droidcam) TEST (x empathy) *FvwmShelf: (22x2 Frame 0, Title(Side) " Messenger", Left, Icon apps/im-local-xmpp.svg:$[MIconSize], ActiveIcon apps/im-local-xmpp.svg:$[AIconSize],  \
+		Action(Mouse 1) FvwmMessenger, \
+		Action(Mouse 2) `Exec exec /usr/bin/empathy`, \
+		Action(Mouse 3) Menu default_MESSENGER_popup, \
+		)
+TEST (x droidcam) *FvwmShelf: (10x2 Frame 0, Title(Side) " Cam", Left, Icon /usr/share/fvwm-verve/icons/droidcam.png, ActiveIcon /usr/share/fvwm-verve/icons/droidcam.png \
+		Action(Mouse 1) `Exec exec /usr/bin/droidcam`, \
+		)
+#TEST (!x droidcam) *FvwmShelf: (10x2 Frame 0)
+*FvwmShelf: (13x2 Frame 0, Title(Side) " Video", Left, Icon gnome-multimedia.svg:$[MIconSize], ActiveIcon gnome-multimedia.svg:$[AIconSize], \
+		Action(Mouse 1) FvwmVideoClient, \
+		Action(Mouse 2) Menu select_VIDEO_popup,\
+		Action(Mouse 3) Menu default_VIDEO_popup,\
+		)
+TEST (f /dev/tvcard) *FvwmShelf: (9x2 Frame 0, Title(Side) " TV", Left, Icon tvtime.svg:$[MIconSize], ActiveIcon tvtime.svg:$[AIconSize],  \
+		Action(Mouse 1) FuncTV, \
+		Action(Mouse 3) FuncTVchupdate, \
+		)
+TEST (!f /dev/tvcard) *FvwmShelf: (9x2 Frame 0)
+*FvwmShelf: (22x2 Frame 0, Id "dpms", Title(Side) " dpms", Left, Icon gears.png, \
+		Action(Mouse 1) Menu select_DPMS_popup,\
+		Action(Mouse 3) `Exec xset -dpms`,\
+		)
+*FvwmShelf: (22x2 Frame 0, Title(Side) " Volume", Center, Id "Vol", Icon stock_volume.png, \
+		Action(Mouse 1) Function FvwmVolumeSet, \
+		Action(Mouse 2) `Exec amixer -q -c $[infostore.AlsaCard] -- sset Master toggle`, \
+		Action(Mouse 3) Menu select_AUDIOMIX_popup, \
+		Action(Mouse 4) FvwmSetVolume +, \
+		Action(Mouse 5) FvwmSetVolume -, \
+		)

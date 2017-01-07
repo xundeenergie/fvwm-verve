@@ -1,0 +1,156 @@
+WindowTitle {FvwmApplet-AtWecker}
+WindowSize 350 100	
+Font "Shadow=0 1 SE:xft:Bitstream Dejavu Sans Mono:style=Roman:size=8"
+#Font		-*-lucida-bold-r-normal-*-10-*-*-*-*-*-*
+# Use the FvwmScript default colors.
+#BackColor {rgb:a0/90/80}
+#ForeColor {black}
+#ShadowColor	{black}
+#HilightColor	{rgb:a0/90/80}
+
+Init
+ Begin
+  Set $MainColorset=(GetScriptArgument 1)
+  If $MainColorset <> {} Then
+  Begin
+   ChangeColorset 0 $MainColorset
+   ChangeColorset 1 $MainColorset
+   ChangeColorset 2 $MainColorset
+  End
+  Set $font12 = {Shadow=0 1 SE:xft:Bitstream Dejavu Sans Mono:style=Roman:size=12}
+  ChangeFont 1 $font12
+  Set $quitButton =  {close-activeup.xpm}
+  ChangeIcon 98 $quitButton
+ End
+
+Widget 1
+Property 
+ Position 10 10
+ Size 120 24
+ Type ItemDraw
+ Flags NoReliefString
+ Title {MPD - Timer}
+End
+
+Widget 10 
+Property
+ Position 10 34
+ Size 80 38
+ Type ItemDraw
+ Flags NoReliefString Right
+ Title {mpd soll in}
+End
+
+Widget 2
+Property
+ Position 90 44
+ Size 18 18
+ Type TextField
+ Flags NoReliefString
+ Title {}
+Main
+ Case message of
+  SingleClic :
+  Begin
+  End
+End
+
+Widget 20 
+Property
+  Position 218 44
+  Size 80 18
+  Type PushButton
+  Flags NoReliefString Left
+  Title {Musik abspielen}
+Main
+  Case message of
+    SingleClic :
+    Begin
+	If (GetValue 2) <> {0} Then
+	Begin
+	  Set $action = {play}
+	  Do {exec echo "mpc }$action{"|at now + }(GetTitle 2){ minutes}
+          Quit
+	End
+	Else
+	  ChangeTitle 99 {Zeit auswählen!!!}
+    End
+End
+
+Widget 30
+Property
+  Position 148 44
+  Size 70 18
+  Type PushButton
+  Flags NoReliefString Left
+  Title {pausieren}
+Main
+  Case message of
+    SingleClic :
+    Begin
+	If (GetValue 2) <> {0} Then
+	Begin
+	  Set $action = {pause}
+	  Do {exec echo "mpc }$action{"|at now + }(GetTitle 2){ minutes}
+          Quit
+	End
+	Else
+	  ChangeTitle 99 {Zeit auswählen!!!}
+    End
+End
+
+
+
+Widget 3
+Property
+  Position 108 100
+  Size 18 18
+  Type PushButton
+  Flags NoReliefString Left
+  Title {Ok|pause|play}
+Main
+  Case message of
+    SingleClic :
+    Begin
+	If (GetValue 2) <> {} Then
+	Begin
+	  If (GetValue 3) == 1 Then 
+		Set $action = {pause}
+	  If (GetValue 3) == 2 Then 
+		Set $action = {play}
+	  ChangeTitle 99 $action
+	  Do {exec echo "mpc }$action{"|at now + }(GetValue 2){ minutes}
+          Quit
+	End
+	Else
+	  ChangeTitle 99 {Zeit auswählen}
+    End
+End
+
+Widget 99
+Property
+ Position 10 70
+ Size 88 18
+ Type ItemDraw 
+ Flags NoReliefString Left
+ Title {}
+Main
+ Case message of
+  SingleClic :
+  Begin
+  End
+End
+
+Widget	98	
+Property
+  Type		ItemDraw
+  Size		16 16
+  Position		335 1
+  Flags		NoFocus NoReliefString
+Main
+  Case message of
+    SingleClic :
+    Begin
+      Quit
+    End
+  End

@@ -1,0 +1,5 @@
+TITEL|Aktueller Videoplayer $[infostore.default_video]|Aktueller Videoplayer $[infostore.default_video]
+VLC|/usr/bin/vlc|/usr/bin/vlc|default_video
+Totem|/usr/bin/totem|/usr/bin/totem|default_video
+Mplayer (Frontend gmlive)|/usr/bin/gmlive|/usr/bin/gmlive|default_video
+Mplayer (Frontend gnome-mplayer)|/usr/bin/gnome-mplayer|/usr/bin/gnome-mplayer|default_video

@@ -1,0 +1,104 @@
+ + ""					Nop
++ %web-browser.svg:$[MIconSize]%"Internet" Popup select_INTERNET_popup
++ %gnome-media-player.svg:$[MIconSize]%"Multimedia" Popup MenuMultimedia
++ %gedit-icon.svg:$[MIconSize]%"Editoren" Popup select_EDITOR_popup
+#+ %terminal.png%"Logins" Popup Menulogins
+#+ MissingSubmenuFunction LoginsPopup
+#+ %terminal.png%"Logins" Popup Logins-dynamic
++ %abiword_48.svg:$[MIconSize]%"Office" Popup MenuOffice
+ + "Debian"%debian.png%		Popup "/Debian"
+TEST (f $[FVWM_USERDIR]/menudefs.hook) Read "$[FVWM_USERDIR]/menudefs.hook"
+TEST (f $[FVWM_USERDIR]/DebianMenu) Read "$[FVWM_USERDIR]/DebianMenu"
+
+########################################################################
+## SUBMENÜS zum Abschnitt Menüs
+########################################################################
+
+DestroyMenu MenuOffice
+AddToMenu MenuOffice
+AddToMenu MenuOffice "Office" Title top
+Test (x $[infostore.default_office]) + %ooo.png%"Office-Suite" Exec exec $[infostore.default_office]
+Test (x abiword-2.0) + %document_letter_word-processor.png%"Word Processor" Exec exec abiword-2.0
+Test (x acroread) + %acrobat.png%"Acrobat Reader" Exec exec acroread
+Test (x evince) + %evince.png%"Evince Dokumentenbetrachter" Exec exec evince
+Test (x gv) + %ghostview.png%"GV Dokumentenbetrachter" Exec exec gv
+Test (x xcalc) + %xcalc16.png%"Calculator" Exec exec xcalc
+Test (x xcalc) + %xcalc16.png%"Calculator RPN" Exec exec xcalc -rpn
+Test (x gcalctool) + %gnome-calculator.png%"Gnome Calculator" Exec exec gcalctool
+Test (x xpad) + %tomboy.png%"Sticky Notes" Exec exec xpad
+Test (x gringotts) + %filter_encrypt.png%"Gringotts Encryption" Exec exec gringotts
+Test (x dia) + %chart_line-graph.png%"Dia Diagram Editor" Exec exec dia
+Test (x treeline) + %tomboy.png%"TreeLine Information Editor" Exec exec treeline
+
+DestroyMenu MenuInternet
+AddToMenu MenuInternet
+AddToMenu MenuInternet "Internet" Title top
+Test (x gaim) + %instant-messenger.png%"Instant Messenger"%ctl_alt_g.png% Exec exec gaim
+Test (x amsn) + %instant-messenger.png%"Instant Messenger"%ctl_alt_g.png% Exec exec amsn
+Test (x pan) + %news_newspaper.png%"News Reader"%ctl_alt_n.png% Exec exec pan
+Test (x xchat-2) + %balloon_chat.png%"IRC Client" Exec exec xchat-2
+Test (x xchat) + %balloon_chat.png%"IRC Client" Exec exec xchat
+Test (x ethereal) + %network_view.png%"Network Analyser" Exec exec ethereal
+Test (x giFtoxic) + %music_notes_view.png%"File Sharing" Exec exec giFToxic
+Test (x mulberry) + %mail.png%"E-Mail Client"%ctl_alt_m.png% Exec exec mulberry
++ "" Nop
+Test (x opera) + %opera.png%"Opera Web Browser"%ctl_alt_o.png% Exec exec opera -newpage -bigicon
+Test (x /usr/lib/mozilla/TestGtkEmbed) + %hand_world_web-site.png%"Simple Gtk+ Browser" Exec LD_LIBRARY_PATH="/usr/lib/mozilla" exec /usr/lib/mozilla/TestGtkEmbed http://www.google.co.uk/
+Test (x firefox) + %firefox-icon.svg:$[MIconSize]%"Mozilla FireFox" Exec exec firefox
+Test (x iceweasel) + %web-browser.svg:$[MIconSize]%"Iceweasel" Exec exec iceweasel
+Test (x chromium) + %web-browser.svg:$[MIconSize]%"Chromium" Exec exec chromium
+Test (x dillo) + %hand_world_web-site.png%"Dillo Fast Web Browser" Exec exec dillo
+Test (x mozilla) + %mozilla-icon.svg:$[MIconSize]%"Mozilla Internet Suite" Exec exec mozilla
+Test (x galeon) + %web-browser.svg:$[MIconSize]%"Galeon Web Browser" Exec exec galeon
+Test (x konqueror) + %konqueror.png%"Konqueror Web Browser" Exec exec konqueror -profile webbrowser
+Test (x dolphin) + %web-browser.svg:$[MIconSize]%"Dolphin Web Browser" Exec exec dolphin
++ "" Nop
+TEST (x $[infostore.default_browser]) + "Web"%web-browser.svg:$[MIconSize]%    Function FvwmBrowser
+TEST (x $[infostore.default_mailclient]) + "Mail"%gnome-mailcheck.svg:$[MIconSize]%    Function FvwmMailClient
++ "" Nop
+TEST (x skype.sh) + "Skype"%skype.svg:$[MIconSize]%			Exec exec /usr/bin/skype.sh
+TEST (x googleearth) + "Google-Earth"%googleearth16.png%		Exec googleearth
+
+DestroyMenu MenuEditors
+AddToMenu MenuEditors
+AddToMenu MenuEditors "Editoren" Title top
+Test (x gvim) + %gtkvim.svg:$[MIconSize]%"Gvim Editor"%ctl_alt_v.png% Exec exec gvim -geom 139x56
+Test (x evim) + %gtkvim.svg:$[MIconSize]%"Evim Editor" Exec exec evim -geom 139x56
+Test (x rvim) + %gtkvim.svg:$[MIconSize]%"Rvim Editor" Exec exec rvim -geom 139x56
+Test (x gedit) + %gedit-icon.svg:$[MIconSize]%"Gedit Editor" Exec exec gedit
+Test (x xedit) + %xedit.png%"Xedit Editor" Exec exec xedit
+Test (x xemacs) + %mail_edit.png%"XEmacs Editor" Exec exec xemacs
+Test (x nedit) + %nedit16.png%"Nedit Editor" Exec `export LC_ALL=ISO-8850-15; /usr/bin/nedit`
+
+DestroyMenu MenuMultimedia
+AddToMenu MenuMultimedia
+AddToMenu MenuMultimedia "Multimedia" Title top
+AddToMenu MenuMultimedia "Audio" Title 
+TEST (x ario) + %ario.png%"MPD-Frontend (Ario)"				Exec /usr/bin/ario
+TEST (x gbemol) + %mpd.png%"MPD-Frontend (gbemol)"				Exec /usr/bin/gbemol
+TEST (x sonata) + %mpd.png%"MPD-Frontend (sonata)"				Exec /usr/bin/sonata
+Test (x beep-media-player) + %audio_horn.png%"Beep Media Player"%ctl_alt_b.png% Exec exec beep-media-player
+Test (x xmms) + %chart_bar.png%"XMMS Media Player" Exec exec xmms
+AddToMenu MenuMultimedia "Video" Title 
+Test (x gmplayer) + %mplayer.png%"Mplayer GUI" Exec exec gmplayer
+Test (x totem) + %totem16.png%"Totem GUI" Exec exec totem
+Test (x /usr/bin/vlc) + %vlc.png%"VLC" Exec exec vlc
+AddToMenu MenuMultimedia "Bildbearbeitung" Title 
+Test (x gimp)		+ %gnome-gimp.svg:$[MIconSize]%"Gimp"	Function FvwmGimp
+Test (x inkscape)	+ %inkscape.svg:$[MIconSize]%"Inkscape Vektorgraphik"			Function FvwmInkscape
+Test (x xpaint)		+ %graphics_presentation_person.png%"Simple Paint Package" Exec exec xpaint
+AddToMenu MenuMultimedia "Bilder - Anzeige" Title 
+Test (x lplayer) + %audio_piano-keys_midi.png%"Long Player Playlist Manager" Exec exec lplayer
+Test (x xv) + %graphics_woman_panel.png%"Xv Graphics Viewer" Exec exec xv
+Test (x display) + %display-capplet.svg:$[MIconSize]%"display Graphics Viewer" Exec exec display
+Test (x grip) + %hardware_audio_cd.png%"Audio CD Player" Exec exec grip
+Test (x /opt/oss/bin/ossxmix) + %graph_mixer.png%"OSS Audio Mixer" Exec exec /opt/oss/bin/ossxmix
+Test (x gcolor) + %graphics_palette_view.png%"Colour Browser" Exec exec gcolor
+Test (x eog) + %gnome-eog.svg:$[MIconSize]%"Eye of Gnome" Exec exec /usr/bin/eog
+Test (x /usr/bin/feh) + %/usr/share/feh/images/logo.svg:$[MIconSize]%"Feh" Exec exec /usr/bin/feh
+TEST (f /dev/tvcard)	AddToMenu MenuMultimedia "TV" Title 
+TEST (f /dev/tvcard) TEST (EnvMatch CS_RUN 0) PipeRead 'echo + \\"Channelupdate läuft\\" Title'
+TEST (f /dev/tvcard) TEST (EnvMatch CS_RUN 1) PipeRead 'echo + \%tvtime.svg:\$[MIconSize]\%\"Fernseher\"	FuncTV'
+TEST (f /dev/tvcard) TEST (EnvMatch CS_RUN 1) PipeRead 'echo + \%tvtime.svg:\$[MIconSize]\%\"Fernseher\\ \\-\\ Kanalsuche\\ \\(update\\)\"	Function FuncTVchupdate'
+
+

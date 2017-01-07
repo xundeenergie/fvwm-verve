@@ -1,0 +1,20 @@
+[Desktop Entry]
+Name=Editor
+GenericName="Internet"
+Icon=gnome-globe
+Exec=sensible-browser
+Id=Internet
+OnlyShowIn=FvwmButton
+
+[Desktop Action Mouse 1]
+Exec=FvwmBrowser
+OnlyShowIn=FvwmButton,user,admin
+
+[Desktop Action Mouse 2]
+Exec=Menu select_INTERNET_popup
+OnlyShowIn=FvwmButton,user,admin
+
+[Desktop Action Mouse 3]
+Exec=Menu default_INTERNET_popup
+OnlyShowIn=FvwmButton,user,admin
+

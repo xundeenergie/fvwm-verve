@@ -1,0 +1,114 @@
+######################################################################
+## Abschnitt Session
+######################################################################
+
+AddToMenu WORK_MENU_popup "Session" Title
+
+ + "Monitor/Bildschirm"%preferences-desktop-screensaver.png%	 	Popup screen_popup 
+TEST (x xscreensaver) + "Monitor sperren (xscreensaver)"%gnome-lockscreen.svg:$[MIconSize]%	Exec xscreensaver & xscreensaver-command -lock && xset dpms force suspend
+TEST (x gnome-screensaver) + "Monitor sperren (gnome-screensaver)"%gnome-lockscreen.svg:$[MIconSize]%	Exec gnome-screensaver-command -la
+TEST (x /usr/bin/gnome-alsamixer)	+ "Lautstärkeregler"%stock_volume.png%	Exec /usr/bin/gnome-alsamixer
+ + ""			Nop
+ + "WindowManager"	Popup THISWM_MENU_popup
+ + "Screenshots"	Popup THISWM_SCREENSHOT_popup
+ + ""			Nop
+TEST (x $[HOME]/.Xresources) + "Load Xresources" Exec xrdb -load $[HOME]/.Xresources
+TEST (x gnome-panel-logout) + "Benutzer wechseln"			Exec gnome-panel-logout
+
+#########################################################################
+## SUBMENÜS zum Abschnitt Session
+#########################################################################
+
+#################################################
+## Menü Screenshot
+#################################################
+
+DestroyMenu THISBKGR_OPTIONS_popup
+AddToMenu THISBKGR_OPTIONS_popup
+AddToMenu THISBKGR_OPTIONS_popup "Hintergrund - Ausrichtung" Title
++ "Kein Hintergrund"	Exec $[fvwm_wallpaperOptionsetter] none
++ "Gekachelt"		Exec $[fvwm_wallpaperOptionsetter] wallpaper
++ "Zentriert"		Exec $[fvwm_wallpaperOptionsetter] centered
++ "Skaliert"		Exec $[fvwm_wallpaperOptionsetter] scaled
++ "Ausgedehnt"		Exec $[fvwm_wallpaperOptionsetter] streched
++ "Zoom"		Exec $[fvwm_wallpaperOptionsetter] zoom
++ "Gespannt"		Exec $[fvwm_wallpaperOptionsetter] spanned
+#################################################
+## Menü Screenshot
+#################################################
+
+DestroyMenu THISWM_SCREENSHOT_popup
+AddToMenu THISWM_SCREENSHOT_popup
+TEST (x /usr/bin/gnome-screenshot) + "Bildschirmfoto (Auswahl)"%gnome-screenshot.svg:$[MIconSize]%	Exec /usr/bin/gnome-screenshot -ai
+TEST (x /usr/bin/gnome-screenshot) + "Bildschirmfoto (Gesamter Schirm)"%gnome-screenshot.svg:$[MIconSize]%	Exec /usr/bin/gnome-screenshot
+TEST (x /usr/bin/gnome-screenshot) + "Bildschirmfoto (Fenster)"%gnome-screenshot.svg:$[MIconSize]%	Exec /usr/bin/gnome-screenshot -w
+
+######################
+## Menü Windowmanager
+######################
+
+
+DestroyMenu THISWM_MENU_popup
+AddToMenu THISWM_MENU_popup "WindowManager"   Title Top
+ + "Titelleiste - Position" Popup DECOSET_popup 
+ + "Buttonleiste - Position" Popup BUTTONPOS_popup 
+ + "Farbgestaltung" Popup COLORSET_popup 
+TEST (x $[infostore.default_editor]) + "Fvwm-Konfiguration" Exec export LC_ALL=ISO-8850-15; $[infostore.default_editor] $[HOME]/.fvwm/config.d/windowdecors/brushedmetal/config $[HOME]/.fvwm/config $[FVWM_USERDIR]/fvwm2rc-taviso `find $[FVWM_USERDIR]/config.d/ -iname "*\.fvwm"|sort` `find $[HOME]/.fvwm/scripts/* -maxdepth 1 -type f` $[HOME]/.fvwm_dirs $[HOME]/.fvwm_button_shells
+ + MissingSubmenuFunction	 FilesBrowser
+ + "FVWM Config" Popup ConfigFVWMMenu
+ + "FVWM Functions neu einlesen" FuncLoadFunctions
+ + ""   Nop
+TEST (x /usr/bin/compton) + "Composition Ein" Function FuncComposition true
+TEST (x /usr/bin/compton) + "Composition Aus" Function FuncComposition false
+ +	""   Nop
+ +	"Fvwm2-Manpage"       Exec xterm -e man fvwm
+ +	"" Nop
+ +	"Buttonleiste rechts"	FuncChangeLayout '-0+0'
+ +	"Buttonleiste links"	FuncChangeLayout "+0+0"
+
+
+#################################
+## Menü und Submenüs Monitor 
+#################################
+DestroyMenu recreate screen_popup
+AddToMenu screen_popup "Monitor"   Title
+ + "Hintergrundbild" Popup BACKGROUND_popup
+ + ""   Nop
+# + MissingSubmenuFunction WallpaperBrowser "$[HOME]/Wallpaper"
+# + "Hintergrundbild einstellen" Popup "$[HOME]/Wallpaper"
+# + "Hintergrund Optionen - Ausrichtung" Popup THISBKGR_OPTIONS_popup
+# + "Control-Center Hintergrund" Exec gnome-control-center background
+#TEST (EnvMatch DT_ICONS_SHOW true) + "Keine Icons am Hintergrund" Exec gsettings set org.gnome.desktop.background show-desktop-icons false
+#TEST (EnvMatch DT_ICONS_SHOW false) + "Icons am Hintergrund zeigen" Exec gsettings set org.gnome.desktop.background show-desktop-icons true
+# + ""   Nop
+# + "Monitor-Energieverwaltung"	 Popup settings_xlock_popup
+TEST (x xscreensaver) + "Bildschirm sperren (xscreensaver)"%gnome-lockscreen.svg:$[MIconSize]%	Exec xscreensaver & xscreensaver-command -lock && xset dpms force suspend
+TEST (x xscreensaver-demo) + "Bildschirmschoner einstellen (xscreensaver)"%gnome-lockscreen.svg:$[MIconSize]%	Exec xscreensaver-demo
+TEST (x gnome-screensaver) + "Bildschirm sperren (gnome-screensaver)"%gnome-lockscreen.svg:$[MIconSize]%	Exec gnome-screensaver-command -la
+TEST (x gnome-screensaver) + "Bildschirmschoner einstellen (gnome-screensaver)"%gnome-lockscreen.svg:$[MIconSize]%	Exec gnome-screensaver-preferences
+ + ""	Nop
+ + "Bildschirm normale Position"%gnome-desktop-config.svg:$[MIconSize]%	Exec xrandr -o normal
+ + "Bildschirm nach links drehen"%gnome-desktop-rotate-left.svg:$[MIconSize]%	Exec xrandr -o left
+ + "Bildschirm nach rechts drehen"%gnome-desktop-rotate-right.svg:$[MIconSize]%	Exec xrandr -o right
+ + "Bildschirm auf den Kopf stellen"%gnome-desktop-rotate-top.svg:$[MIconSize]%	Exec xrandr -o inverted
+ + ""	Nop
+ + "Monitor abschalten (Einstellungen)"	Popup settings_xlock_xset_dpms_time_suspend_popup
+ + "Abschalten in $[DPMS_T]s aktivieren (dpms)"	Exec xset +dpms'
+ + "Abschalten deaktivieren (dpms)"	Exec xset -dpms
+ + ""	Nop
+TEST (x electricsheep)	+ "ElectricSheep"			Exec electricsheep --root 1 --zoom 1
+TEST (x electricsheep)	+ "ElectricSheep stoppen"		Exec killall electricsheep
+TEST (x xanalogtv)	+ "XAnalogTV"				Exec /usr/lib/xscreensaver/xanalogtv -root
+TEST (x xanalogtv)	+ "XAnalogTV stoppen"			Exec killall xanalogtv
+
+DestroyMenu recreate settings_xlock_xset_dpms_time_suspend_popup
+AddToMenu settings_xlock_xset_dpms_time_suspend_popup "Monitor ausschalten in"   Title
+ + "nie"		Exec xset -dpms
+ + "10s"		Exec xset dpms 10 10 10
+ + "30s"		Exec xset dpms 30 30 30
+ + "1min"		Exec xset dpms 60 60 60
+ + "2min"		Exec xset dpms 120 120 120
+ + "3min"		Exec xset dpms 180 180 180
+ + "4min"		Exec xset dpms 240 240 240
+ + "5min"		Exec xset dpms 300 300 300
+ + "10min"		Exec xset dpms 600 600 600

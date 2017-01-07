@@ -1,0 +1,7 @@
+TITEL|Messenger $[infostore.default_messenger]
+Empathy|empathy|empathy|default_messenger|apps/empathy.svg:$[MIconSize]
+Ekiga|ekiga|ekiga|default_messenger|apps/im-ekiga.svg:$[MIconSize]
+Pidgin|pidgin|pidgin|default_messenger|pidgin.svg:$[MIconSize]
+Skype|skype|skype.sh|default_messenger|skype.svg:$[MIconSize]
+|""
+Droidcam|droidcam|droidcam||droidcam.png

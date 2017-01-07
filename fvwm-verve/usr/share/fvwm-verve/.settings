@@ -1,0 +1,174 @@
+#-----------------------------------------------------------------------
+# File:		.settings
+# Version:	1.0.6
+# Licence: 	GPL 2
+#
+# Description:	base settings for Fvwm-Verve
+#
+# Author:	Jakobus Schürz <jakob@xundeenergie.at>
+# Created:	08/11/2012
+# Changed:	11/09/2012
+#-----------------------------------------------------------------------
+
+#***********************************************************************
+# Environment settings
+#***********************************************************************
+# DO NOT EDIT! WILL BE CHANGED BY FVWMFORM-FV-BASESETUP!
+
+#-----------------------------------------------------------------------
+# The actual theme. Be changed dynamically via FuncChangeDecor
+#-----------------------------------------------------------------------
+InfoStoreAdd used_theme "cooljakob"
+InfoStoreAdd tpos "Left"
+InfoStoreAdd colorset "Dunkel"
+
+#-----------------------------------------------------------------------
+# Banner image for FvwmBanner
+#-----------------------------------------------------------------------
+InfoStoreAdd used_banner "$[FV_SYSTEMDIR]/icons/web-verve-logo.png"
+
+#-----------------------------------------------------------------------
+# Run Compositions-manager at startup?
+#-----------------------------------------------------------------------
+SetEnv CompositOn "false"
+InfoStoreAdd compositman "compton"
+
+#-----------------------------------------------------------------------
+# Run Banner at startup?
+#-----------------------------------------------------------------------
+SetEnv SplashOn "0"
+
+#-----------------------------------------------------------------------
+# default used font for all Fvwm parts
+#-----------------------------------------------------------------------
+InfoStoreAdd used_font "Bitstream Vera Sans Mono"
+
+#-----------------------------------------------------------------------
+# default font size
+#-----------------------------------------------------------------------
+InfoStoreAdd fontsize "11"
+
+#-----------------------------------------------------------------------
+# Fontconfigs 
+#-----------------------------------------------------------------------
+InfoStoreAdd default_font "Bitstream Vera Sans "
+InfoStoreAdd default_fontstyle "Roman"
+InfoStoreAdd default_fontsize "11"
+InfoStoreAdd window_font "Bitstream Vera Sans "
+InfoStoreAdd window_fontstyle "Roman"
+InfoStoreAdd window_fontsize "11"
+InfoStoreAdd icon_font "Bitstream Vera Sans Mono "
+InfoStoreAdd icon_fontstyle "Roman"
+InfoStoreAdd icon_fontsize "9"
+InfoStoreAdd small_font "Bitstream Vera Sans "
+InfoStoreAdd small_fontstyle "Roman"
+InfoStoreAdd small_fontsize "9"
+InfoStoreAdd term_font "Bitstream Vera Sans Mono "
+InfoStoreAdd term_fontstyle "Roman"
+InfoStoreAdd term_fontsize "6"
+
+
+SetEnv default_font "xft:$[infostore.default_font]:style=$[infostore.default_fontstyle]:size=$[infostore.default_fontsize]"
+SetEnv window_font "xft:$[infostore.window_font]:style=$[infostore.window_fontstyle]:size=$[infostore.window_fontsize]"
+SetEnv icon_font "xft:$[infostore.icon_font]:style=$[infostore.icon_fontstyle]:size=$[infostore.icon_fontsize]"
+SetEnv small_font "xft:$[infostore.small_font]:style=$[infostore.small_fontstyle]:size=$[infostore.small_fontsize]"
+SetEnv term_font "xft:$[infostore.term_font]:style=$[infostore.term_fontstyle]:size=$[infostore.term_fontsize]"
+
+#-----------------------------------------------------------------------
+# The actual layout
+#-----------------------------------------------------------------------
+InfoStoreAdd used_layout "Rechts"
+
+
+#***********************************************************************
+# Default applications
+#***********************************************************************
+
+#-----------------------------------------------------------------------
+# terminal
+#-----------------------------------------------------------------------
+InfoStoreAdd default_terminal "/usr/bin/urxvtcd -ls"
+
+#-----------------------------------------------------------------------
+# browser
+#-----------------------------------------------------------------------
+InfoStoreAdd default_browser "chromium"
+
+#-----------------------------------------------------------------------
+# email
+#-----------------------------------------------------------------------
+InfoStoreAdd default_mailclient "icedove"
+
+#-----------------------------------------------------------------------
+# bluetooth-applet 
+#-----------------------------------------------------------------------
+InfoStoreAdd default_btapp "bluetooth-applet"
+
+#-----------------------------------------------------------------------
+# network-applet 
+#-----------------------------------------------------------------------
+InfoStoreAdd default_netapplet "nm-applet"
+
+#-----------------------------------------------------------------------
+# editor
+#-----------------------------------------------------------------------
+InfoStoreAdd default_editor "/usr/bin/gvim"
+
+#-----------------------------------------------------------------------
+# pdf-viewer
+#-----------------------------------------------------------------------
+InfoStoreAdd default_pdfvidw "evince"
+
+#-----------------------------------------------------------------------
+# mpd-client - graphical
+#-----------------------------------------------------------------------
+InfoStoreAdd default_mpdc "gmpc"
+
+#-----------------------------------------------------------------------
+# office-suite
+#-----------------------------------------------------------------------
+InfoStoreAdd default_office "libreoffice"
+
+#-----------------------------------------------------------------------
+# Video
+#-----------------------------------------------------------------------
+InfoStoreAdd default_video "/usr/bin/vlc"
+
+
+#-----------------------------------------------------------------------
+# MPD
+#-----------------------------------------------------------------------
+SetEnv MPD_HOST "localhost"
+SetEnv MPD_PORT "6600"
+SetEnv MPD_PW ""
+SetEnv MPD_IP ""
+SetEnv MPD_NAME ""
+SetEnv MPD_IP "/run/mpd/socket"
+SetEnv MPD_APP_ACTIVE "1"
+InfoStoreAdd mpd_app_active "1"
+
+#-----------------------------------------------------------------------
+# Filemanager 
+#-----------------------------------------------------------------------
+InfoStoreAdd default_filesbrowser "/usr/bin/xfe"
+
+#-----------------------------------------------------------------------
+# Picturemanager 
+#-----------------------------------------------------------------------
+InfoStoreAdd default_picturemanager "shotwell"
+
+#-----------------------------------------------------------------------
+# Messenger, Skype, & Co
+#-----------------------------------------------------------------------
+InfoStoreAdd default_messenger "empathy"
+
+#-----------------------------------------------------------------------
+# Position der Buttonleiste - "-0+0" = Rechts, "+0+0" = Links
+#-----------------------------------------------------------------------
+InfoStoreAdd ShelfPos "-0+0"
+
+#-----------------------------------------------------------------------
+# Volume
+#-----------------------------------------------------------------------
+InfoStoreAdd Vol "0"
+InfostoreAdd AlsaCard "1"

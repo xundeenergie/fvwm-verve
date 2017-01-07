@@ -1,0 +1,93 @@
+#!/bin/sh
+
+help () {
+echo "
+USAGE: $0 -[m|s] </Pfad/zu/.MENU_popup.menu.fvwm>
+
+Dieses Hilfsprogramm gibt den Teil einer Funktion für FVWM-Verve zurück, wo in Funktion ein Untermenü dynamisch aus einer Dateivorlage aufgebaut werden kann."
+echo "Die Grundsätzliche Struktur schaut so aus, dass ein kleines Menü in Fvwm gemacht wird:"
+echo 
+echo "DestroyMenu recreate VIDEO_popup
+AddToMenu VIDEO_popup \"Webbrowser\" Title
++ DynamicPopupAction Function FuncMenuVideo
+
+DestroyFunc FuncMenuVideo
+AddToFunc   FuncMenuVideo
++ I DestroyMenu recreate VIDEO_popup
+TEST (f $[FV_SYSTEMDIR]/menus.d/.VIDEO_popup.menu.fvwm) + I PipeRead 'fv-menu-from-file -m $[FV_SYSTEMDIR]/menus.d/.VIDEO_popup.menu.fvwm'
++ I "" Nop
+TEST (f $[FVWM_USERDIR]/menus.d/.VIDEO_popup.menu.fvwm) + I PipeRead 'fv-menu-from-file -m $[FVWM_USERDIR]/menus.d/.VIDEO_popup.menu.fvwm'
+
+Die zu lesende Datei, in der die Menüpunkte aufgelistet sind, akzeptiert keine Kommentare.
+Die Zeile \"TITEL\" ist optional und kann weggelassen werden.
+Der Feldtrenner ist das Pipezeichen |
+
+Die Inhalte der Felder dürfen nicht in Anführungszeichen stehen. Wird ein literales Anführungszeichen im Menütext gewünscht, so ist \\\" zu verwenden.
+Der Dateiname MUSS dem Namen des Popup-Menüs entsprechen und zuvor ein Punkt \".\", und danach ein \".menu.fvwm\" einschließen.
+Heißt das Popupmenü z.B. INTERNET_popup, so MUSS die zugehörige Datei \".INTERNET_popup.menu.fvwm\" heißen.
+
+Diese Dateien sind im Systemverzeichnis für Menüs $FV_SYSTEMDIR/menus.d/ oder im zugehörigen Userverzeichnis ~/.fvwm-verve/menus.d/ abzulegen. Die Menüpunkte werden aneinandergereiht. Zuerst die Einträge aus dem Systemverzeichnis, dann jene aus dem Userverzeichnis!
+
+Inhalt von .z.B. der Datei .INTERNET_popup.menu.fvwm:
+
+TITEL|Aktueller Browser $[infostore.default_browser]
+Chromium|/usr/bin/chromium|default_browser
+Iceweasel (Firefox)|/usr/bin/iceweasel|default_browser
+
+Die 3. Spalte umfasst die Variable aus der Datei ~/.fvwm-verve/.settings für die Zugehörige Programmgruppe. Wird diese Spalte weggelassen, kann nur die Option -s (erzeugt ein Standardmenü mit Programmstartern) verwendet werden.
+Wird die 3. Spalte angegeben, so kann auch mit der Option -m (Memory, Ändern des Defaultprogrammes im Infostore) das Menü erzeugt werden. Dabei werden aber keine Programme gestartet, sondern nur das Defaultprogramm in den Einstellungen geändert. Z.B. von Totem auf VLC für die Videowiedergabe. 
+
+Optionen:
+
+  -h	Ruft diese Hilfe auf
+  default_	Erzeugt die Ausgabe für ein Menü, welches die Defaultprogramme in den Einstellungen ändert
+  select_	Erzeugt ein Standardmenü, welches das gewünschte Programm aufruft.
+
+"
+
+}
+
+modify_config () {
+awk -F "|" ' \
+	$1 !~ /^#/ && $2 ~ /Nop/ {print "AddToMenu "t" \"\" Nop" } \
+	$1 !~ /^#/ && $1 ~ /TITEL/ {print "AddToMenu "t" \""$2"\" Title"} \
+	$1 !~ /^#/ && $1 !~ /TITEL/  && $1 !~ /.desktop/ {if($5 != "") icon="%"$5"%";bin=$3;gsub(/ .*$/,"",$2);print "TEST (x "$2") AddToMenu "t" "icon"\""$1"\" FuncWriteInfoStoreToFileAndSet \""$4"\" \""bin"\" $[FVWM_USERDIR]/.settings\""} \
+	$1 !~ /^#/ && $1 !~ /TITEL/ && $2 !~ /Nop/ && $3 !~ /Function/ && $1 ~ /.desktop/ {n=$1" "$2; system("/usr/bin/fvwm-xdg-menu "n) } \
+	END{print "AddToMenu "t" \"\" Nop"}' t=$2 $1
+}
+
+standard_menu () {
+awk -F "|" ' \
+	$1 !~ /^#/ && $1 ~ /TITEL/ {print "AddToMenu "t" \""$2"\" Title"} \
+	$1 !~ /^#/ && $2 ~ /Nop/ {print "AddToMenu "t" \"\" Nop" } \
+	$1 !~ /^#/ && $1 !~ /TITEL/ && $2 !~ /Nop/  && $1 !~ /.desktop/ {if($5 != "") icon="%"$5"%";bin=$3;gsub(/ .*$/,"",$2);print "TEST (x "$2") AddToMenu "t" "icon"\""$1"\" Exec exec "bin ;icon=""} \
+	$1 !~ /^#/ && $1 !~ /TITEL/ && $2 !~ /Nop/ && $3 !~ /Function/ && $1 ~ /.desktop/ {n=$1; system("/usr/bin/fvwm-xdg-menu "n) } \
+	END{print "AddToMenu "t" \"\" Nop"}' t=$2 $1
+
+}
+
+append_menu () {
+awk -F "|" ' \
+	$1 !~ /^#/ && $1 ~ /TITEL/ {print "AddToMenu "t" \""$2"\" Title"} \
+	$1 !~ /^#/ && $1 !~ /TITEL/ && $2 ~ /Nop/ {print "AddToMenu "t" \"\" Nop" } \
+	$1 !~ /^#/ && $1 !~ /TITEL/ && $2 !~ /Nop/ && $3 !~ /Function/ && $1 !~ /.desktop/ {if($5 != "") icon="%"$5"%";bin=$3;gsub(/ .*$/,"",$2);print "TEST (x "$2") AddToMenu "t" "icon"\""$1"\" Exec exec "bin ;icon=""} \
+	$1 !~ /^#/ && $1 !~ /TITEL/ && $2 !~ /Nop/ && $3 ~ /Function/ && $1 !~ /.desktop/ {if($5 != "") icon="%"$5"%";bin=$3;gsub(/ .*$/,"",$2);print "TEST (x "$2") AddToMenu "t" "icon"\""$1"\" "bin ;icon=""} \
+	$1 !~ /^#/ && $1 !~ /TITEL/ && $2 !~ /Nop/ && $3 !~ /Function/ && $1 ~ /.desktop/ {n=$1; system("/usr/bin/fvwm-xdg-menu "n) } \
+	END{print "AddToMenu "t" \"\" Nop"}' t=$2 $1
+
+}
+
+
+
+
+while [ $# -ge 1 ]
+do
+case $1 in
+	-h)shift; help; break;;
+	-d)shift; modify_config $1 default_`basename ${1%.menu.fvwm}|sed 's/^.//;s/.sub//'`;;
+	-s)shift; standard_menu $1 select_`basename ${1%.menu.fvwm}|sed 's/^.//;s/.sub//'`;;
+	-o)shift; append_menu $2 $1;shift;;
+	*) break ;;
+esac
+  : #shift
+done

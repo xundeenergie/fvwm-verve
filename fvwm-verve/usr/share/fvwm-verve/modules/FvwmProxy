@@ -1,0 +1,7 @@
+##################
+# Hit Alt+Esc to toggle FvwmProxy, which allows you to see all windows on your
+# desktop, even if they've been obscured..really cool.
+##################
+DestroyModuleConfig FvwmProxy: *
+*FvwmProxy: Font "xft:snap;-artwiz-snap-*-r-*-*-*-*-*-*-*-*-iso8859-1"
+*FvwmProxy: ProxyMove false

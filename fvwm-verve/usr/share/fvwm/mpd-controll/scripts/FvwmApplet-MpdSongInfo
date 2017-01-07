@@ -1,0 +1,490 @@
+WindowTitle {FvwmApplet-MpdSongInfo}
+WindowSize 110 53		# Taille
+#Font "Shadow=0 1 SE:xft:Bitstream Dejavu Sans Mono:style=Roman:size=8"
+#Font		-*-lucida-bold-r-normal-*-10-*-*-*-*-*-*
+# Use the FvwmScript default colors.
+#BackColor {rgb:a0/90/80}
+#ForeColor {black}
+#ShadowColor	{black}
+#HilightColor	{rgb:a0/90/80}
+
+Init
+ Begin
+  Set $MainColorset=(GetScriptArgument 1)
+  Set $HLColorset=(GetScriptArgument 2)
+  Set $Button=(GetScriptArgument 3)
+  If $MainColorset <> {} Then
+   Begin
+    ChangeColorset 0 $MainColorset
+    ChangeColorset 1 $MainColorset
+    ChangeColorset 2 $MainColorset
+    ChangeColorset 3 $MainColorset
+    ChangeColorset 4 $MainColorset
+    ChangeColorset 5 $MainColorset
+    ChangeColorset 6 $MainColorset
+   End
+  If $HLColorset <> {} Then
+   ChangeColorset 2 $HLColorset 
+
+  HideWidget 2
+  HideWidget 3
+  HideWidget 4
+  ShowWidget 6
+  
+  #Set $APPLET_ACTIVE = {true}
+  Set $APPLET_ACTIVE = (GetOutput {echo $APPLET_ACTIVE} 1 -1)
+
+  Set $MPD_HOST = (GetOutput {echo $MPD_HOST} 1 -1)
+  Set $new_MPD_HOST = $MPD_HOST
+  Set $MPD_PORT = (GetOutput {echo $MPD_PORT} 1 -1)   
+  Set $new_MPD_PORT = $MPD_PORT
+  Set $MPD_NAME = (GetOutput {echo $MPD_NAME} 1 -1)   
+  Set $new_MPD_NAME = $MPD_NAME
+  Set $MPD_PW = (GetOutput {echo $MPD_PW} 1 -1)   
+  Set $new_MPD_PW = $MPD_PW
+  Set $MPD_IP = (GetOutput {echo $MPD_IP} 1 -1)   
+  Set $new_MPD_IP = $MPD_IP
+  Set $display_MPD_HOST = {MPD: }$new_MPD_HOST
+  ChangeTitle 6 $display_MPD_HOST
+  #Set $pos = (GetOutput {exec mpc -h $MPD_IP -p $MPD_PORT} 2 4)
+  #ChangeTitle  1 $song
+  Set $textWidth = 24
+  Set $scrollText = {false}
+  Set $Title = {}
+  
+  ### ScrollWidth - If Title is too long to display it in the Title-Widged, it starts to scroll. Here you can change, how fast it scrolls. ####
+  Set $ScrollWidth = 6
+  
+  Set $volume_set = 0
+  Set $status_set = ""
+  Set $status_change = 0
+  Set $ptime_set = ""
+  Set $mpdpid = ""
+  Set $mpd_run = ""
+End
+
+
+PeriodicTasks
+ Begin
+  If (RemainderOfDiv (GetTime) 10)==0 Then
+   Begin
+   ### Aktionen die alle 10 Sekunde ausgeführt werden ###
+    If $APPLET_ACTIVE == true Then
+      Do {Exec  $[FVWM_SCRIPTDIR]/mpd-controll/scripts/update-mpdhosts}
+   End
+
+  If (RemainderOfDiv (GetTime) 1)==0 Then
+   Begin
+   ### Aktionen die jede Sekunde ausgeführt werden ###
+    If $MPD_HOST <> $new_MPD_HOST Then
+     Begin
+      Set $MPD_HOST = $new_MPD_HOST
+      Set $MPD_NAME = $new_MPD_NAME
+      Set $MPD_IP = $new_MPD_IP
+      Set $MPD_PORT = $new_MPD_PORT
+      Set $ch_host = 1
+     End
+    Else
+     Set $ch_host = 0
+ 
+
+    If $MPD_PORT <> $new_MPD_PORT Then
+     Set $MPD_PORT = $new_MPD_PORT   
+
+    If $MPD_NAME <> $new_MPD_NAME Then
+     Set $MPD_NAME = $new_MPD_NAME
+
+    If $MPD_PW <> $new_MPD_PW Then
+     Set $MPD_PW = $new_MPD_PW   
+
+    If $MPD_IP <> $new_MPD_IP Then
+     Set $MPD_IP = $new_MPD_IP   
+
+    Set $display_MPD_HOST = {MPD: }$MPD_NAME
+
+    If $APPLET_ACTIVE == true Then
+      Set $MPC = {exec /usr/bin/mpc -h }$MPD_IP{ -p }$MPD_PORT
+    Else
+      Set $MPC = {exec /bin/false }
+   
+    #Do FuncPrintDbgMsg { } "MpdSongInfo" { "} $MPC {"}
+
+     Set $cmd = $MPC{ current 2>&1 }
+     Set $new_mpd_run = (GetOutput $cmd 1 -1)
+     If $mpd_run <> $new_mpd_run Then
+      Begin
+       Set $mpd_run = $new_mpd_run  
+       Set $chg = 1
+      End
+
+    Set $mpd_err = {0}
+    If $mpd_run == {error: Connection refused} Then
+     Set $mpd_err = {1}
+    If $mpd_run == {error: No route to host} Then
+     Set $mpd_err = {1}
+    If $mpd_run == {error: Connection reset by peer} Then
+     Set $mpd_err = {1}
+    If $mpd_run == {} Then
+     Begin
+      If $APPLET_ACTIVE == {true} Then
+        Set $mpd_err = {0}
+      Else
+        Set $mpd_err = {2}
+     End
+
+#    Do FuncPrintMsg { } "MpdSongInfo" { "} $mpd_run {:} $mpd_err  {"}
+
+    
+    If $mpd_err >= {2} Then
+     #### Wird nur ausgeführt, wenn Applet inaktiv ist ###
+     Begin
+      If $chg == {1} Then
+       Begin
+        ChangeTitle 1 {Applet ausgeschaltet}
+        ChangeTitle 3 {}
+        ChangeTitle 4 {}
+        ChangeTitle 5 {}
+        ChangeTitle 6 {}
+        HideWidget 2
+        ShowWidget 3 
+        Set $chg = 0
+       End
+     End
+
+    If $mpd_err >= {1} Then
+     #### Wird nur ausgeführt, wenn mpd-host NICHT erreichbar ist ###
+     Begin
+      If $chg == {1} Then
+       Begin
+        ChangeTitle 1 {Mpd not running}
+        ChangeTitle 3 {}
+        ChangeTitle 4 {}
+        ChangeTitle 5 {}
+        ChangeTitle 6 $display_MPD_HOST
+        HideWidget 2
+        ShowWidget 3 
+        Set $chg = 0
+       End
+     End
+    Else
+     #### Wird nur ausgeführt, wenn mpd-host erreichbar ist ###
+     Begin
+      If $chg == {1} Then
+       Begin
+        ############
+        Set $cmd = $MPC{ status}
+        Set $status = (GetOutput $cmd 2 1)
+        If $status == {} Then
+         Begin
+          HideWidget 2
+          ShowWidget 3 
+          Set $set_status = $MPD_IP { STOP}
+          Do {CHANGE_ICON mpp player_play.png }
+         End
+        If $status == [paused] Then
+         Begin
+          HideWidget 2
+          ShowWidget 3
+          Set $set_status = $MPD_IP { PAUSE}
+          Do {CHANGE_ICON mpp player_play.png }
+         End
+        If $status == [playing]  Then
+         Begin
+          HideWidget 3
+          ShowWidget 2
+          Set $set_status = $MPD_IP { PLAY}
+          Do {CHANGE_ICON mpp player_pause.png}
+         End
+        ChangeTitle 3 $set_status
+        ############
+        ShowWidget 5 
+        ChangeTitle 5 {}
+        Set $chg = 0
+       End
+      ##### Check & Change Title
+      Set $cmd = $MPC{ current}
+      Set $newTitle = (GetOutput $cmd 1 -1)
+      ChangeTitle 1 $newTitle
+      Set $cmd = {title=$(}$cmd{);expr length "$title"}
+      Set $TitleLength = (GetOutput $cmd 1 -1) 
+      If $TitleLength > $textWidth Then
+        Set $scrollText = {true}
+      If $newTitle == {} Then
+        Set $newTitle = $Title
+      If $Title <> $newTitle Then
+       Begin
+        If $ch_host == 0 Then
+         Set $Title = $newTitle
+        Else
+         Begin
+          Set $Title = $song
+          Set $newTitle = $song
+         End
+         
+        If $scrollText == {true} Then
+         Begin
+          Set $titleLength = (Add (Add (GetOutput $cmd 1 -1) $textWidth) (Mult $ScrollWidth 3))
+          If $TitleLength > $textWidth Then
+           Begin
+            Set $scrollTitle = {true}
+            Set $startTitlePos = $textWidth 
+            Set $stopTitlePos = (Add $startTitlePos $textWidth)
+           End
+	 End
+        Else
+         Begin
+          Set $scrollTitle = {false}
+          ChangeTitle 1 $newTitle
+         End
+       End
+      Else
+       ChangeTitle 1 $newTitle
+      
+      ##### Scroll Title
+      ## Scrollwidth definded in Header!!!!
+      
+      If $scrollTitle == {true} Then
+       Begin
+        #Set $T = $newTitle {     ---     } $newTitle
+        Set $T = { * * * * * * * * * * * * } $newTitle { * * * * * * * * * * * * * * * * * *}
+        Set $newTitle = (StrCopy $T $startTitlePos $stopTitlePos)	
+        ChangeTitle 1 $newTitle 
+        If $stopTitlePos <= $titleLength Then
+         Begin
+          Set $startTitlePos = (Add $startTitlePos $ScrollWidth)
+           #Set $stopTitlePos = (Add $stopTitlePos 1)
+          Set $stopTitlePos = (Add $startTitlePos $textWidth)
+         End
+        Else
+         Begin
+          Set $startTitlePos = 1
+          Set $stopTitlePos = $textWidth
+         End
+       End
+
+      #### Stati aktualisieren
+      ##
+      ChangeTitle 6 $display_MPD_HOST
+      Set $cmd = $MPC{ status}
+      Set $status = (GetOutput $cmd 2 1)
+      Set $ptime = (GetOutput $cmd 2 3)
+      Set $cmd = $cmd{|awk '/volume/'|sed -e 's/volume: *//' -e 's/%//'}
+      Set $volume = (GetOutput $cmd 1 1)
+      If $status_set == $status Then
+       Begin
+        Set $status_set = $status
+        Set $status_change = 0
+       End
+      Else
+       Begin
+        Set $status_set = $status
+        Set $status_change = 1
+       End
+
+      If $status_change == 1 Then
+       Begin
+        If $status == {} Then
+         Begin
+          HideWidget 2
+          ShowWidget 3 
+          Set $set_status = $MPD_IP { STOP}
+          Do {CHANGE_ICON mpp player_play.png }
+         End
+        If $status == [paused] Then
+         Begin
+          HideWidget 2
+          ShowWidget 3
+          Set $set_status = $MPD_IP { PAUSE}
+          Do {CHANGE_ICON mpp player_play.png }
+         End
+        If $status == [playing]  Then
+         Begin
+          HideWidget 3
+          ShowWidget 2
+          Set $set_status = $MPD_IP { PLAY}
+          Do {CHANGE_ICON mpp player_pause.png}
+         End
+        ChangeTitle 3 $set_status
+       End
+
+      If $volume_set == $volume Then
+       Set $volume_set = $volume
+      Else
+       Begin
+        Set $volume_set = $volume
+        If $volume == 0 Then
+         Do {CHANGE_ICON mpdVol audio-volume-muted.png}
+        If $volume > 0 Then
+         Do {CHANGE_ICON mpdVol audio-volume-low.png}
+        If $volume >= 33 Then
+         Do {CHANGE_ICON mpdVol audio-volume-medium.png}
+        If $volume >= 66 Then
+         Do {CHANGE_ICON mpdVol audio-volume-high.png}
+        Set $title5=$ptime { Vol: } $volume {%}
+        ChangeTitle  5 $title5
+       End
+        
+      If $ptime_set == $ptime Then
+       Set $ptime_set = $ptime
+      Else
+       Begin
+#	HideWidget 3
+#	ShowWidget 2
+        Set $ptime_set = $ptime
+        Set $title5=$ptime { Vol: } $volume {%}
+        ChangeTitle  5 $title5
+        Set $cmd = $MPC{|sed -e 's/[()%]//g'}
+        Set $pos = (GetOutput $cmd 2 4)
+        Set $pos = (StrCopy $pos 1 2)
+        ChangeValue 2 $pos
+       End  
+     End
+   End
+
+ End
+
+Widget 6
+Property
+ Position 0 0
+ Size 110 11
+ Type ItemDraw
+ Flags NoReliefString Left
+ Title {MPD-Host not ready}
+Main
+ Case message of
+  SingleClic :
+  Begin
+      Set $m = $MPD_IP {:} $MPD_PORT
+      ChangeTitle 1 $m
+  End
+End
+
+
+Widget 1
+Property
+ Position 0 12
+ Size 110 11
+ #Type TextField
+ Type ItemDraw
+ Flags NoReliefString Left
+ Title {}
+Main
+ Case message of
+  SingleClic :
+  Begin
+	#Do {Exec /usr/bin/x-mpd-client &}
+  End
+End
+
+Widget 2
+Property
+ Position 0 27
+ Size 110 13
+# Type HDipstick
+ Type HScrollBar
+ Value 0 
+ MinValue 0
+ MaxValue 100
+ Flags NoReliefString
+ Title {}
+Main
+ Case message of
+  SingleClic :
+  Begin
+ 	#Do {exec /usr/bin/mpc -h }$MPD_IP{ -p }$MPD_PORT{ --quiet seek } (GetValue 2) {%}
+ 	Do $MPC{ --quiet seek } (GetValue 2) {%}
+  End
+End
+
+
+Widget 3
+Property
+ Position 0 27
+ Size 110 13
+# Type HDipstick
+ Type ItemDraw
+ Flags NoReliefString
+ Title {Pause}
+Main
+#Hier empfÃ¤ngt das Script Ã¼ber SendToModule die Informationen Ã¼ber die geÃ¤nderten Umgebungsvariablen. Dieser Abschnitt hat mit dem Widget an sich nichts zu tun!!!
+Case message of
+   1 :
+   Begin
+      Set $new_MPD_HOST = (LastString)
+   End
+
+   2 :
+   Begin
+      Set $new_MPD_PORT = (LastString)
+   End
+
+   3 :
+   Begin
+      Set $new_MPD_NAME = (LastString)
+   End
+
+   4 :
+   Begin
+      Set $new_MPD_PW = (LastString)
+   End
+
+   5 :
+   Begin
+      Set $new_MPD_IP = (LastString)
+   End
+
+   6 :
+   Begin
+      Set $APPLET_ACTIVE = (LastString)
+   End
+End
+
+
+Widget 4
+Property
+ Size		10 37
+ Position	90 0
+ Type		PushButton
+# Title		{#|Choice 1|Choice 2|Choice 3}
+# Title { }
+ Icon stock_volume.png
+ ForeColor	{navy}
+ BackColor	{grey}
+# ShadowColor	{DarkGray}
+ HilightColor	{white}
+ Flags NoReliefString
+ Colorset	9
+Main
+Case message of
+SingleClic :
+Begin
+	ChangeTitle 4 (GetValue 4)
+End
+
+2 :
+Begin
+ 	#Do {exec /usr/bin/mpc -h }$MPD_IP{ -p }$MPD_PORT{ -q volume +5}
+ 	Do $MPC{ -q volume +5}
+End
+3 :
+Begin
+ 	#Do {exec /usr/bin/mpc -h }$MPD_IP{ -p }$MPD_PORT{ -q volume -5}
+ 	Do $MPC{ -q volume -5}
+ End
+End
+
+Widget 5
+Property
+  Size 110 16
+  Position 0 39
+  Type ItemDraw
+  Flags NoReliefString
+  Title {}
+Main
+  Case message of
+    SingleClic :
+     Begin
+	Do {FvwmScript FvwmApplet-AtWecker}
+     End
+End
+

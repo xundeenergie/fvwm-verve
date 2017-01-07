@@ -1,0 +1,37 @@
+#!/bin/sh
+
+LOC="$HOME/.local/share/applications /usr/share/fvwm-verve/applications /usr/share/applications /usr/share/applications/kde4 /usr/share/kde4/services /etc/xdg/autostart"
+
+if [ $# -eq 1 ]; then
+
+   for i in $LOC;do
+     DTFILE="$i/$1"
+     [ -e "$DTFILE" ] || continue
+     awk -F "=" 'BEGIN {e=0;te=0;i=0;n=0;t=0}
+   	      $1 ~ /^Exec/     {if(e==0){exec=$2;e=1;gsub(/%.+ */,"",exec)}} \
+   	      $1 ~ /^TryExec/  {if(te==0){tryexec=$2;if (tryexec != //) texec="TEST (x "tryexec")";te=1}} \
+   	      $1 ~ /^Icon/     {if(i==0){icon=$2;i=1}} \
+   	      $1 ~ /^Name/     {if(n==0){name=$2;n=1;gsub(/"/,"",name)}} \
+   	      $1 ~ /^Terminal/ {if(t==0){terminal=$2;t=1}} \
+   	      END {print texec" + %"icon".svg:$[MIconSize]%\""name"\" Exec exec "exec}' $DTFILE
+     [ -e "$DTFILE" ] && break
+   done
+
+else
+
+   for i in $LOC;do
+     DTFILE="$i/$1"
+     [ -e "$DTFILE" ] || continue
+     awk -F "=" 'BEGIN {e=0;te=0;i=0;n=0;t=0}
+   	      $1 ~ /^Exec/     {if(e==0){exec=$2;e=1;gsub(/%.+ */,"",exec)}} \
+   	      $1 ~ /^TryExec/  {if(te==0){tryexec=$2;if (tryexec != //) texec="TEST (x "tryexec")";te=1}} \
+   	      $1 ~ /^Icon/     {if(i==0){icon=$2;i=1}} \
+   	      $1 ~ /^Name/     {if(n==0){name=$2;n=1;gsub(/"/,"",name)}} \
+   	      $1 ~ /^Terminal/ {if(t==0){terminal=$2;t=1}} \
+   	      END {print texec" + %"icon".svg:$[MIconSize]%\""name"\" FuncWriteInfoStoreToFileAndSet \""defent"\" \""exec"\" $[FVWM_USERDIR]/.settings\"" }' defent=$2 $DTFILE
+     [ -e "$DTFILE" ] && break
+   done
+
+fi
+
+exit 0

@@ -1,0 +1,210 @@
+###########
+#
+# Funktionen, welche alle Programme launchen, damit sie vom Aufruf unabhängig sind
+#
+#
+
+DestroyFunc FvwmXTerm
+AddToFunc   FvwmXTerm
+#+	"I"	Exec exec xterm
++ I PipeRead 'printf SetEnv prog `printf $[infostore.default_terminal]|awk -F " " \'{print $1}\'`'
++ I PipeRead 'printf SetEnv prog \"$(basename $[prog]|sed -e "s/^./*/;s/$/*/")\"'
++ I StartOnCurrentDesk $[prog] $[infostore.default_terminal]
++ I UnsetEnv prog
+# +	"I"	Exec exec urxvtcd -ls -geometry +150+85
+# +	"I"	PipeRead 'echo SetEnv xpid `pidof urxvtd`'
+# +	"I"	Test (R /proc/$[xpid]/cmdline) Exec exec urxvtc -ls -geometry +150+85
+# +	"I"	TestRc (NoMatch) Exec exec urxvtcd -ls -geometry +150+85
+
+DestroyFunc RootShell
+AddToFunc RootShell
++ I Exec exec urxvtcd -vb -sb -sl 2000 -T Root -n Root -j +vb -bg \#FFD0C0 -e  su -
+#+ I PipeRead 'printf SetEnv prog `printf $[infostore.root_terminal]|awk -F " " \'{print $1}\'`'
+#+ I PipeRead 'printf SetEnv prog \"$(basename $[prog]|sed -e "s/^./*/;s/$/*/")\"'
+#+ I StartOnCurrentDesk $[prog] "$[infostore.root_terminal]"
+#+ I UnsetEnv prog
+#  +	"I"	Exec xterm -ls -vb -sb -sl 2000 -T Root -n Root -j -rw +vb -bg \#FFD0C0 -e  'su -'
+#  +	"I"	Exec urxvtc -vb -sb -sl 2000 -T Root -n Root -j +vb -bg \#FFD0C0 -e  su -
+# +	"I"	Test (R /proc/14556/cmdline) Exec urxvtc -vb -sb -sl 2000 -T Root -n Root -j +vb -bg \#FFD0C0 -e  su -
+# +	"I"	TestRc (NoMatch) Exec exec urxvtcd -vb -sb -sl 2000 -T Root -n Root -j +vb -bg \#FFD0C0 -e  su -
+
+DestroyFunc FvwmBackupUnmount
+AddToFunc   FvwmBackupUnmount
++ I Exec exec systemctl stop dev-mapper-mars.device
+#+ I PipeRead 'printf SetEnv prog `printf $[infostore.default_browser]|awk -F " " \'{print $1}\'`'
+#+ I PipeRead 'printf SetEnv prog \"$(basename $[prog]|sed -e "s/^./*/;s/$/*/")\"'
+#+ I StartOnCurrentDesk $[prog] $[infostore.default_browser]
+#+ I UnsetEnv prog
+
+DestroyFunc FvwmBrowser
+AddToFunc   FvwmBrowser
++ I PipeRead 'printf SetEnv prog `printf $[infostore.default_browser]|awk -F " " \'{print $1}\'`'
++ I PipeRead 'printf SetEnv prog \"$(basename $[prog]|sed -e "s/^./*/;s/$/*/")\"'
++ I StartOnCurrentDesk $[prog] $[infostore.default_browser]
++ I UnsetEnv prog
+
+DestroyFunc FvwmBrowserInit
+AddToFunc   FvwmBrowserInit
++ I PipeRead 'echo -n SetEnv prog `echo $[infostore.default_browser]|awk -F " " \'{print $1}\'`'
++ I PipeRead 'echo -n SetEnv prog \"$(basename $[prog]|sed -e "s/^./*/")\"'
++ I Exec echo $prog
++ I PipeRead 'echo Style $prog  SkipMapping, !FPGrabFocus, !FPFocusByProgram, StartsOnPage 0 2 0'
+#+ I StartOnCurrentDesk $[prog] $[infostore.default_browser]
++ I Exec exec $[infostore.default_browser]&
++ I UnsetEnv prog
+
+DestroyFunc FvwmMailClient
+AddToFunc   FvwmMailClient
++ I PipeRead 'echo -n SetEnv prog `echo $[infostore.default_mailclient]|awk -F " " \'{print $1}\'`'
++ I PipeRead 'echo -n SetEnv prog \"$(basename $[prog]|sed -e "s/^./*/")\"'
++ I StartOnCurrentDesk $[prog] $[infostore.default_mailclient]
++ I UnsetEnv prog
+
+DestroyFunc FvwmMailClientInit
+AddToFunc   FvwmMailClientInit
++ I PipeRead 'echo -n SetEnv prog `echo $[infostore.default_mailclient]|awk -F " " \'{print $1}\'`'
++ I PipeRead 'echo -n SetEnv prog \"$(basename $[prog]|sed -e "s/^./*/")\"'
++ I Exec echo $prog
++ I PipeRead 'echo Style $prog  SkipMapping, !FPGrabFocus, !FPFocusByProgram, StartsOnPage 0 2 1'
++ I Exec exec $[infostore.default_mailclient]&
++ I UnsetEnv prog
+
+DestroyFunc FvwmOffice
+AddToFunc   FvwmOffice
++ I PipeRead 'echo -n SetEnv prog `echo $[infostore.default_office]|awk -F " " \'{print $1}\'`'
++ I PipeRead 'echo -n SetEnv prog \"$(basename $[prog]|sed -e "s/^./*/")\"'
++ I StartOnCurrentDesk $[prog] $[infostore.default_office]
++ I UnsetEnv prog
+#+	"I"	PipeRead 'echo \"$(echo -n "StartOnCurrentDesk  $[infostore.default_office] "; basename `readlink -f $[infostore.default_office]`|sed -e "s/^./*/")\"'
+
+DestroyFunc FvwmGimp
+AddToFunc   FvwmGimp
+#+	"I"	StartOnCurrentDesk /usr/bin/gimp Gimp
++ I FvwmStartOnPage /usr/bin/gimp
+
+#DestroyFunc FvwmKonq
+#AddToFunc   FvwmKonq
+#+	"I"	StartOnCurrentDesk /usr/bin/konqueror Konqueror
+#
+#DestroyFunc FvwmDolphin
+#AddToFunc   FvwmDolphin
+#+	"I"	StartOnCurrentDesk /usr/bin/dolphin Dolphin
+#
+#DestroyFunc FvwmNautilus
+#AddToFunc   FvwmNautilus
+#+	"I"	StartOnCurrentDesk `/usr/bin/nautilus --no-desktop` Nautilus
+#
+DestroyFunc FvwmInkscape
+AddToFunc   FvwmInkscape
++	"I"	StartOnCurrentDesk 'inkscape' `/usr/bin/inkscape`
+
+DestroyFunc FvwmSynaptic
+AddToFunc   FvwmSynaptic
++	"I"	StartOnCurrentDesk  'Synaptic*' `/usr/bin/gksudo /usr/sbin/synaptic`
+
+DestroyFunc FvwmVideoClient
+AddToFunc   FvwmVideoClient
++ I PipeRead 'echo -n SetEnv prog `echo $[infostore.default_video]|awk -F " " \'{print $1}\'`'
++ I PipeRead 'echo -n SetEnv prog \"$(basename $[prog]|sed -e "s/^./*/")\"'
++ I StartOnCurrentDesk $[prog] $[infostore.default_video]
++ I UnsetEnv prog
+#+	"I"	StartOnCurrentDesk $[infostore.default_video] "*ail"
+
+DestroyFunc FvwmEditor
+AddToFunc   FvwmEditor
++ I PipeRead 'echo -n SetEnv prog `echo $[infostore.default_editor]|awk -F " " \'{print $1}\'`'
++ I PipeRead 'echo -n SetEnv prog \"$(basename $[prog]|sed -e "s/^./*/")\"'
++ I StartOnCurrentDesk $[prog] $[infostore.default_editor]
++ I UnsetEnv prog
+#+	"I"	StartOnCurrentDesk $[infostore.default_editor] PipeRead 'basename `readlink -f $[infostore.default_editor]`'
+
+DestroyFunc FvwmFiles
+AddToFunc   FvwmFiles
++ I PipeRead 'echo -n SetEnv prog `echo $[infostore.default_filesbrowser]|awk -F " " \'{print $1}\'`'
++ I PipeRead 'echo -n SetEnv prog \"$(basename $[prog]|sed -e "s/^./*/")\"'
++ I StartOnCurrentDesk $[prog] $[infostore.default_filesbrowser]
++ I UnsetEnv prog
+#+	"I"	PipeRead 'echo \"$(echo -n "StartOnCurrentDesk  $[infostore.default_filesbrowser] "; basename `readlink -f $[infostore.default_filesbrowser]`|sed -e "s/^./*/")\"'
+
+DestroyFunc FvwmMessenger
+AddToFunc   FvwmMessenger
++ I PipeRead 'echo -n SetEnv prog `echo $[infostore.default_messenger]|awk -F " " \'{print $1}\'`'
++ I PipeRead 'echo -n SetEnv prog \"$(basename $[prog]|sed -e "s/^./*/")\"'
++ I StartOnCurrentDesk $[prog] $[infostore.default_messenger]
++ I UnsetEnv prog
+
+DestroyFunc FvwmPictureManager
+AddToFunc   FvwmPictureManager
++ I PipeRead 'echo -n SetEnv prog `echo $[infostore.default_picturemanager]|awk -F " " \'{print $1}\'`'
++ I PipeRead 'echo -n SetEnv prog \"$(basename $[prog]|sed -e "s/^./*/")\"'
++ I StartOnCurrentDesk $[prog] $[infostore.default_picturemanager]
++ I UnsetEnv prog
+#+	"I"	PipeRead 'echo \"$(echo -n "StartOnCurrentDesk  $[infostore.default_picturemanager] "; basename `readlink -f $[infostore.default_picturemanager]`|sed -e "s/^./*/")\"'
+
+DestroyFunc FvwmStartOnPage
+AddToFunc   FvwmStartOnPage
++ I FuncPrintMsg "FvwmStartOnPage" $0
++ "I" PipeRead 'echo \"$(echo -n "StartOnCurrentDesk  $0 "; basename `readlink -f $0`|sed -e "s/^./*/")\"'
+
+DestroyFunc FvwmComposit
+AddToFunc   FvwmComposit
++ I FuncPrintMsg Composition $[CompositOn]
++ I TEST (EnvMatch CompositOn "false") Exec exec $[infostore.compositman]
++ I TEST (EnvMatch CompositOn "true") Exec exec pkill -u $USER $[infostore.compositman]
++ I TestRc (Match) break
++ I Exec exec pkill -u $USER $[infostore.compositman]
+
+DestroyFunc gmrun
+AddToFunc gmrun
++ I Exec gmrun 
+
+DestroyFunc FvwmVolumeSet
+AddToFunc FvwmVolumeSet
++ I PipeRead 'printf SetEnv prog `printf $[infostore.default_mixer]|awk -F " " \'{print $1}\'`'
++ I PipeRead 'printf SetEnv prog \"$(basename $[prog]|sed -e "s/^./*/;s/$/*/")\"'
++ I StartOnCurrentDesk $[prog] $[infostore.default_mixer]
++ I UnsetEnv prog
+
+
+DestroyFunc RestartSound
+AddToFunc RestartSound
+  +	"I"	Exec killall esd
+  +	"I"	Exec esdctl unlock
+
+DestroyFunc StartOnCurrentDesk
+AddToFunc StartOnCurrentDesk
++ I PipeRead `echo Style "$0" SkipMapping, !FPGrabFocus, !FPFocusByProgram, StartsOnPage $[desk.n] $[page.nx] $[page.ny]`
++ I Exec exec $1 $2 $3 $4&
++ I Exec echo $1 $2 $3 $4
+
+
+#
+#
+#
+###########
+DestroyFunc WORK_MENU
+AddToFunc WORK_MENU
+PipeRead 'echo + I SetEnv IS_ADMIN `groups|grep -q " *sudo *\\| *admin *"; echo $?`'
++ I FuncPrintMsg "ENV IS_ADMIN" $[IS_ADMIN]
++ I TEST (EnvMatch IS_ADMIN 0) Load $[FV_SYSTEMDIR]/menus.d/menu-admin-workmenu.fvwm
++ I TEST (EnvMatch IS_ADMIN 1) Load $[FV_SYSTEMDIR]/menus.d/menu-workmenu.fvwm
+#TEST (EnvMatch IS_ADMIN 0) + I PipeRead `cat $[FV_SYSTEMDIR]/menus.d/menu-admin-workmenu.fvwm`
+#TEST (EnvMatch IS_ADMIN 1) + I PipeRead `cat $[FV_SYSTEMDIR]/menus.d/menu-workmenu.fvwm`
++ I Menu WORK_MENU_popup
++ I FuncPrintMsg "ENV IS_ADMIN" $[IS_ADMIN]
+
+
+
+
+DestroyFunc FuncVNC
+AddToFunc FuncVNC
++ I Exec urxvtc -e /usr/bin/x11vnc -id $[w.id] -localhost
+
+DestroyFunc FuncTV
+AddToFunc FuncTV
++ I Exec exec /usr/bin/svlc --fullscreen --video-filter=deinterlace:auto .config/vlc/channels.conf
+
+DestroyFunc FuncTVchupdate
+AddToFunc FuncTVchupdate
++ I Exec exec /usr/local/bin/dvb-channelupdate
+

@@ -1,0 +1,17 @@
+*FvwmIdent: Colorset 10
+#    Tells the module to use colorset n. See FvwmTheme.
+
+#*FvwmIdent: Fore color
+#    Tells the module to use color instead of black for text. Switches off the Colorset option.
+
+#*FvwmIdent: Back color
+#    Tells the module to use color instead of white for the window background. Switches off the Colorset option.
+
+*FvwmIdent: Font "Shadow=0 1 SE:xft:$[infostore.default_font]:style=$[infostore.default_fontstyle]:pixelsize=$[infostore.default_fontsize]"
+#    Tells the module to use fontname instead of fixed for text.
+
+#*FvwmIdent: MinimalLayer layer
+#    FvwmIdent places its window on the layer of a target window. But not below the minimal layer. By default, the minimal layer is 4 just like the fvwm default layer. If layer is 0, the layer of the target window is always used. If layer is "default" or not specified, the default behavior is restored. If layer is "none", FvwmIdent is placed as a normal window even if the target window is above it. 
+
+Style FvwmIdent CirculateHit, Title, WindowListHit
+Style FvwmIdent MiniIcon label_tag_version.png

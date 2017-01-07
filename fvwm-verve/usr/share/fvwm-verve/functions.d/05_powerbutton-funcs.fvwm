@@ -1,0 +1,68 @@
+##############################################################################
+## >>> LOCK-Screen
+##############################################################################
+DestroyFunc LOCK_SCREEN
+AddToFunc LOCK_SCREEN
++ I Exec xset dpms force suspend
+TEST (x xscreensaver-command)	+ I Exec exec xscreensaver-command --lock && xset dpms force suspend
+TEST (x gnome-screensaver-command)	+ I Exec exec gnome-screensaver-command -la && xset dpms force suspend
++ I Exec exec amixer -c $[infostore.AlsaCard] -- sset Master Playback Switch mute -q
++ I KillModule FvwmButtons FvwmPowerButton
+
+##############################################################################
+## >>> LOCK-Screen-loud
+##############################################################################
+DestroyFunc LOCK_SCREEN_LOUD
+AddToFunc LOCK_SCREEN_LOUD
+TEST (x xscreensaver-command)	+ I Exec exec xscreensaver-command --lock && xset dpms force suspend
+TEST (x gnome-screensaver-command)	+ I Exec exec gnome-screensaver-command -la && xset dpms force suspend
++ I KillModule FvwmButtons FvwmPowerButton
+
+########################
+## PowerButton
+########################
+
+SetEnv PB 0 # PB = PowerButton
+
+DestroyFunc FuncPower
+AddToFunc FuncPower
++ I Test (EnvMatch PB 0) Module FvwmButtons FvwmPowerButton
++ I TestRc (NoMatch) KillModule FvwmButtons FvwmPowerButton
++ I Test (EnvMatch PB 0) SetEnv PB 1
++ I TestRc (NoMatch) SetEnv PB 0
+
+#######################
+## Suspend-Button
+#######################
+ 
+DestroyFunc FuncSuspendButton
+AddToFunc FuncSuspendButton
++ I Function FuncPower
+#+ I Exec exec sudo /usr/sbin/pm-suspend
+#+ I Exec exec dbus-send --system --print-reply --dest="org.freedesktop.UPower" /org/freedesktop/UPower org.freedesktop.UPower.Suspend
++ I Exec exec systemctl suspend
++ I KillModule FvwmButtons FvwmPowerButton
+
+##################
+# PowerOffFunc
+##################
+
+DestroyFunc PowerOff
+AddToFunc PowerOff
++ I KillModule FvwmButton FvwmPowerButton
+#+ I Exec exec sudo /sbin/poweroff
+#+ I Exec exec dbus-send --system --print-reply --dest="org.freedesktop.ConsoleKit" /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Stop
+#+ I Exec exec dbus-send --system --print-reply --dest="org.freedesktop.UPower" /org/freedesktop/UPower org.freedesktop.UPower.PowerOff
++ I Exec exec systemctl poweroff
+
+##################
+# PowerRebootFunc
+##################
+
+DestroyFunc PowerReboot
+AddToFunc PowerReboot
++ I KillModule FvwmButton FvwmPowerButton
+#+ I Exec exec sudo /sbin/poweroff
+#+ I Exec exec dbus-send --system --print-reply --dest="org.freedesktop.ConsoleKit" /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Restart
+#+ I Exec exec dbus-send --system --print-reply --dest="org.freedesktop.UPower" /org/freedesktop/UPower org.freedesktop.UPower.Reboot
++ I Exec exec systemctl reboot

@@ -1,0 +1,16 @@
+#!/bin/bash
+
+USER=$USER
+DOTFILE="$1"
+
+echo "Einrichten von Portforwardings:"|logger -t portforward
+
+if [ -e /home/$USER/$DOTFILE ]
+then
+	grep -v '^#\|^$' /home/$USER/$DOTFILE | while read i j k l n
+	do
+		echo ssh -f -g $n $j:localhost:$k -N $l 
+		ssh -f -g $n $j:localhost:$k -N $l &&  { echo $i erfolgreich eingerichtet| logger -t portforward; }  || { echo $i einrichten fehlgeschlagen|logger -t portforward; } 
+	done
+fi
+exit 0

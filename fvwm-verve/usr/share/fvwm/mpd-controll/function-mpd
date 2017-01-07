@@ -1,0 +1,45 @@
+##############################
+##MPD-Applet-Functions BEGINN#
+##############################
+
+DestroyFunc MPDOUTPUTS
+AddToFunc MPDOUTPUTS
++	"I"	PipeRead `cat $[FVWM_SCRIPTDIR]/mpd-controll/menu-mpd`
++	"I"	Menu mpd-outputs
+
+DestroyFunc FuncSetNewMpd
+AddToFunc   FuncSetNewMpd
+#+ I SetEnv MPD_HOST $0
+#+ I SetEnv MPD_PORT $1
+#+ I SetEnv MPD_NAME $2
+#+ I SetEnv MPD_PW $3
++ I FuncWriteSetEnvToFileAndSet "MPD_HOST" "$0" $[FVWM_USERDIR]/.settings
++ I FuncWriteSetEnvToFileAndSet "MPD_PORT" "$1" $[FVWM_USERDIR]/.settings
++ I FuncWriteSetEnvToFileAndSet "MPD_NAME" "$2" $[FVWM_USERDIR]/.settings
++ I FuncWriteSetEnvToFileAndSet "MPD_PW" "$4" $[FVWM_USERDIR]/.settings
++ I FuncWriteSetEnvToFileAndSet "MPD_IP" "$3" $[FVWM_USERDIR]/.settings
++ I FuncPrintMsg "FuncSetNewMpd" "$0:$1:$2:$3:$4"
++ I SendToModule *FvwmApplet-MpdSongInfo SendString 3 1 $[MPD_HOST]
++ I SendToModule *FvwmApplet-MpdSongInfo SendString 3 2 $[MPD_PORT]
++ I SendToModule *FvwmApplet-MpdSongInfo SendString 3 3 $[MPD_NAME]
++ I SendToModule *FvwmApplet-MpdSongInfo SendString 3 4 $[MPD_PW]
++ I SendToModule *FvwmApplet-MpdSongInfo SendString 3 5 $[MPD_IP]
+
+DestroyFunc FuncMpdAppletDeActivate
+AddToFunc   FuncMpdAppletDeActivate
++ I FuncWriteSetEnvToFileAndSet "APPLET_ACTIVE" "false" "$[FVWM_USERDIR]/.settings"
++ I SendToModule *FvwmApplet-MpdSongInfo SendString 3 6 $[APPLET_ACTIVE]
+
+DestroyFunc FuncMpdAppletActivate
+AddToFunc   FuncMpdAppletActivate
++ I FuncWriteSetEnvToFileAndSet "APPLET_ACTIVE" "true" "$[FVWM_USERDIR]/.settings"
++ I SendToModule *FvwmApplet-MpdSongInfo SendString 3 6 $[APPLET_ACTIVE]
+
+DestroyFunc FuncMpdPrev
+AddToFunc   FuncMpdPrev
++ I Test (EnvMatch APPLET_ACTIVE true) Exec exec /usr/bin/mpc -h $MPD_IP -p $MPD_PORT prev
+
+###########################
+##MPD-Applet-Functions END#
+###########################
+
