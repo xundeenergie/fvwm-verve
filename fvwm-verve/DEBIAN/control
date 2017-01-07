@@ -1,12 +1,12 @@
 Package: fvwm-verve
-Version: 0.0.4
+Version: 0.0.5
 Section: x11
 Priority: extra
 Architecture: all
 Maintainer: jakob <jakob@xundeenergie.at>
 Homepage: http://linux.xundeenergie.at/
 Provides: fvwm-verve
-Depends: fvwm (>= 2.6.6), systemd-cron
+Depends: fvwm (>= 2.6.6), systemd-cron, my-services, my-config
 Recommends: xserver-xorg, rxvt-unicode-256color, xterm, xosview, stalonetray, vim, chromium|firefox, icedove, xfe|pcmanfm|nautilus, mpd, mpc, ncmpc|ncmpcpp, ttf-bitstream-vera, gmrun, imagemagick, crystalcursors, avahi-utils, x11vnc, libglib2.0-bin, console-data, console-common, tzdata, most, locales, keyboard-configuration, alsamixergui|aumix|qasmixer|gnome-alsamixer, lxappearance, udev-notify, mate-notification-daemon|notify-osd|notification-daemon|xfce4-notifyd, libnotify-bin, x11-apps, pavucontrol, pasystray, network-manager
 Suggests: chromium|iceweasel|firefox|dolphin, icedove|evolution|claws-mail, xfe|nautilus|konqueror|pcmanfm, vlc|totem|mplayer, nedit, libreoffice, skype, wicd|network-manager, ncmpcpp|ncmpc|gmpc|ario, xscreensaver|gnome-screensaver, dropbox, wuala, compton, gxmessage, cups, cups-pdf, libnss-mdns, bluetooth, gnome-colors-common, owncloud, xss-lock
 Description: Pimp my Fvwm in Jakob-Style
