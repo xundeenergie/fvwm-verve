@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<!-- Created with Sodipodi ("http://www.sodipodi.com/") -->
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   version="1.0"
+   x="0"
+   y="0"
+   width="60"
+   height="60"
+   id="svg1">
+  <defs
+     id="defs3" />
+  <ellipse
+     cx="22.3132877"
+     cy="40.0260086"
+     rx="13.3159943"
+     ry="13.3159943"
+     transform="matrix(1.218076,0,0,1.218076,-6.967022,-19.67486)"
+     style="font-size:12;fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#333333;stroke-width:2.565521;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:2.5655 2.5655 ;stroke-dashoffset:0;"
+     id="path1435" />
+  <path
+     d="M 13.28822 5.212879 L 48.5085 11.35458 L 37.25527 23.80455 L 51.46452 33.54796 L 46.96587 54.96152 "
+     transform="translate(4.318701,0.539838)"
+     style="font-size:12;fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#333333;stroke-width:3.125;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:3.125 3.125 ;stroke-dashoffset:0;"
+     id="path1436" />
+  <rect
+     width="4.67859221"
+     height="4.67859221"
+     rx="0.18439718"
+     x="14.2188263"
+     y="3.06257081"
+     style="font-size:12;fill:#333333;fill-rule:evenodd;stroke:#333333;stroke-width:1;"
+     id="rect1438" />
+  <rect
+     width="4.67859221"
+     height="4.67859221"
+     rx="0.18439718"
+     x="25.0124741"
+     y="2.59726977"
+     transform="translate(23.75285,49.48511)"
+     style="font-size:12;fill:#333333;fill-rule:evenodd;stroke:#333333;stroke-width:1;"
+     id="rect1439" />
+  <rect
+     width="21.0536652"
+     height="21.0536652"
+     rx="0.82978725"
+     x="22.6295166"
+     y="34.6276321"
+     style="font-size:12;fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#333333;stroke-width:3.125;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:3.125 3.125 ;stroke-dashoffset:0;"
+     id="rect1437" />
+</svg>

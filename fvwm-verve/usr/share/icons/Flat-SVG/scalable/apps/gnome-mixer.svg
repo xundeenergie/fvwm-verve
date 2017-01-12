@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<!-- Created with Sodipodi ("http://www.sodipodi.com/") -->
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   version="1.0"
+   x="0"
+   y="0"
+   width="60"
+   height="60"
+   id="svg1">
+  <defs
+     id="defs3">
+    <linearGradient
+       id="linearGradient1160">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop1161" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="1"
+         id="stop1162" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient1163"
+       xlink:href="#linearGradient1160" />
+  </defs>
+  <path
+     d="M 8.652384 7.322251 L 8.652384 52.36554 "
+     transform="matrix(1.084746,0,0,1.084746,7.802674,-2.147421)"
+     style="font-size:12;fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#333333;stroke-width:2.88086;stroke-linecap:round;stroke-linejoin:round;"
+     id="path770" />
+  <rect
+     width="15.014431"
+     height="4.58067369"
+     x="2.79930067"
+     y="14.956708"
+     transform="matrix(1.084746,0,0,1.506591,5.870337,-9.008938)"
+     style="font-size:12;fill:#b3b3b3;fill-rule:evenodd;stroke:#333333;stroke-width:2.44449;stroke-linecap:round;stroke-linejoin:round;"
+     id="rect771" />
+  <path
+     d="M 38.93768 5.795362 L 38.93768 54.65589 "
+     transform="translate(3.053783,0)"
+     style="font-size:12;fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#333333;stroke-width:3.125;stroke-linecap:round;stroke-linejoin:round;"
+     id="path772" />
+  <rect
+     width="16.2868443"
+     height="6.90120173"
+     x="30.6562309"
+     y="13.524704"
+     transform="translate(3.053783,17.30477)"
+     style="font-size:12;fill:#b3b3b3;fill-rule:evenodd;stroke:#333333;stroke-width:3.125;stroke-linecap:round;stroke-linejoin:round;"
+     id="rect773" />
+</svg>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<!-- Created with Sodipodi ("http://www.sodipodi.com/") -->
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   version="1.0"
+   x="0"
+   y="0"
+   width="60"
+   height="60"
+   id="svg1">
+  <defs
+     id="defs3">
+    <linearGradient
+       id="linearGradient900">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop901" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="1"
+         id="stop902" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient903"
+       xlink:href="#linearGradient900" />
+    <linearGradient
+       id="linearGradient904"
+       xlink:href="#linearGradient900" />
+    <linearGradient
+       id="linearGradient905"
+       xlink:href="#linearGradient900" />
+    <linearGradient
+       id="linearGradient906"
+       xlink:href="#linearGradient900" />
+    <linearGradient
+       id="linearGradient907"
+       xlink:href="#linearGradient900" />
+  </defs>
+  <rect
+     width="50.7447319"
+     height="50.3848419"
+     rx="2"
+     x="4.67859221"
+     y="5.1165123"
+     style="font-size:12;fill:#b3b3b3;fill-rule:evenodd;stroke:#333333;stroke-width:3.125;stroke-linejoin:round;"
+     id="rect812" />
+  <path
+     d="M 12.93984 42.72598 L 16.93288 46.90915 L 23.39776 42.53581 L 28.53165 44.81758 L 30.24294 52.31197 L 35.75711 52.26132 L 37.27827 44.5717 L 42.41216 42.53581 L 48.87704 46.71902 L 51.91935 42.53581 L 44.5825 35.61189 C 25.77745 52.85989 9.526988 26.27649 25.67949 15.15509 L 25.67947 11.16205 L 23.77805 12.11277 L 17.88358 8.365561 L 13.81178 11.70938 L 17.5033 18.00722 L 15.41171 23.14111 L 8.208463 24.33769 L 8.186234 29.79616 L 15.60187 31.6976 L 17.64591 36.68891 L 12.93984 42.72598 z "
+     style="font-size:12;fill:#333333;fill-rule:evenodd;stroke:#333333;stroke-width:0.326617;stroke-linecap:round;stroke-linejoin:round;"
+     id="path705" />
+</svg>

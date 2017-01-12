@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<!-- Created with Sodipodi ("http://www.sodipodi.com/") -->
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   version="1.0"
+   x="0"
+   y="0"
+   width="60"
+   height="60"
+   id="svg1">
+  <defs
+     id="defs3" />
+  <path
+     d="M 30.15625 4.90625 C 16.10885 4.90625 4.71875 16.29635 4.71875 30.34375 C 4.71875 44.39115 16.10885 55.8125 30.15625 55.8125 C 44.20365 55.8125 55.59375 44.39115 55.59375 30.34375 C 55.59375 16.29635 44.20365 4.90625 30.15625 4.90625 z M 37.625 10.375 L 45.96875 18.71875 L 37.71875 28.625 L 37.71875 22.46875 C 37.58207 22.46875 23.22435 18.0986 14.75 36.6875 C 17.75703 11.94787 37.625 16.59375 37.625 16.59375 L 37.625 10.375 z M 45.96875 24.53125 C 42.96172 49.27088 23.09375 44.625 23.09375 44.625 L 23.09375 50.84375 L 14.75 42.5 L 23 32.59375 L 23 38.75 C 23.13668 38.75 37.4944 43.12015 45.96875 24.53125 z "
+     style="font-size:12;fill:#b3b3b3;fill-rule:evenodd;stroke:#333333;stroke-width:3.22656;stroke-linecap:round;stroke-linejoin:round;"
+     id="path701" />
+</svg>

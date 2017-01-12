@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<!-- Created with Sodipodi ("http://www.sodipodi.com/") -->
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   version="1.0"
+   x="0"
+   y="0"
+   width="60"
+   height="60"
+   id="svg1">
+  <defs
+     id="defs3" />
+  <ellipse
+     cx="31.6193733"
+     cy="31.8161316"
+     rx="25.5118084"
+     ry="25.5118084"
+     transform="matrix(1.072319,0,0,1.072319,-3.749958,-4.01867)"
+     style="font-size:12;fill:#b3b3b3;fill-rule:evenodd;stroke:#333333;stroke-width:2.91424;stroke-linejoin:round;"
+     id="path587" />
+  <g
+     transform="translate(1.111294e-2,-0.378966)"
+     style="font-size:12;"
+     id="g835">
+    <ellipse
+       cx="23.9212971"
+       cy="43.3314362"
+       rx="10.4337568"
+       ry="7.25273371"
+       transform="matrix(0.799926,-3.967447e-2,-0.192894,0.811462,12.71086,7.049891)"
+       style="fill:#333333;fill-rule:evenodd;stroke:#333333;stroke-width:5;"
+       id="path838" />
+    <path
+       d="M 32.00709 40.05459 L 37.17081 12.40589 "
+       style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#333333;stroke-width:4.004549;stroke-linecap:round;stroke-linejoin:round;"
+       id="path839" />
+    <path
+       d="M 36.59768 11.03394 C 35.38487 11.97684 35.4935 14.72575 34.97659 16.38333 C 49.2475 17.68428 46.47503 39.19036 47.80093 33.20114 C 47.54362 10.1547 37.81048 10.09104 36.59768 11.03394 z "
+       style="fill:#333333;fill-rule:evenodd;stroke:#333333;stroke-width:0.776513;stroke-linejoin:round;"
+       id="path841" />
+  </g>
+</svg>

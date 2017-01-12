@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<!-- Created with Sodipodi ("http://www.sodipodi.com/") -->
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   version="1.0"
+   x="0"
+   y="0"
+   width="60"
+   height="60"
+   id="svg1">
+  <defs
+     id="defs3">
+    <linearGradient
+       id="linearGradient772">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop773" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="1"
+         id="stop774" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient775"
+       xlink:href="#linearGradient772" />
+  </defs>
+  <g
+     transform="matrix(1.790449,-0.547912,0.547912,1.790449,-35.30134,8.370108)"
+     style="font-size:12;"
+     id="g797">
+    <rect
+       width="5.21687841"
+       height="26.3388748"
+       x="-30.6650658"
+       y="1.59640908"
+       transform="matrix(0.300998,0.514766,-0.514766,0.300998,45.96975,31.58257)"
+       style="fill:#b3b3b3;fill-rule:evenodd;stroke:#333333;stroke-width:2.09623;"
+       id="rect587" />
+    <path
+       d="M -11.65625 8.34375 C -17.02938 8.34375 -21.375 12.68937 -21.375 18.0625 C -21.375 22.14778 -18.85131 25.61938 -15.28125 27.0625 L -15.28125 17 L -7.75 17 L -7.75 26.96875 C -4.312968 25.46585 -1.90625 22.05164 -1.90625 18.0625 C -1.90625 12.68937 -6.28312 8.34375 -11.65625 8.34375 z "
+       transform="matrix(-3.288793e-3,-0.596299,0.596299,-3.288793e-3,29.49271,8.496128)"
+       style="fill:#7f7f7f;fill-rule:evenodd;stroke:#333333;stroke-width:2.09623;stroke-linecap:round;stroke-linejoin:round;"
+       id="path586" />
+    <path
+       d="M -11.65625 8.34375 C -17.02938 8.34375 -21.375 12.68937 -21.375 18.0625 C -21.375 22.14778 -18.85131 25.61938 -15.28125 27.0625 L -15.28125 17 L -7.75 17 L -7.75 26.96875 C -4.312968 25.46585 -1.90625 22.05164 -1.90625 18.0625 C -1.90625 12.68937 -6.28312 8.34375 -11.65625 8.34375 z "
+       transform="matrix(3.288793e-3,0.596299,-0.596299,3.288793e-3,30.72691,34.28214)"
+       style="fill:#7f7f7f;fill-rule:evenodd;stroke:#333333;stroke-width:2.09623;stroke-linecap:round;stroke-linejoin:round;"
+       id="path585" />
+  </g>
+</svg>

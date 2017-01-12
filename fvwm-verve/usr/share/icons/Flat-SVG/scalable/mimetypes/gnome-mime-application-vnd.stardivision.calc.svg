@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<!-- Created with Sodipodi ("http://www.sodipodi.com/") -->
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   version="1.0"
+   x="0"
+   y="0"
+   width="60"
+   height="60"
+   id="svg1">
+  <defs
+     id="defs3">
+    <linearGradient
+       id="linearGradient900">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop901" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="1"
+         id="stop902" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient903"
+       xlink:href="#linearGradient900" />
+    <linearGradient
+       id="linearGradient904"
+       xlink:href="#linearGradient900" />
+    <linearGradient
+       id="linearGradient905"
+       xlink:href="#linearGradient900" />
+    <linearGradient
+       id="linearGradient906"
+       xlink:href="#linearGradient900" />
+    <linearGradient
+       id="linearGradient907"
+       xlink:href="#linearGradient900" />
+  </defs>
+  <rect
+     width="50.7447319"
+     height="50.3848419"
+     rx="2"
+     x="4.67859221"
+     y="5.1165123"
+     style="font-size:12;fill:#b3b3b3;fill-rule:evenodd;stroke:#333333;stroke-width:3.125;"
+     id="rect812" />
+  <rect
+     width="37.4287376"
+     height="27.7116623"
+     rx="1.47517741"
+     x="28.4075546"
+     y="6.3862114"
+     transform="translate(-18.53442,3.778863)"
+     style="font-size:12;fill:#cccccc;fill-rule:evenodd;stroke:#4c4c4c;stroke-width:1.875;"
+     id="rect863" />
+  <path
+     d="M 28.76744 20.31077 L 65.83629 20.31077 "
+     transform="translate(-18.53442,3.778863)"
+     style="font-size:12;fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#4c4c4c;stroke-width:1.25;"
+     id="path865" />
+  <path
+     d="M 28.76744 27.39738 L 65.83629 27.39738 "
+     transform="translate(-18.53442,3.778863)"
+     style="font-size:12;fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#4c4c4c;stroke-width:1.25;"
+     id="path866" />
+  <path
+     d="M 28.76744 13.22415 L 65.83629 13.22415 "
+     transform="translate(-18.53442,3.778863)"
+     style="font-size:12;fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#4c4c4c;stroke-width:1.25;"
+     id="path867" />
+  <path
+     d="M 39.92409 6.746103 L 39.92409 33.55804 "
+     transform="translate(-18.53442,3.778863)"
+     style="font-size:12;fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#4c4c4c;stroke-width:1.25;"
+     id="path868" />
+  <path
+     d="M 54.09732 6.746103 L 54.09732 33.55804 "
+     transform="translate(-18.53442,3.778863)"
+     style="font-size:12;fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#4c4c4c;stroke-width:1.25;"
+     id="path869" />
+  <path
+     d="M 40.12433 22.87345 L 40.12433 41.70323 L 58.84589 41.70323 "
+     transform="matrix(1.530042,0,0,1.530042,-39.96636,-13.78517)"
+     style="font-size:12;fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#333333;stroke-width:2.042428;stroke-linecap:round;stroke-linejoin:round;"
+     id="path917" />
+  <rect
+     width="4.76155233"
+     height="16.5572166"
+     rx="0.18766686"
+     x="40.4489861"
+     y="24.9295731"
+     transform="matrix(1.530042,0,0,1.530042,-39.96636,-13.78517)"
+     style="font-size:12;fill:#7f7f7f;fill-rule:evenodd;stroke:#333333;stroke-width:1.225457;stroke-linecap:round;stroke-linejoin:round;"
+     id="rect918" />
+  <rect
+     width="4.76155233"
+     height="9.12609005"
+     rx="0.18766686"
+     x="46.8751259"
+     y="32.540947"
+     transform="matrix(1.530042,0,0,1.530042,-39.96636,-13.78517)"
+     style="font-size:12;fill:#7f7f7f;fill-rule:evenodd;stroke:#333333;stroke-width:1.225457;stroke-linecap:round;stroke-linejoin:round;"
+     id="rect919" />
+  <rect
+     width="4.76155233"
+     height="12.8993721"
+     rx="0.18766686"
+     x="53.2678223"
+     y="28.6522923"
+     transform="matrix(1.530042,0,0,1.530042,-39.96636,-13.78517)"
+     style="font-size:12;fill:#4c4c4c;fill-rule:evenodd;stroke:#333333;stroke-width:1.225457;stroke-linecap:round;stroke-linejoin:round;"
+     id="rect920" />
+</svg>

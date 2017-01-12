@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<!-- Created with Sodipodi ("http://www.sodipodi.com/") -->
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   version="1.0"
+   x="0"
+   y="0"
+   width="60"
+   height="60"
+   id="svg1">
+  <defs
+     id="defs3">
+    <linearGradient
+       id="linearGradient772">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop773" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="1"
+         id="stop774" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient775"
+       xlink:href="#linearGradient772" />
+  </defs>
+  <path
+     d="M 23.69174 56.79572 L 34.72955 46.1234 L 34.72955 28.43366 L 23.76484 38.81359 L 23.69174 56.79572 z "
+     transform="matrix(0.898555,0,0,0.898555,-0.68572,1.278275)"
+     style="font-size:12;fill:#4c4c4c;fill-rule:evenodd;stroke:#333333;stroke-width:3.47781;stroke-linecap:round;stroke-linejoin:round;"
+     id="path653" />
+  <path
+     d="M 5.344117 38.2288 L 15.72405 28.14127 L 34.72955 28.14127 L 23.61864 39.03288 L 5.344117 38.2288 z "
+     transform="matrix(0.898555,0,0,0.898555,-0.68572,1.278275)"
+     style="font-size:12;fill:#737373;fill-rule:evenodd;stroke:#333333;stroke-width:3.47781;stroke-linecap:round;stroke-linejoin:round;"
+     id="path654" />
+  <rect
+     width="19.4347477"
+     height="19.4347477"
+     rx="1.6248908"
+     x="5.1090765"
+     y="37.5114708"
+     transform="matrix(0.898555,0,0,0.898555,-0.68572,1.278275)"
+     style="font-size:12;fill:#b3b3b3;fill-rule:evenodd;stroke:#333333;stroke-width:3.47781;"
+     id="rect648" />
+  <path
+     d="M 23.69174 56.79572 L 34.72955 46.1234 L 34.72955 28.43366 L 23.76484 38.81359 L 23.69174 56.79572 z "
+     transform="matrix(0.898555,0,0,0.898555,25.2966,1.278275)"
+     style="font-size:12;fill:#4c4c4c;fill-rule:evenodd;stroke:#333333;stroke-width:3.47781;stroke-linecap:round;stroke-linejoin:round;"
+     id="path664" />
+  <path
+     d="M 5.344117 38.2288 L 15.72405 28.14127 L 34.72955 28.14127 L 23.61864 39.03288 L 5.344117 38.2288 z "
+     transform="matrix(0.898555,0,0,0.898555,25.2966,1.278275)"
+     style="font-size:12;fill:#737373;fill-rule:evenodd;stroke:#333333;stroke-width:3.47781;stroke-linecap:round;stroke-linejoin:round;"
+     id="path665" />
+  <rect
+     width="19.4347477"
+     height="19.4347477"
+     rx="1.6248908"
+     x="5.1090765"
+     y="37.5114708"
+     transform="matrix(0.898555,0,0,0.898555,25.2966,1.278275)"
+     style="font-size:12;fill:#b3b3b3;fill-rule:evenodd;stroke:#333333;stroke-width:3.47781;"
+     id="rect666" />
+  <path
+     d="M 23.69174 56.79572 L 34.72955 46.1234 L 34.72955 28.43366 L 23.76484 38.81359 L 23.69174 56.79572 z "
+     transform="matrix(0.898555,0,0,0.898555,12.07327,-16.18438)"
+     style="font-size:12;fill:#4c4c4c;fill-rule:evenodd;stroke:#333333;stroke-width:3.47781;stroke-linecap:round;stroke-linejoin:round;"
+     id="path660" />
+  <path
+     d="M 5.344117 38.2288 L 15.72405 28.14127 L 34.72955 28.14127 L 23.61864 39.03288 L 5.344117 38.2288 z "
+     transform="matrix(0.898555,0,0,0.898555,12.07327,-16.18438)"
+     style="font-size:12;fill:#737373;fill-rule:evenodd;stroke:#333333;stroke-width:3.47781;stroke-linecap:round;stroke-linejoin:round;"
+     id="path661" />
+  <rect
+     width="19.4347477"
+     height="19.4347477"
+     rx="1.6248908"
+     x="5.1090765"
+     y="37.5114708"
+     transform="matrix(0.898555,0,0,0.898555,12.07327,-16.18438)"
+     style="font-size:12;fill:#b3b3b3;fill-rule:evenodd;stroke:#333333;stroke-width:3.47781;"
+     id="rect662" />
+</svg>

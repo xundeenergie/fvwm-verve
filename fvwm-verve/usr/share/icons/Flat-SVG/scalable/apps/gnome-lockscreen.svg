@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<!-- Created with Sodipodi ("http://www.sodipodi.com/") -->
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   version="1.0"
+   x="0"
+   y="0"
+   width="60"
+   height="60"
+   id="svg1">
+  <defs
+     id="defs3" />
+  <path
+     d="M 13.16911 30.16673 C 16.00093 18.43491 21.05775 6.09627 31.37366 6.298543 C 41.4873 6.298543 45.33048 19.64855 47.55548 30.369 "
+     transform="translate(0,-0.508964)"
+     style="font-size:12;fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#333333;stroke-width:3.75;"
+     id="path612" />
+  <rect
+     width="44.7349205"
+     height="27.5519295"
+     rx="2"
+     ry="2"
+     x="7.55772638"
+     y="29.0291004"
+     transform="translate(0.254482,-0.508964)"
+     style="font-size:12;fill:#bfbfbf;fill-rule:evenodd;stroke:#333333;stroke-width:3.125;stroke-linejoin:round;"
+     id="rect611" />
+</svg>

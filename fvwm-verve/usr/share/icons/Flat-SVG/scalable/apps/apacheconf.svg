@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<!-- Created with Sodipodi ("http://www.sodipodi.com/") -->
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   version="1.0"
+   x="0"
+   y="0"
+   width="60"
+   height="60"
+   id="svg1">
+  <defs
+     id="defs3" />
+  <path
+     d="M 29.01093 44.98557 L 29.01093 53.89243 M 6.107565 54.14692 L 52.93223 54.14692 "
+     transform="translate(0.763446,0)"
+     style="font-size:12;fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#333333;stroke-width:3.125;stroke-linecap:round;stroke-linejoin:round;"
+     id="path1098" />
+  <ellipse
+     cx="-46.1884613"
+     cy="15.847394"
+     rx="2.41757774"
+     ry="2.41757774"
+     transform="matrix(1.421053,0,0,1.421053,95.53786,30.99073)"
+     style="font-size:12;fill:#333333;fill-rule:evenodd;stroke:#333333;stroke-width:1;"
+     id="path1099" />
+  <rect
+     width="37.8165779"
+     height="48.1531105"
+     rx="2.39998007"
+     x="12.9728441"
+     y="3.65057731"
+     transform="matrix(0.811109,0,0,0.811109,5.999902,0.689561)"
+     style="font-size:12;fill:#7f7f7f;fill-rule:evenodd;stroke-width:1.25001;stroke-linecap:round;stroke-linejoin:round;"
+     id="rect672" />
+  <rect
+     width="37.8165779"
+     height="48.1531105"
+     rx="2.39998007"
+     x="9.42953491"
+     y="7.19388437"
+     transform="matrix(0.811109,0,0,0.811109,5.999902,0.689561)"
+     style="font-size:12;fill:#cccccc;fill-rule:evenodd;stroke:#333333;stroke-width:3.0822;stroke-linecap:round;stroke-linejoin:round;"
+     id="rect617" />
+  <path
+     d="M 21.28841 10.84727 L 21.28841 22.95967 C 16.49123 25.52284 13.11348 30.41892 13.11348 36.23455 C 13.11348 44.63781 19.9351 51.45943 28.33835 51.45943 C 36.74161 51.45943 43.56323 44.63781 43.56323 36.23455 C 43.56323 33.50089 42.65144 31.0654 41.38825 28.84712 L 41.38825 10.84727 L 21.28841 10.84727 z "
+     transform="matrix(0.811109,0,0,0.811109,5.999902,0.689561)"
+     style="font-size:12;fill:#bfbfbf;fill-rule:evenodd;stroke:#333333;stroke-width:1.92637;stroke-linecap:round;stroke-linejoin:round;"
+     id="path621" />
+  <ellipse
+     cx="34.0097694"
+     cy="38.2265511"
+     rx="12.0563726"
+     ry="12.0563726"
+     transform="matrix(0.784469,0,0,0.784469,2.381467,0.181664)"
+     style="font-size:12;fill:#a6a6a6;fill-rule:evenodd;stroke:#333333;stroke-width:1.59343;"
+     id="path619" />
+  <rect
+     width="1.94339919"
+     height="2.69916558"
+     x="12.5605669"
+     y="49.7327271"
+     transform="matrix(0.811109,0,0,0.811109,5.999902,0.689561)"
+     style="font-size:12;fill:#cccccc;fill-rule:evenodd;stroke:#333333;stroke-width:1.5411;stroke-linecap:round;stroke-linejoin:round;"
+     id="rect640" />
+</svg>

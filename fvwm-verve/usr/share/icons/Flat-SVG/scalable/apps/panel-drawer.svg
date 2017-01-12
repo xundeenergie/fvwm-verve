@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<!-- Created with Sodipodi ("http://www.sodipodi.com/") -->
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   version="1.0"
+   x="0"
+   y="0"
+   width="60"
+   height="60"
+   id="svg1">
+  <defs
+     id="defs3">
+    <linearGradient
+       id="linearGradient772">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop773" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="1"
+         id="stop774" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient775"
+       xlink:href="#linearGradient772" />
+  </defs>
+  <rect
+     width="53.5684357"
+     height="44.7888107"
+     rx="2"
+     x="3.43550539"
+     y="5.66811895"
+     transform="matrix(0.996875,0,0,0.996875,1.073322e-2,2.44798)"
+     style="font-size:12;fill:#b3b3b3;fill-rule:evenodd;stroke:#333333;stroke-width:3.134796;stroke-linejoin:round;"
+     id="rect689" />
+  <rect
+     width="38.9570465"
+     height="14.3640556"
+     x="10.3453484"
+     y="13.6700125"
+     style="font-size:12;fill:#4c4c4c;fill-rule:evenodd;stroke:#333333;stroke-width:1.875;stroke-linecap:round;stroke-linejoin:round;"
+     id="rect690" />
+  <rect
+     width="38.9570465"
+     height="14.472868"
+     x="10.3453484"
+     y="33.0568314"
+     style="font-size:12;fill:#4c4c4c;fill-rule:evenodd;stroke:#333333;stroke-width:1.875;stroke-linecap:round;stroke-linejoin:round;"
+     id="rect691" />
+  <path
+     d="M 19.98566 21.17454 L 39.20541 21.17454 "
+     style="font-size:12;fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#cccccc;stroke-width:3.125;stroke-linecap:round;stroke-linejoin:round;"
+     id="path849" />
+  <path
+     d="M 19.98566 40.1861 L 39.20541 40.1861 "
+     style="font-size:12;fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#cccccc;stroke-width:3.125;stroke-linecap:round;stroke-linejoin:round;"
+     id="path850" />
+</svg>

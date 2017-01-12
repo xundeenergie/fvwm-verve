@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<!-- Created with Sodipodi ("http://www.sodipodi.com/") -->
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   version="1.0"
+   x="0"
+   y="0"
+   width="60"
+   height="60"
+   id="svg1">
+  <defs
+     id="defs3">
+    <linearGradient
+       id="linearGradient1160">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop1161" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="1"
+         id="stop1162" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient1163"
+       xlink:href="#linearGradient1160" />
+  </defs>
+  <ellipse
+     cx="19.0861416"
+     cy="30.4801025"
+     rx="12.7240934"
+     ry="23.4123325"
+     transform="matrix(1.058456,0,0,1.058456,-2.570903,-2.103194)"
+     style="font-size:12;fill:#b3b3b3;fill-rule:evenodd;stroke-width:2.952414;"
+     id="path835" />
+  <ellipse
+     cx="19.0861416"
+     cy="30.4801025"
+     rx="12.7240934"
+     ry="23.4123325"
+     transform="matrix(1.058456,0,0,1.058456,22.47939,-1.564473)"
+     style="font-size:12;fill:#b3b3b3;fill-rule:evenodd;stroke-width:2.952414;"
+     id="path836" />
+  <ellipse
+     cx="17.1775265"
+     cy="43.8404007"
+     rx="11.5789251"
+     ry="9.03410625"
+     transform="matrix(0.885399,0,0,1,2.095804,0.763446)"
+     style="font-size:12;fill:#4c4c4c;fill-rule:evenodd;stroke-width:1.992653;stroke-linecap:round;stroke-linejoin:round;"
+     id="path837" />
+  <ellipse
+     cx="17.1775265"
+     cy="43.8404007"
+     rx="11.5789251"
+     ry="9.03410625"
+     transform="matrix(0.885399,0,0,1,27.64298,1.27241)"
+     style="font-size:12;fill:#4c4c4c;fill-rule:evenodd;stroke-width:1.992653;stroke-linecap:round;stroke-linejoin:round;"
+     id="path839" />
+  <ellipse
+     cx="19.0861416"
+     cy="30.4801025"
+     rx="12.7240934"
+     ry="23.4123325"
+     transform="matrix(1.058456,0,0,1.058456,-2.570903,-2.103194)"
+     style="font-size:12;fill:none;fill-rule:evenodd;stroke:#333333;stroke-width:2.952414;"
+     id="path840" />
+  <path
+     d="M 30.32736 41.44897 A 12.72409 23.41233 0 1 1 30.08187 18.69884"
+     transform="matrix(-1.058456,0,0,1.058456,61.78318,-1.564473)"
+     style="font-size:12;fill:none;fill-rule:evenodd;stroke:#333333;stroke-width:2.952414;stroke-linecap:round;stroke-linejoin:round;"
+     id="path841" />
+</svg>

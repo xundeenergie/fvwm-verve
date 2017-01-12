@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<!-- Created with Sodipodi ("http://www.sodipodi.com/") -->
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   version="1.0"
+   x="0"
+   y="0"
+   width="60"
+   height="60"
+   id="svg1">
+  <defs
+     id="defs3">
+    <linearGradient
+       id="linearGradient900">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop901" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="1"
+         id="stop902" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient903"
+       xlink:href="#linearGradient900" />
+    <linearGradient
+       id="linearGradient904"
+       xlink:href="#linearGradient900" />
+    <linearGradient
+       id="linearGradient905"
+       xlink:href="#linearGradient900" />
+    <linearGradient
+       id="linearGradient906"
+       xlink:href="#linearGradient900" />
+    <linearGradient
+       id="linearGradient907"
+       xlink:href="#linearGradient900" />
+  </defs>
+  <rect
+     width="50.7447319"
+     height="50.3848419"
+     rx="2"
+     x="4.67859221"
+     y="5.1165123"
+     style="font-size:12;fill:#b3b3b3;fill-rule:evenodd;stroke:#333333;stroke-width:3.125;"
+     id="rect812" />
+  <rect
+     width="7.96418476"
+     height="23.3069534"
+     rx="1.30172884"
+     x="10.032939"
+     y="19.7077465"
+     style="font-size:12;fill:#cccccc;fill-rule:evenodd;stroke:#333333;stroke-width:2.5;"
+     id="rect924" />
+  <rect
+     width="7.96418476"
+     height="23.3069534"
+     rx="1.30172884"
+     x="18.1227818"
+     y="19.7077465"
+     style="font-size:12;fill:#cccccc;fill-rule:evenodd;stroke:#333333;stroke-width:2.5;"
+     id="rect925" />
+  <rect
+     width="7.96418476"
+     height="23.3069534"
+     rx="1.30172884"
+     x="26.1764278"
+     y="19.7077465"
+     style="font-size:12;fill:#cccccc;fill-rule:evenodd;stroke:#333333;stroke-width:2.5;"
+     id="rect926" />
+  <rect
+     width="7.96418476"
+     height="23.3069534"
+     rx="1.30172884"
+     x="34.1406097"
+     y="19.7077465"
+     style="font-size:12;fill:#cccccc;fill-rule:evenodd;stroke:#333333;stroke-width:2.5;"
+     id="rect927" />
+  <rect
+     width="7.96418476"
+     height="23.3069534"
+     rx="1.30172884"
+     x="42.1047897"
+     y="19.7077465"
+     style="font-size:12;fill:#cccccc;fill-rule:evenodd;stroke:#333333;stroke-width:2.5;"
+     id="rect928" />
+  <rect
+     width="6.42588377"
+     height="14.7080832"
+     rx="1.05029678"
+     x="14.7798672"
+     y="19.7033558"
+     style="font-size:12;fill:#4c4c4c;fill-rule:evenodd;stroke:#333333;stroke-width:2.5;"
+     id="rect929" />
+  <rect
+     width="6.42588377"
+     height="14.7080832"
+     rx="1.05029678"
+     x="30.9708214"
+     y="19.7033558"
+     style="font-size:12;fill:#4c4c4c;fill-rule:evenodd;stroke:#333333;stroke-width:2.5;"
+     id="rect930" />
+</svg>

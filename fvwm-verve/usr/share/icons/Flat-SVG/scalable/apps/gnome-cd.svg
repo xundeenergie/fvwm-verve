@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<!-- Created with Sodipodi ("http://www.sodipodi.com/") -->
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   version="1.0"
+   x="0"
+   y="0"
+   width="60"
+   height="60"
+   id="svg1">
+  <defs
+     id="defs3" />
+  <ellipse
+     cx="31.6193733"
+     cy="31.8161316"
+     rx="25.5118084"
+     ry="25.5118084"
+     transform="matrix(1.072319,0,0,1.072319,-3.749958,-4.01867)"
+     style="font-size:12;fill:#b3b3b3;fill-rule:evenodd;stroke:#333333;stroke-width:2.91424;"
+     id="path587" />
+  <ellipse
+     cx="29.6471386"
+     cy="30.861824"
+     rx="10.560998"
+     ry="10.560998"
+     transform="translate(0.508964,0.127241)"
+     style="font-size:12;fill:#7f7f7f;fill-rule:evenodd;stroke:#333333;stroke-width:3.125;"
+     id="path588" />
+  <ellipse
+     cx="30.9831696"
+     cy="32.4523354"
+     rx="5.66222191"
+     ry="5.66222191"
+     transform="translate(-0.763445,-1.272409)"
+     style="font-size:12;fill:#cccccc;fill-rule:evenodd;stroke:#333333;stroke-width:1.875;"
+     id="path589" />
+</svg>

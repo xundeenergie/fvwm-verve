@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<!-- Created with Sodipodi ("http://www.sodipodi.com/") -->
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   version="1.0"
+   x="0"
+   y="0"
+   width="60"
+   height="60"
+   id="svg1">
+  <defs
+     id="defs3" />
+  <path
+     d="M 11.68434 -9.870712 L 11.82701 -29.36041 L -1.017927 -29.32314 L -1.048802 -9.982517 L 11.68434 -9.870712 z "
+     transform="matrix(0.997083,-7.632604e-2,7.632604e-2,0.997083,8.190248,37.07372)"
+     style="font-size:12;fill:#bfbfbf;fill-rule:evenodd;stroke:#4c4c4c;stroke-width:3.125;stroke-linecap:round;stroke-linejoin:round;"
+     id="path840" />
+  <path
+     d="M 11.77431 -29.32314 L 11.44718 -9.855276 L 24.92379 -9.818008 L 25.16094 -29.34497 L 11.77431 -29.32314 z "
+     transform="matrix(0.997083,-7.632604e-2,7.632604e-2,0.997083,8.190248,37.07372)"
+     style="font-size:12;fill:#7f7f7f;fill-rule:evenodd;stroke:#4c4c4c;stroke-width:3.125;stroke-linecap:round;stroke-linejoin:round;"
+     id="path841" />
+  <path
+     d="M 37.59617 -9.728034 L 37.46893 -29.21773 L 24.8939 -29.36041 L 25.13295 -9.839838 L 37.59617 -9.728034 z "
+     transform="matrix(0.997083,-7.632604e-2,7.632604e-2,0.997083,8.190248,37.07372)"
+     style="font-size:12;fill:#cccccc;fill-rule:evenodd;stroke:#4c4c4c;stroke-width:3.125;stroke-linecap:round;stroke-linejoin:round;"
+     id="path843" />
+  <rect
+     width="38.2299347"
+     height="19.6576023"
+     x="2.26524639"
+     y="-41.285511"
+     transform="matrix(0.985262,0.171057,-0.163888,0.986479,10.52531,60.38277)"
+     style="font-size:12;fill:#7f7f7f;fill-rule:evenodd;stroke-width:1.25002;stroke-linecap:round;stroke-linejoin:round;"
+     id="rect797" />
+  <path
+     d="M 2.4375 -41.65182 L 1.75 -40.40182 L 15.03125 -33.80807 L 2.0625 -33.83932 L 1.96875 -28.99557 L 14.875 -28.90182 L 1.875 -22.37057 L 2.78125 -21.46432 L 17.6875 -28.87057 L 19 -28.87057 L 18.90625 -21.52682 L 23.75 -21.62057 L 23.78125 -28.83932 L 25.0625 -28.83932 L 39.96875 -21.43307 L 40.5625 -22.77682 L 28.375 -28.80807 L 40.5 -28.71432 L 40.5 -33.74557 L 27.5 -33.77682 L 40.46875 -40.21432 L 39.65625 -41.37057 L 24.5625 -33.77682 L 23.8125 -33.77682 L 23.84375 -41.21432 L 19.15625 -41.21432 L 19.0625 -33.80807 L 18.28125 -33.80807 L 2.4375 -41.65182 z "
+     transform="matrix(0.985789,0.167992,-0.167992,0.985789,10.52531,60.38277)"
+     style="font-size:12;fill:#cccccc;fill-rule:evenodd;stroke:#333333;stroke-width:0.625;stroke-linecap:round;"
+     id="path872" />
+  <path
+     d="M 20 -41.125 L 19.96875 -32.8125 L 2.15625 -32.84375 L 2.0625 -29.9375 L 19.96875 -29.78125 L 19.9375 -21.46875 L 22.9375 -21.5625 L 23 -29.75 L 40.5 -29.59375 L 40.40625 -32.75 L 23.03125 -32.78125 L 23.09375 -41.125 L 20 -41.125 z "
+     transform="matrix(0.985789,0.167992,-0.167992,0.985789,10.52531,60.38277)"
+     style="font-size:12;fill:#999999;fill-rule:evenodd;stroke:#333333;stroke-width:0.625;stroke-linecap:round;stroke-linejoin:round;"
+     id="path875" />
+  <rect
+     width="38.5890503"
+     height="20.0153046"
+     x="1.12508798"
+     y="-37.5700684"
+     transform="matrix(0.985257,0.171084,-0.163923,0.986473,11.96192,56.49718)"
+     style="font-size:12;fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#333333;stroke-width:3.12504;stroke-linecap:round;stroke-linejoin:round;"
+     id="rect876" />
+  <path
+     d="M 13.35631 57.94666 L 11.3688 57.60945 L 18.43237 13.97898 L 20.59775 14.49409 L 13.35631 57.94666 z "
+     style="font-size:12;fill:#333333;fill-rule:evenodd;stroke:#333333;stroke-width:1.875;stroke-linecap:round;stroke-linejoin:round;"
+     id="path899" />
+  <path
+     d="M 8.770986 56.96708 L 6.76017 57.11026 L 2.927492 3.331278 L 4.973319 3.138848 L 8.770986 56.96708 z "
+     style="font-size:12;fill:#4c4c4c;fill-rule:evenodd;stroke:#4c4c4c;stroke-width:1.875;stroke-linecap:round;stroke-linejoin:round;"
+     id="path900" />
+</svg>

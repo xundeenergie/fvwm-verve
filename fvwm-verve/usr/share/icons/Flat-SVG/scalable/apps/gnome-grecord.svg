@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<!-- Created with Sodipodi ("http://www.sodipodi.com/") -->
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   version="1.0"
+   x="0"
+   y="0"
+   width="60"
+   height="60"
+   id="svg1">
+  <defs
+     id="defs3">
+    <linearGradient
+       id="linearGradient772">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop773" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="1"
+         id="stop774" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient775"
+       xlink:href="#linearGradient772" />
+  </defs>
+  <path
+     d="M 16.03236 40.91386 C 11.45168 50.58417 4.580674 54.91036 4.580674 54.91036 "
+     transform="translate(-1.017928,1.781374)"
+     style="font-size:12;fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#333333;stroke-width:3.125;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:3.125 3.125 ;stroke-dashoffset:0;"
+     id="path971" />
+  <rect
+     width="9.92479324"
+     height="37.4088364"
+     rx="2"
+     x="11.1972027"
+     y="16.4835987"
+     transform="matrix(0.674652,0.738136,-0.738136,0.674652,42.96921,-4.71459)"
+     style="font-size:12;fill:#999999;fill-rule:evenodd;stroke:#333333;stroke-width:3.125;"
+     id="rect969" />
+  <ellipse
+     cx="14.5054674"
+     cy="13.4298162"
+     rx="11.7061663"
+     ry="11.7061663"
+     transform="matrix(0.674652,0.738136,-0.738136,0.674652,43.98317,-3.228008)"
+     style="font-size:12;fill:#666666;fill-rule:evenodd;stroke:#333333;stroke-width:3.125;"
+     id="path970" />
+</svg>

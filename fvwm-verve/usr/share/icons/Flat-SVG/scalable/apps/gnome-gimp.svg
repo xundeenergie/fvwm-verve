@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<!-- Created with Sodipodi ("http://www.sodipodi.com/") -->
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   version="1.0"
+   x="0"
+   y="0"
+   width="60"
+   height="60"
+   id="svg1">
+  <defs
+     id="defs3">
+    <linearGradient
+       id="linearGradient900">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop901" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="1"
+         id="stop902" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient903"
+       xlink:href="#linearGradient900" />
+    <linearGradient
+       id="linearGradient904"
+       xlink:href="#linearGradient900" />
+    <linearGradient
+       id="linearGradient905"
+       xlink:href="#linearGradient900" />
+    <linearGradient
+       id="linearGradient906"
+       xlink:href="#linearGradient900" />
+    <linearGradient
+       id="linearGradient907"
+       xlink:href="#linearGradient900" />
+  </defs>
+  <path
+     d="M -2.699187 -9.279157 C 5.938214 0.257974 12.77616 -0.821702 16.55502 -3.880781 C 19.43415 -6.400023 22.85312 -15.93715 21.23361 -4.600565 C 20.6281 -0.46181 16.13799 3.238025 15.2954 5.65635 C 14.57562 7.671001 11.33659 12.1344 6.837943 12.1344 C -0.179946 11.77451 -3.778863 10.155 -5.038485 7.8157 C -1.259621 -0.641756 -0 -0.641756 -0.719783 -2.081323 C -1.439566 -3.52089 -2.699187 -9.279157 -2.699187 -9.279157 z "
+     transform="matrix(1.783091,0,0,1.783091,18.12039,34.50084)"
+     style="font-size:12;fill:#7f7f7f;fill-rule:evenodd;stroke:#333333;stroke-width:1.752575;stroke-linecap:round;stroke-linejoin:round;"
+     id="path878" />
+  <ellipse
+     cx="-14.8455334"
+     cy="-2.71113324"
+     rx="3.86883616"
+     ry="3.86883616"
+     transform="matrix(1.426091,0,0,1.426091,48.75684,41.55446)"
+     style="font-size:12;fill:#b3b3b3;fill-rule:evenodd;stroke:#333333;stroke-width:1.314783;stroke-linecap:round;stroke-linejoin:round;"
+     id="path880" />
+  <ellipse
+     cx="-14.8455334"
+     cy="-2.71113324"
+     rx="3.86883616"
+     ry="3.86883616"
+     transform="matrix(1.104791,0,0,1.104791,34.07818,38.91864)"
+     style="font-size:12;fill:#b3b3b3;fill-rule:evenodd;stroke:#333333;stroke-width:1.697154;"
+     id="path881" />
+  <path
+     d="M 10.25 5.46875 C 8.25253 10.3856 -0.47257 10.02723 -2.71875 9.9375 C -0.752221 11.09789 2.25323 11.88959 6.84375 12.125 C 7.474103 12.125 8.016998 11.89029 8.59375 11.75 C 10.2667 9.656503 11.05021 5.991684 10.25 5.46875 z "
+     transform="matrix(1.783091,0,0,1.783091,18.12039,34.50084)"
+     style="font-size:12;fill:#4c4c4c;fill-rule:evenodd;stroke:#333333;stroke-width:1.752575;stroke-linecap:round;stroke-linejoin:round;"
+     id="path886" />
+  <ellipse
+     cx="-18.4444504"
+     cy="1.60756755"
+     rx="5.66829491"
+     ry="4.22872782"
+     transform="matrix(0.221913,1.497547,-1.555138,-0.166724,17.21316,71.15151)"
+     style="font-size:12;fill:#4c4c4c;fill-rule:evenodd;stroke:#333333;stroke-width:2.064205;stroke-linecap:round;stroke-linejoin:round;"
+     id="path879" />
+  <g
+     transform="translate(-0.359892,0.359892)"
+     style="font-size:12;"
+     id="g916">
+    <path
+       d="M 17.53125 2.96875 L 32.21875 19.25 L 37.75 14.25 L 27.5625 2.96875 L 17.53125 2.96875 z "
+       style="fill:#999999;fill-rule:evenodd;stroke:#333333;stroke-width:3.125;stroke-linecap:round;stroke-linejoin:round;"
+       id="path915" />
+    <path
+       d="M 43.48648 21.91673 C 41.40899 23.18957 33.02704 29.58653 34.44963 31.33581 C 41.6278 32.06723 48.66458 30.04251 56.43393 37.45048 C 49.99091 15.63673 43.48648 21.91673 43.48648 21.91673 z "
+       transform="matrix(1.021532,0,0,1.021532,-7.434978,-9.42742)"
+       style="fill:#4c4c4c;fill-rule:evenodd;stroke:#333333;stroke-width:3.059131;stroke-linecap:round;stroke-linejoin:round;"
+       id="path833" />
+  </g>
+</svg>

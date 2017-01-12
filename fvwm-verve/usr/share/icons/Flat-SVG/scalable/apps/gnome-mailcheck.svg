@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<!-- Created with Sodipodi ("http://www.sodipodi.com/") -->
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   version="1.0"
+   x="0"
+   y="0"
+   width="60"
+   height="60"
+   id="svg1">
+  <defs
+     id="defs3">
+    <linearGradient
+       id="linearGradient900">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop901" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="1"
+         id="stop902" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient903"
+       xlink:href="#linearGradient900" />
+    <linearGradient
+       id="linearGradient904"
+       xlink:href="#linearGradient900" />
+    <linearGradient
+       id="linearGradient905"
+       xlink:href="#linearGradient900" />
+    <linearGradient
+       id="linearGradient906"
+       xlink:href="#linearGradient900" />
+    <linearGradient
+       id="linearGradient907"
+       xlink:href="#linearGradient900" />
+  </defs>
+  <path
+     d="M 69.81899 119.598 L 373.5676 119.598 L 373.5676 290.9065 L 69.81899 290.9065 L 69.81899 119.598 z "
+     transform="matrix(0.17049,0,0,0.17824,-7.388165,-6.009671)"
+     style="font-size:12;fill:#b3b3b3;fill-rule:evenodd;stroke:#333333;stroke-width:17.9266;stroke-linecap:round;stroke-linejoin:round;"
+     id="path589" />
+  <path
+     d="M 69.81899 119.598 L 219.9402 210.0107 L 373.5676 119.598 "
+     transform="matrix(0.17049,0,0,0.17824,-7.388165,-6.009671)"
+     style="font-size:12;fill:none;fill-rule:evenodd;stroke:#333333;stroke-width:14.34128;stroke-linecap:round;stroke-linejoin:round;"
+     id="path590" />
+</svg>

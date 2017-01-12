@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<!-- Created with Sodipodi ("http://www.sodipodi.com/") -->
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   version="1.0"
+   x="0"
+   y="0"
+   width="60"
+   height="60"
+   id="svg1">
+  <defs
+     id="defs3">
+    <linearGradient
+       id="linearGradient772">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop773" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="1"
+         id="stop774" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient775"
+       xlink:href="#linearGradient772" />
+  </defs>
+  <rect
+     width="50.7447319"
+     height="50.3848419"
+     rx="2"
+     x="4.67859221"
+     y="5.1165123"
+     style="font-size:12;fill:#b3b3b3;fill-rule:evenodd;stroke:#333333;stroke-width:3.125;"
+     id="rect812" />
+  <rect
+     width="25.5523129"
+     height="23.3375359"
+     rx="2"
+     x="26.6938744"
+     y="7.36162996"
+     transform="matrix(0.785336,0,-0.266438,0.738759,6.667858,6.621977)"
+     style="font-size:12;fill:#cccccc;fill-rule:evenodd;stroke:#333333;stroke-width:3.282168;"
+     id="rect765" />
+  <rect
+     width="50.7447319"
+     height="26.2720966"
+     rx="2"
+     x="4.40227938"
+     y="27.0789509"
+     transform="matrix(0.785336,0,0,0.785336,6.667858,6.621977)"
+     style="font-size:12;fill:#7f7f7f;fill-rule:evenodd;stroke:#333333;stroke-width:3.183351;"
+     id="rect764" />
+  <rect
+     width="39.228199"
+     height="8.27750969"
+     x="10.2877884"
+     y="44.9681244"
+     transform="matrix(0.785336,0,0,0.785336,6.667858,6.621977)"
+     style="font-size:12;fill:#b3b3b3;fill-rule:evenodd;stroke:#333333;stroke-width:3.183351;stroke-linecap:round;stroke-linejoin:round;"
+     id="rect766" />
+</svg>

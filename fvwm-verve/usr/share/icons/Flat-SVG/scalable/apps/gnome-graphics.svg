@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<!-- Created with Sodipodi ("http://www.sodipodi.com/") -->
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   version="1.0"
+   x="0"
+   y="0"
+   width="60"
+   height="60"
+   id="svg1">
+  <defs
+     id="defs3">
+    <linearGradient
+       id="linearGradient900">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop901" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="1"
+         id="stop902" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient903"
+       xlink:href="#linearGradient900" />
+    <linearGradient
+       id="linearGradient904"
+       xlink:href="#linearGradient900" />
+    <linearGradient
+       id="linearGradient905"
+       xlink:href="#linearGradient900" />
+    <linearGradient
+       id="linearGradient906"
+       xlink:href="#linearGradient900" />
+    <linearGradient
+       id="linearGradient907"
+       xlink:href="#linearGradient900" />
+  </defs>
+  <path
+     d="M 34.10057 13.42982 C 0.254482 17.24704 -11.70617 24.62702 -0.508964 38.62352 C 10.68824 52.62003 33.84609 57.2007 36.13643 52.36554 C 39.19021 44.4766 56.74946 36.0787 44.78881 32.26147 C 28.24749 26.15391 36.13643 14.19326 34.10057 13.42982 z "
+     transform="translate(7.634457,2.544819)"
+     style="font-size:12;fill:#bfbfbf;fill-rule:evenodd;stroke:#4c4c4c;stroke-width:3.125;stroke-linecap:round;stroke-linejoin:round;"
+     id="path994" />
+  <ellipse
+     cx="-22.2671642"
+     cy="24.2452965"
+     rx="7.25273371"
+     ry="7.25273371"
+     transform="matrix(0.854632,0,0.331296,0.854632,46.19304,25.79165)"
+     style="font-size:12;fill:#4c4c4c;fill-rule:evenodd;stroke:#4c4c4c;stroke-width:2.193927;"
+     id="path995" />
+  <ellipse
+     cx="-22.2671642"
+     cy="24.2452965"
+     rx="7.25273371"
+     ry="7.25273371"
+     transform="matrix(0.854632,0,0.331296,0.854632,28.63379,18.41167)"
+     style="font-size:12;fill:#737373;fill-rule:evenodd;stroke:#4c4c4c;stroke-width:2.193927;"
+     id="path996" />
+  <ellipse
+     cx="-22.2671642"
+     cy="24.2452965"
+     rx="7.25273371"
+     ry="7.25273371"
+     transform="matrix(0.854632,0,0.331296,0.854632,37.79514,7.977915)"
+     style="font-size:12;fill:#999999;fill-rule:evenodd;stroke:#4c4c4c;stroke-width:2.193927;"
+     id="path997" />
+  <path
+     d="M 53.09375 2.75 L 40.28125 16.9375 L 45.125 21.3125 L 58.03125 7.0625 L 58.03125 2.75 L 53.09375 2.75 z "
+     transform="translate(-0.763446,0.508964)"
+     style="font-size:12;fill:#b3b3b3;fill-rule:evenodd;stroke:#333333;stroke-width:3.125;stroke-linecap:round;stroke-linejoin:round;"
+     id="path1014" />
+  <path
+     d="M 34.39428 27.68741 C 36.47176 28.96024 44.85372 35.3572 43.43113 37.10648 C 36.25296 37.8379 29.21618 35.81319 21.44683 43.22115 C 27.88985 21.4074 34.39428 27.68741 34.39428 27.68741 z "
+     transform="translate(6.362047,-13.23306)"
+     style="font-size:12;fill:#4c4c4c;fill-rule:evenodd;stroke:#333333;stroke-width:3.125001;stroke-linecap:round;stroke-linejoin:round;"
+     id="path833" />
+</svg>
