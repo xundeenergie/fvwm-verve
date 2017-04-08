@@ -37,7 +37,7 @@ AddToFunc   FuncMpdAppletActivate
 
 DestroyFunc FuncMpdPrev
 AddToFunc   FuncMpdPrev
-+ I Test (EnvMatch APPLET_ACTIVE true) Exec exec /usr/bin/mpc -h $MPD_IP -p $MPD_PORT prev
++ I Test (EnvMatch APPLET_ACTIVE true) Exec exec /usr/bin/mpc -h $MPD_HOST -p $MPD_PORT prev
 
 ###########################
 ##MPD-Applet-Functions END#

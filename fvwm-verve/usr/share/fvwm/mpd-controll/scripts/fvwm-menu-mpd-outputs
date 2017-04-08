@@ -7,7 +7,7 @@ else
   export MPC="/bin/false " 
   echo "+ %noicon-red.png%\"App ist inaktiv -> einschalten\" FuncMpdAppletActivate"
 fi
-export CON=" -h $MPD_IP -p $MPD_PORT"
+export CON=" -h $MPD_HOST -p $MPD_PORT"
 export IFS="	"
 HOSTNAME=`cat /etc/hostname`
 #echo $MPC $CON
@@ -17,7 +17,7 @@ then
 	echo "AddToMenu mpd-outputs \"Server nicht erreichbar\" Title"
 	exit 1
 else
-	/usr/bin/mpc -h $MPD_IP -p $MPD_PORT outputs |sed -e 's/^Output //' -e 's/ is //' -e 's/enabled/1/' -e 's/disabled/0/' -e 's/[\(\)]/	/g'| \
+	/usr/bin/mpc -h $MPD_HOST -p $MPD_PORT outputs |sed -e 's/^Output //' -e 's/ is //' -e 's/enabled/1/' -e 's/disabled/0/' -e 's/[\(\)]/	/g'| \
 	while read i j k
 	do
 	  if [ $k -eq 1 ]
@@ -34,7 +34,7 @@ else
 	done
 
 	echo "AddToMenu mpd-outputs \"Playlist - Wiederholungen\" Title"
-	/usr/bin/mpc -h $MPD_IP -p $MPD_PORT  status|grep volume|sed -e 's/:/ /g;s/  */ /g'|while IFS=" " read vol vols rep reps ran rans sin sins con cons
+	/usr/bin/mpc -h $MPD_HOST -p $MPD_PORT  status|grep volume|sed -e 's/:/ /g;s/  */ /g'|while IFS=" " read vol vols rep reps ran rans sin sins con cons
 	do
 		if [ "$reps" == "on" ]
 		then

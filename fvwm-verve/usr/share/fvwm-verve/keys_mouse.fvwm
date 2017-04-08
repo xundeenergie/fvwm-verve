@@ -85,8 +85,8 @@ Key Left A SC	PackWrapperPageLeft g
 #Key M A CM	Exec exec mulberry
 #Key m A CM	Exec exec /usr/bin/googlizer -u mailto:
 Key m A M	Function FvwmMailClient
-Key M WTSF2 SM	Maximize grow grow
-Key M WTSF2 CSM	Maximize 100 100
+#Key Super_L WTSF2 Up	Maximize grow grow
+Key Super WTSF2 CSM	Maximize 100 100
 #Key N A CM	Exec exec pan
 #Key O A CM	Exec exec opera -newpage -bigicon
 Key o A CM	exec /usr/bin/x-mpd-client

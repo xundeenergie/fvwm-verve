@@ -103,7 +103,7 @@ PeriodicTasks
     Set $display_MPD_HOST = {MPD: }$MPD_NAME
 
     If $APPLET_ACTIVE == true Then
-      Set $MPC = {exec /usr/bin/mpc -h }$MPD_IP{ -p }$MPD_PORT
+      Set $MPC = {exec /usr/bin/mpc -h }$MPD_HOST{ -p }$MPD_PORT
     Else
       Set $MPC = {exec /bin/false }
    
@@ -178,21 +178,21 @@ PeriodicTasks
          Begin
           HideWidget 2
           ShowWidget 3 
-          Set $set_status = $MPD_IP { STOP}
+          Set $set_status = $MPD_HOST { STOP}
           Do {CHANGE_ICON mpp player_play.png }
          End
         If $status == [paused] Then
          Begin
           HideWidget 2
           ShowWidget 3
-          Set $set_status = $MPD_IP { PAUSE}
+          Set $set_status = $MPD_HOST { PAUSE}
           Do {CHANGE_ICON mpp player_play.png }
          End
         If $status == [playing]  Then
          Begin
           HideWidget 3
           ShowWidget 2
-          Set $set_status = $MPD_IP { PLAY}
+          Set $set_status = $MPD_HOST { PLAY}
           Do {CHANGE_ICON mpp player_pause.png}
          End
         ChangeTitle 3 $set_status
@@ -287,21 +287,21 @@ PeriodicTasks
          Begin
           HideWidget 2
           ShowWidget 3 
-          Set $set_status = $MPD_IP { STOP}
+          Set $set_status = $MPD_HOST { STOP}
           Do {CHANGE_ICON mpp player_play.png }
          End
         If $status == [paused] Then
          Begin
           HideWidget 2
           ShowWidget 3
-          Set $set_status = $MPD_IP { PAUSE}
+          Set $set_status = $MPD_HOST { PAUSE}
           Do {CHANGE_ICON mpp player_play.png }
          End
         If $status == [playing]  Then
          Begin
           HideWidget 3
           ShowWidget 2
-          Set $set_status = $MPD_IP { PLAY}
+          Set $set_status = $MPD_HOST { PLAY}
           Do {CHANGE_ICON mpp player_pause.png}
          End
         ChangeTitle 3 $set_status
@@ -354,7 +354,7 @@ Main
  Case message of
   SingleClic :
   Begin
-      Set $m = $MPD_IP {:} $MPD_PORT
+      Set $m = $MPD_HOST {:} $MPD_PORT
       ChangeTitle 1 $m
   End
 End

@@ -5,20 +5,20 @@
 ImagePath +:$[FVWM_SCRIPTDIR]/mpd-controll/icons
 
 *FvwmButtonMPD: (4x2 Frame 0, Icon player_rew.png \
-	Action(Mouse 1) Test (EnvMatch APPLET_ACTIVE true) Exec exec /usr/bin/mpc -h $MPD_IP -p $MPD_PORT prev, \
+	Action(Mouse 1) Test (EnvMatch APPLET_ACTIVE true) Exec exec /usr/bin/mpc -h $MPD_HOST -p $MPD_PORT prev, \
 	)
 *FvwmButtonMPD: (3x2 Frame 0, Id "mpp", Icon player_play.png PressIcon player_pause.png \
-	Action(Mouse 1) Test (EnvMatch APPLET_ACTIVE true) Exec exec /usr/bin/mpc -h $MPD_IP -p $MPD_PORT status|grep -q '\[playing\]\|\[paused\]' \
-		&& /usr/bin/mpc -h $MPD_IP -p $MPD_PORT toggle \
-		|| /usr/bin/mpc -h $MPD_IP -p $MPD_PORT play, \
-	Action (Mouse 4) Test (EnvMatch APPLET_ACTIVE true) Exec exec /usr/bin/mpc -h $MPD_IP -p $MPD_PORT seek +2% > /dev/null, \
-	Action (Mouse 5) Test (EnvMatch APPLET_ACTIVE true) Exec exec /usr/bin/mpc -h $MPD_IP -p $MPD_PORT seek -2% > /dev/null \
+	Action(Mouse 1) Test (EnvMatch APPLET_ACTIVE true) Exec exec /usr/bin/mpc -h $MPD_HOST -p $MPD_PORT status|grep -q '\[playing\]\|\[paused\]' \
+		&& /usr/bin/mpc -h $MPD_HOST -p $MPD_PORT toggle \
+		|| /usr/bin/mpc -h $MPD_HOST -p $MPD_PORT play, \
+	Action (Mouse 4) Test (EnvMatch APPLET_ACTIVE true) Exec exec /usr/bin/mpc -h $MPD_HOST -p $MPD_PORT seek +2% > /dev/null, \
+	Action (Mouse 5) Test (EnvMatch APPLET_ACTIVE true) Exec exec /usr/bin/mpc -h $MPD_HOST -p $MPD_PORT seek -2% > /dev/null \
 	)
-*FvwmButtonMPD: (4x2 Frame 0, Icon player_fwd.png Action(Mouse 1) Test (EnvMatch APPLET_ACTIVE true) Exec exec /usr/bin/mpc -h $MPD_IP -p $MPD_PORT next)
-*FvwmButtonMPD: (3x2 Frame 0, Icon player_stop.png Action Test (EnvMatch APPLET_ACTIVE true) Exec exec /usr/bin/mpc -h $MPD_IP -p $MPD_PORT stop)
+*FvwmButtonMPD: (4x2 Frame 0, Icon player_fwd.png Action(Mouse 1) Test (EnvMatch APPLET_ACTIVE true) Exec exec /usr/bin/mpc -h $MPD_HOST -p $MPD_PORT next)
+*FvwmButtonMPD: (3x2 Frame 0, Icon player_stop.png Action Test (EnvMatch APPLET_ACTIVE true) Exec exec /usr/bin/mpc -h $MPD_HOST -p $MPD_PORT stop)
 *FvwmButtonMPD: (4x2 Frame 0, Id "mpdVol", Icon stock_volume.png \
-	Action (Mouse 4) Test (EnvMatch APPLET_ACTIVE true) Exec exec /usr/bin/mpc -h $MPD_IP -p $MPD_PORT volume +5 > /dev/null, \
-	Action (Mouse 5) Test (EnvMatch APPLET_ACTIVE true) Exec exec /usr/bin/mpc -h $MPD_IP -p $MPD_PORT volume -5 > /dev/null \
+	Action (Mouse 4) Test (EnvMatch APPLET_ACTIVE true) Exec exec /usr/bin/mpc -h $MPD_HOST -p $MPD_PORT volume +5 > /dev/null, \
+	Action (Mouse 5) Test (EnvMatch APPLET_ACTIVE true) Exec exec /usr/bin/mpc -h $MPD_HOST -p $MPD_PORT volume -5 > /dev/null \
 	)
 *FvwmButtonMPD: (4x2 Frame 0, Icon gears.png, Action (Mouse 1) Function MPDOUTPUTS )
 *FvwmButtonMPD: (22x3, Frame 0, Swallow (Respawn)"FvwmApplet-MpdSongInfo" `FvwmScript $[FVWM_SCRIPTDIR]/mpd-controll/scripts/FvwmApplet-MpdSongInfo  `)
@@ -27,5 +27,5 @@ ImagePath +:$[FVWM_SCRIPTDIR]/mpd-controll/icons
 # MPD-Player-Control ENDE#
 ##########################
 # Nur zur Erinnerung
-#*FvwmButtonMPD: (3x2 Frame 0, Icon player_stop.png Action `Exec exec echo -e "stop\\nclose"|nc $MPD_IP $MPD_PORT`)
+#*FvwmButtonMPD: (3x2 Frame 0, Icon player_stop.png Action `Exec exec echo -e "stop\\nclose"|nc $MPD_HOST $MPD_PORT`)
 
